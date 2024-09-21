@@ -1,0 +1,5 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+wp.shsarker.xyz	TRUE	/	FALSE	1999999999	__tad	1726667017.5586839
+ww25.wp.shsarker.xyz	TRUE	/	FALSE	1999999999	parking_session	79ddbda8-0307-42cb-a12f-d47ded683b41
+
