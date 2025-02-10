@@ -1,143 +1,1508 @@
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Abdul Kader</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Place favicon.ico in the root directory -->
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/images/favicon.png"
+    />
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins/swiper.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins/nice-select.css" />
+    <link rel="stylesheet" href="assets/css/vendor/magnific-popup.css" />
+    <link rel="stylesheet" href="assets/css/vendor/fontawesome-pro.css" />
+    <link rel="stylesheet" href="assets/css/vendor/spacing.css" />
+    <link rel="stylesheet" href="assets/css/vendor/remixicon.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="description" content="abdul kader" />
-	<meta name="keywords" content="abdul,kader,programmer,terbaik" />
-	<title>ABDUL KADER</title>
-	<style type="text/css">
-	<!--
+  <body class="rs-smoother-yes">
+    <!-- preloader start -->
+    <div id="pre-load">
+      <div id="loader" class="loader">
+        <div class="loader-container">
+          <div class="loader-icon">
+            <img src="assets/images/favicon.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- preloader end -->
 
-body {
-	margin: 0;  padding: 0;  margin-bottom: 15px;  margin-top: 8px;
-	background: #77b;
-}
-body, td {
-	font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	}
+    <!-- preloader start -->
 
-#subTitle {
-	background: #000;  color: #fff;  padding: 4px;  font-weight: bold; 
-	}
+    <div id="rs-mouse">
+      <div id="cursor-ball"></div>
+    </div>
 
-#siteNavigation a, #siteNavigation .current {
-	font-weight: bold;  color: #448;
-	}
-#siteNavigation a:link    { text-decoration: none; }
-#siteNavigation a:visited { text-decoration: none; }
+    <!-- preloader end -->
 
-#siteNavigation .current { background-color: #ccd; }
+    <!-- Header area start -->
+    <header>
+      <div
+        class="rs-header-area header-style-one header-transparent"
+        id="header-sticky"
+      >
+        <div class="container">
+          <div class="rs-header-inner">
+            <div class="rs-header-left">
+              <div class="rs-header-logo">
+                <a class="logo-black" href="index.html"
+                  ><img src="assets/images/logo.png" alt="logo"
+                /></a>
+                <a class="logo-white" href="index.html"
+                  ><img src="assets/images/logo-dark.png" alt="logo"
+                /></a>
+              </div>
+            </div>
+            <div class="rs-header-menu">
+              <nav id="mobile-menu" class="main-menu has-theme-yellow">
+                <ul class="multipage-menu">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="#">About us</a></li>
+                  <li><a href="#">Portofolio</a></li>
+                  <li><a href="#">Certificate</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="rs-header-right">
+              <div class="rs-header-hamburger">
+                <div class="sidebar-toggle">
+                  <a class="bar-icon" href="javascript:void(0)">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 
-#siteNavigation a:hover   { text-decoration: none;  background-color: #fff;  color: #000; }
-#siteNavigation a:active  { text-decoration: none;  background-color: #ccc; }
+    <!-- Header area end -->
 
+    <!-- Offcanvas area start -->
+    <div class="fix">
+      <div class="offcanvas-area" data-lenis-prevent>
+        <div class="offcanvas-wrapper">
+          <div class="offcanvas-content">
+            <div
+              class="offcanvas-top d-flex justify-content-between align-items-center mb-25"
+            >
+              <div class="offcanvas-logo">
+                <a class="logo-black" href="index.html"
+                  ><img src="assets/images/logo.png" alt="logo"
+                /></a>
+                <a class="logo-white" href="index.html"
+                  ><img src="assets/images/logo-dark.png" alt="logo"
+                /></a>
+              </div>
+              <div class="offcanvas-close">
+                <button class="offcanvas-close-icon animation--flip">
+                  <span class="offcanvas-m-lines">
+                    <span class="offcanvas-m-line line--1"></span
+                    ><span class="offcanvas-m-line line--2"></span
+                    ><span class="offcanvas-m-line line--3"></span>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div class="offcanvas-about mb-30 d-none d-sm-block">
+              <h4 class="offcanvas-title-meta">Tentang</h4>
+              <p>
+                Ini adalah website portofolio saya, dirancang untuk menampilkan
+                karya dan proyek yang mencerminkan kemampuan dan pengalaman
+                saya.
+              </p>
+            </div>
+            <div class="mobile-menu">
+              <div class="rs-offcanvas-menu mb-25">
+                <nav></nav>
+              </div>
+            </div>
+            <div class="offcanvas-contact mb-30">
+              <h4 class="offcanvas-title-meta">Hubungi</h4>
+              <ul>
+                <li class="d-flex align-items-center gap-15">
+                  <div class="offcanvas-contact-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="18"
+                      viewBox="0 0 14 18"
+                      fill="none"
+                    >
+                      <path
+                        d="M11.8768 9.68475C11.3059 10.835 10.5331 11.9818 9.74128 13.0109C8.95198 14.0368 8.15999 14.9249 7.5643 15.5572C7.48514 15.6412 7.40956 15.7206 7.33802 15.7951C7.26648 15.7206 7.1909 15.6412 7.11174 15.5572C6.51605 14.9249 5.72406 14.0368 4.93476 13.0109C4.14299 11.9818 3.37019 10.835 2.79925 9.68475C2.22242 8.52266 1.89032 7.43373 1.89032 6.5C1.89032 3.50846 4.32934 1.08333 7.33802 1.08333C10.3467 1.08333 12.7857 3.50846 12.7857 6.5C12.7857 7.43373 12.4536 8.52266 11.8768 9.68475ZM7.33802 17.3333C7.33802 17.3333 13.8753 11.1732 13.8753 6.5C13.8753 2.91015 10.9484 0 7.33802 0C3.7276 0 0.800781 2.91015 0.800781 6.5C0.800781 11.1732 7.33802 17.3333 7.33802 17.3333Z"
+                        fill="#6D6D6D"
+                      ></path>
+                      <path
+                        d="M7.33802 8.66667C6.13455 8.66667 5.15894 7.69662 5.15894 6.5C5.15894 5.30338 6.13455 4.33333 7.33802 4.33333C8.54149 4.33333 9.5171 5.30338 9.5171 6.5C9.5171 7.69662 8.54149 8.66667 7.33802 8.66667ZM7.33802 9.75C9.14323 9.75 10.6066 8.29492 10.6066 6.5C10.6066 4.70507 9.14323 3.25 7.33802 3.25C5.53281 3.25 4.0694 4.70507 4.0694 6.5C4.0694 8.29492 5.53281 9.75 7.33802 9.75Z"
+                        fill="#6D6D6D"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="offcanvas-contact-text">
+                    <a href="#">
+                      Satreyan maron probolinggo <br />
+                      Jawa Timur, Indonesia
+                    </a>
+                  </div>
+                </li>
+                <li class="d-flex align-items-center gap-15">
+                  <div class="offcanvas-contact-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <path
+                        d="M3.65387 1.32849C3.40343 1.00649 2.92745 0.976861 2.639 1.26531L1.60508 2.29923C1.1216 2.78271 0.94387 3.46766 1.1551 4.06847C2.00338 6.48124 3.39215 8.74671 5.32272 10.6773C7.25329 12.6078 9.51876 13.9966 11.9315 14.8449C12.5323 15.0561 13.2173 14.8784 13.7008 14.3949L14.7347 13.361C15.0231 13.0726 14.9935 12.5966 14.6715 12.3461L12.3653 10.5524C12.2008 10.4245 11.9866 10.3793 11.7845 10.4298L9.59541 10.9771C9.00082 11.1257 8.37183 10.9515 7.93845 10.5181L5.48187 8.06155C5.04849 7.62817 4.87427 6.99919 5.02292 6.40459L5.57019 4.21553C5.62073 4.01336 5.57552 3.79918 5.44758 3.63468L3.65387 1.32849ZM1.88477 0.511076C2.62689 -0.231039 3.8515 -0.154797 4.49583 0.673634L6.28954 2.97983C6.6187 3.40304 6.73502 3.95409 6.60498 4.47423L6.05772 6.66329C5.99994 6.8944 6.06766 7.13888 6.2361 7.30732L8.69268 9.7639C8.86113 9.93235 9.1056 10.0001 9.33671 9.94229L11.5258 9.39502C12.0459 9.26499 12.597 9.3813 13.0202 9.71047L15.3264 11.5042C16.1548 12.1485 16.231 13.3731 15.4889 14.1152L14.455 15.1492C13.7153 15.8889 12.6089 16.2137 11.5778 15.8512C9.01754 14.9511 6.61438 13.4774 4.56849 11.4315C2.5226 9.38562 1.04895 6.98246 0.148838 4.42225C-0.213682 3.39112 0.11113 2.28472 0.85085 1.545L1.88477 0.511076Z"
+                        fill="#6D6D6D"
+                      ></path>
+                      <path
+                        d="M11 0.5C11 0.223858 11.2239 0 11.5 0H15.5C15.7761 0 16 0.223858 16 0.5V4.5C16 4.77614 15.7761 5 15.5 5C15.2239 5 15 4.77614 15 4.5V1.70711L10.8536 5.85355C10.6583 6.04882 10.3417 6.04882 10.1464 5.85355C9.95118 5.65829 9.95118 5.34171 10.1464 5.14645L14.2929 1H11.5C11.2239 1 11 0.776142 11 0.5Z"
+                        fill="#6D6D6D"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="offcanvas-contact-text">
+                    <a href="tel:+12346691234"> 0895428183064 </a>
+                  </div>
+                </li>
+                <li class="d-flex align-items-center gap-15">
+                  <div class="offcanvas-contact-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <path
+                        d="M2 2C0.895431 2 0 2.89543 0 4V12L2.58386e-05 12.0103C0.00555998 13.1101 0.898859 14 2 14H7.5C7.77614 14 8 13.7761 8 13.5C8 13.2239 7.77614 13 7.5 13H2C1.53715 13 1.14774 12.6855 1.03376 12.2586L6.67417 8.7876L8 9.5831L15 5.3831V8.5C15 8.77614 15.2239 9 15.5 9C15.7761 9 16 8.77614 16 8.5V4C16 2.89543 15.1046 2 14 2H2ZM5.70808 8.20794L1 11.1052V5.3831L5.70808 8.20794ZM1 4.2169V4C1 3.44772 1.44772 3 2 3H14C14.5523 3 15 3.44772 15 4V4.2169L8 8.4169L1 4.2169Z"
+                        fill="#6D6D6D"
+                      ></path>
+                      <path
+                        d="M14.2467 14.2686C15.2567 14.2686 15.8339 13.4116 15.8339 12.2442V12.0344C15.8339 10.4297 14.6402 9 12.5197 9H12.4847C10.421 9 9 10.3598 9 12.4322V12.6465C9 14.8195 10.4385 16 12.3579 16H12.4016C12.9963 16 13.4204 15.9257 13.639 15.8251V15.0949C13.3941 15.2042 12.9656 15.2742 12.4585 15.2742H12.4147C11.0812 15.2742 9.84385 14.4872 9.84385 12.6202V12.4628C9.84385 10.8057 10.9019 9.73891 12.4847 9.73891H12.524C14.0587 9.73891 15.0075 10.7883 15.0075 12.065V12.183C15.0075 13.158 14.6839 13.5734 14.3691 13.5734C14.1374 13.5734 13.9582 13.4247 13.9582 13.1537V10.9631H13.0531V11.5315H13.0225C12.9394 11.2342 12.6552 10.9019 12.0693 10.9019C11.2911 10.9019 10.8101 11.4572 10.8101 12.3011V12.8301C10.8101 13.722 11.2998 14.2642 12.0693 14.2642C12.5415 14.2642 12.9656 14.0369 13.0837 13.6215H13.1274C13.2455 14.0412 13.7439 14.2686 14.2467 14.2686ZM11.7939 12.6814V12.4541C11.7939 11.9076 12.0212 11.6627 12.3666 11.6627C12.664 11.6627 12.9394 11.8551 12.9394 12.371V12.7383C12.9394 13.3111 12.6858 13.4816 12.3754 13.4816C12.0212 13.4816 11.7939 13.2673 11.7939 12.6814Z"
+                        fill="#6D6D6D"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="offcanvas-contact-text">
+                    <a href="mailto:hello@flixta.com"
+                      >abdulkader0126@gmail.com</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="offcanvas-social">
+              <h4 class="offcanvas-title-meta">Subscribe & Follow</h4>
+              <ul>
+                <li>
+                  <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fab fa-youtube"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fab fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="offcanvas-overlay"></div>
+    <div class="offcanvas-overlay-white"></div>
+    <!-- Offcanvas area start -->
 
-a:link    { text-decoration: underline;  color: #00f; }
-a:visited { text-decoration: underline;  color: #000; }
-a:hover   { text-decoration: underline;  color: #c00; }
-a:active  { text-decoration: underline; }
+    <!-- Body main wrapper start -->
+    <main>
+      <!-- banner area start -->
+      <section class="rs-banner-area rs-banner-six p-relative">
+        <div
+          class="rs-banner-bg"
+          data-background="assets/images/bg/banner-bg-01.png"
+        ></div>
+        <div
+          class="rs-banner-bg bg-black"
+          data-background="assets/images/bg/banner-bg-dark-02.png"
+        ></div>
+        <div class="rs-banner-shape-two">
+          <img src="assets/images/shape/small-arrow-two.png" alt="image" />
+        </div>
+        <div class="container">
+          <div class="row g-5">
+            <div class="col-xxl-7 col-xl-7 col-lg-7">
+              <div class="rs-banner-content-wrapper p-relative">
+                <div class="rs-banner-shape">
+                  <img src="assets/images/shape/arow.png" alt="image" />
+                </div>
+                <div class="rs-banner-content">
+                  <span
+                    class="rs-section-subtitle wow fadeInUp"
+                    data-wow-delay=".3s"
+                    data-wow-duration=".7s"
+                  >
+                    <img src="assets/images/shape/hand-shape-02.svg" alt="" />
+                    Welcome to my portfolio
+                  </span>
+                  <h1
+                    class="rs-banner-title wow fadeInUp"
+                    data-wow-delay=".5s"
+                    data-wow-duration=".9s"
+                  >
+                    I'm Abdul Kader
+                    <span class="cd-headline slide rs-title-slide">
+                      <span class="cd-words-wrapper">
+                        <b class="is-hidden">Software Enginering</b>
+                        <b class="is-visible">Web Development</b>
+                      </span>
+                    </span>
+                  </h1>
+                  <div
+                    class="rs-banner-description wow fadeInUp"
+                    data-wow-delay=".7s"
+                    data-wow-duration="1.1s"
+                  >
+                    <p>
+                      Saya adalah seorang programmer yang percaya bahwa kode
+                      yang baik dapat mengubah ide menjadi kenyataan.
+                    </p>
+                  </div>
+                  <div
+                    class="rs-banner-btn wow fadeInUp"
+                    data-wow-delay=".9s"
+                    data-wow-duration="1.3s"
+                  >
+                    <div class="rs-rotate-btn">
+                      <a class="rs-circle-btn" href="#">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M31,0H15V2H28.59L.29,30.29l1.41,1.41L30,3.41V16h2V1A1,1,0,0,0,31,0Z"
+                          ></path>
+                        </svg>
+                      </a>
+                      <div
+                        class="rs_circle_title gsap-rotate rs-text-circle-wrapper"
+                      >
+                        <div class="rs-text-circle" data-rotate-degree="13.33">
+                          Hubungi Saya --------------
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xxl-5 col-xl-5 col-lg-5">
+              <div
+                class="rs-banner-thumb wow fadeInRight"
+                data-wow-delay="1.1s"
+                data-wow-duration="1.5s"
+              >
+                <img src="assets/images/im.jpg" alt="image" />
+                <div class="rs-banner-exp gsap-move up-100 start-70">
+                  <h3 class="rs-banner-exp-title">
+                    <span
+                      data-purecounter-duration="1"
+                      data-purecounter-end="3"
+                      class="purecounter"
+                      >3</span
+                    >+
+                  </h3>
+                  <p>Years of Experience</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- banner area end -->
 
-#pageContent {
-	clear: both;
-	border-bottom: 6px solid #000;
-	padding: 10px;  padding-top: 20px;
-	line-height: 1.65em;
-	background-image: url(backblue.gif);
-	background-repeat: no-repeat;
-	background-position: top right;
-	}
+      <!-- services area start -->
+      <section
+        class="rs-servcies-area section-space rs-services-six secondary-bg"
+      >
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-6">
+              <div
+                class="rs-section-title-wrapper section-title-space text-center"
+              >
+                <span class="rs-section-subtitle has-text-style">
+                  <img src="assets/images/shape/small-arrow.png" alt="image" />
+                  Layanan
+                </span>
+                <h2 class="rs-section-title rs-split-text-enable split-in-fade">
+                  What I Do
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="row g-5">
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div
+                class="rs-services-wrapper wow fadeInUp"
+                data-wow-delay=".3s"
+                data-wow-duration="1s"
+              >
+                <div class="rs-services-item">
+                  <div class="rs-services-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="512"
+                      viewBox="0 0 60 60"
+                      width="512"
+                    >
+                      <g id="Page-41" fill="none" fill-rule="evenodd">
+                        <g id="Crossed-Pencilss" fill-rule="nonzero">
+                          <path
+                            id="Sdhape"
+                            d="m18.67 50.78-7.33 7.34c-1.1751514 1.1698661-3.07484863 1.1698661-4.25 0l-5.21-5.21c-1.16986609-1.1751514-1.16986609-3.0748486 0-4.25l7.34-7.33z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shapiie"
+                            d="m9.22 41.33-1.5 1.5 7.95 7.95-7.33 7.34c-.18644981.1812832-.39590882.3372848-.623.464 1.17351135.6830574 2.6594993.492746 3.623-.464l7.33-7.34z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shape000"
+                            d="m48 12-13.27 13.27-4.73-4.73 13.09-13.09.46.1z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shappes"
+                            d="m52.78 16.62c-.0174538.0370849-.0411293.070907-.07.1-.0478468.0677575-.1013733.1313202-.16.19l-13.1 13.09-4.72-4.73 13.27-13.27 4.45 4.45z"
+                            fill="#a4c2f7"
+                          ></path>
+                          <path
+                            id="Shaple"
+                            d="m56.26 8.78-3.43 7.73c-.0143741.0376661-.0310728.0744035-.05.11l-.33-.17-8.9-8.9-.46-.1c.1155894-.11641582.2510518-.21123952.4-.28l7.73-3.43.11.25 4.68 4.68z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shapevv"
+                            d="m56.01 8.67-4.68-4.68-.11-.25-2.175.965 3.965 3.965.25.11-2.606 5.874 1.8 1.8.33.17c.0189272-.0355965.0356259-.0723339.05-.11l3.43-7.73z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shdaple"
+                            d="m58.88 2.89-2.62 5.89-.25-.11-4.68-4.68-.11-.25 5.89-2.62c.5070274-.22529827 1.1004426-.11509044 1.4927665.27723346.3923239.39232391.5025318.98573914.2772335 1.49276654z"
+                            fill="#a4c2f7"
+                          ></path>
+                          <path
+                            id="Rectangle-patha"
+                            d="m19.672 37.051h9.33v6.679h-9.33z"
+                            fill="#a4c2f7"
+                            transform="matrix(.707 -.707 .707 .707 -21.432 29.039)"
+                          ></path>
+                          <path
+                            id="Shape57"
+                            d="m23.4 46.05-4.73 4.73-9.45-9.45 4.73-4.73 4.72 4.73h.01z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shape36"
+                            d="m58.12 52.91-5.21 5.21c-1.1751514 1.1698661-3.0748486 1.1698661-4.25 0l-7.33-7.34 9.45-9.45 7.34 7.33c1.1698661 1.1751514 1.1698661 3.0748486 0 4.25z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shape96"
+                            d="m58.12 48.66-7.34-7.33-1.5 1.5 5.84 5.83c1.1698661 1.1751514 1.1698661 3.0748486 0 4.25l-5.21 5.21c-.1880488.1811377-.3988086.3371067-.627.464 1.1750352.6822623 2.6615585.4920922 3.627-.464l5.21-5.21c1.1698661-1.1751514 1.1698661-3.0748486 0-4.25z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shape888"
+                            d="m25.27 34.73-6.59 6.6h-.01l-4.72-4.73 6.6-6.6z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shape19"
+                            d="m50.78 41.33-9.45 9.45-4.73-4.73 4.73-4.72 4.72-4.73z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shape27"
+                            d="m41.33 41.33-4.73 4.72-6.6-6.6-4.73-4.72-4.72-4.73-13.1-13.09c-.11641582-.1155894-.21123952-.2510518-.28-.4l.38-.06 4.45-4.45z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shape00"
+                            d="m46.05 36.6-4.72 4.73-29.33-29.33 4.45-4.45.17-.33c.0370849.01745378.070907.04112927.1.07.0677575.04784683.1313202.10137331.19.16l13.09 13.09 4.73 4.73 4.72 4.73z"
+                            fill="#a4c2f7"
+                          ></path>
+                          <path
+                            id="Shadpe"
+                            d="m16.62 7.22-.17.33-8.9 8.9-.38.06-3.43-7.73.25-.11 4.68-4.68.11-.25 7.73 3.43c.0376661.01437405.0744035.03107285.11.05z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shape8"
+                            d="m16.51 7.17-7.73-3.43-.11.25-.715.715 5.555 2.465c.0376661.01437405.0744035.03107285.11.05l-.17.33-7.1 7.1.82 1.86.38-.06 8.9-8.9.17-.33c-.0355965-.01892715-.0723339-.03562595-.11-.05z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shape9"
+                            d="m8.78 3.74-.11.25-4.68 4.68-.25.11-2.62-5.89c-.22529827-.5070274-.11509044-1.10044263.27723346-1.49276654.39232391-.3923239.98573914-.50253173 1.49276654-.27723346z"
+                            fill="#a4c2f7"
+                          ></path>
+                          <path
+                            id="Shape77"
+                            d="m10.09 58.12-5.21-5.21c-1.16986609-1.1751514-1.16986609-3.0748486 0-4.25l5.839-5.831 1.5-1.5 4.73-4.73 6.6-6.6-13.099-13.089c-.1164158-.1155894-.2112395-.2510518-.28-.4l-3.43-7.73-2.62-5.89c-.17835104-.38515681-.15744576-.83312704.056-1.2l-1.286-.57c-.5070274-.22529827-1.10044263-.11509044-1.49276654.27723346-.3923239.39232391-.50253173.98573914-.27723346 1.49276654l2.62 5.89 3.43 7.73c.06876048.1489482.16358418.2844106.28.4l13.1 13.09-6.6 6.6-4.73 4.73-1.5 1.5-5.84 5.83c-1.16986609 1.1751514-1.16986609 3.0748486 0 4.25l5.21 5.21c.18804877.1811377.39880862.3371067.627.464.41902801.2422166.89043902.3794542 1.374.4h.024c.1171691.0018471.23435023-.0028267.351-.014.065 0 .13-.01.194-.019.1-.014.189-.034.283-.057.0879162-.0212414.174695-.0469413.26-.077.077-.027.154-.054.23-.087.0973046-.0448375.1921101-.0949108.284-.15-.2279627-.1256527-.4387118-.2802693-.627-.46z"
+                            fill="#fff"
+                          ></path>
+                          <path
+                            id="Rectangle-pathbs"
+                            d="m.707 44.834h8v2h-8z"
+                            fill="#fff"
+                            transform="matrix(.707 -.707 .707 .707 -31.031 16.753)"
+                          ></path>
+                          <g fill="#428dff">
+                            <path
+                              id="Shape44"
+                              d="m7.314 53.685c-.26519481-.0000566-.51950727-.1054506-.707-.293l-1.9-1.9c-.39038194-.3904999-.39038194-1.0235001 0-1.414l1.9-1.9c.39425229-.3633867 1.00494187-.3511685 1.38434381.0276968.37940193.3788653.39248447.989537.02965619 1.3843032l-1.193 1.194 1.193 1.194c.28590792.2859943.37142191.7160366.21667798 1.0896546-.15474393.3736179-.51928208.6172591-.92367798.6173454z"
+                            ></path>
+                            <path
+                              id="Shape7"
+                              d="m52.685 53.685c-.4043959-.0000863-.7689341-.2437275-.923678-.6173454-.1547439-.373618-.0692299-.8036603.216678-1.0896546l1.194-1.194-1.194-1.194c-.3789722-.3923789-.3735524-1.0160848.0121814-1.4018186s1.0094397-.3911536 1.4018186-.0121814l1.9 1.9c.3903819.3904999.3903819 1.0235001 0 1.414l-1.9 1.9c-.1871648.188283-.4415178.2944134-.707.295z"
+                            ></path>
+                            <path
+                              id="Shape5"
+                              d="m4.727 46.834c-.55228473.0027614-1.00223852-.4427153-1.00499994-.995-.00276143-.5522847.44271521-1.0022385.99499994-1.005h.01c.55228475 0 1 .4477153 1 1s-.44771525 1-1 1z"
+                            ></path>
+                            <path
+                              id="Shape0"
+                              d="m51.491 40.618-10.622-10.618 12.388-12.383c.2028169-.2023922.3677532-.4394669.487-.7l6.049-13.617c.3971913-.88623067.2059521-1.92566976-.4806558-2.61249966-.686608-.6868299-1.7259852-.87840515-2.6123442-.48150034l-13.634 6.058c-.2540921.11821002-.4853099.28036717-.683.479l-12.383 12.384-12.385-12.384c-.2014296-.20293536-.4387848-.36671045-.7-.483l-13.623-6.054c-.88405863-.39405643-1.91954288-.20236729-2.60395508.48204492-.68441221.6844122-.87610135 1.71989645-.48204492 2.60395508l6.055 13.624c.11635253.2609328.27974146.4982196.482.7l12.389 12.384-5.869 5.869c-.007.007-.017.009-.025.016s-.009.017-.016.025l-4.687 4.69c-.008.007-.018.009-.026.017l-1.681 1.683c-.39046532.3907415-.39024146 1.0240347.0005 1.4145s1.02403468.3902415 1.4145-.0005l.973-.973 8.045 8.044-6.631 6.63c-.791167.755814-2.036833.755814-2.828 0l-5.216-5.215c-.78076388-.7809997-.78076388-2.0470003 0-2.828.25995658-.2510745.3642126-.6228779.27269716-.9725073-.09151544-.3496295-.3645604-.6226744-.71418984-.7141899-.34962943-.0915154-.72143285.0127406-.97250732.2726972-1.56152775 1.5619994-1.56152775 4.0940006 0 5.656l5.216 5.216c1.56199941 1.5615278 4.0940006 1.5615278 5.656 0l7.338-7.337c.008-.008.011-.019.019-.028l4.683-4.683c.008-.008.019-.01.027-.018s.011-.019.018-.027l5.871-5.869 5.892 5.893 4.729 4.729 7.338 7.337c1.5619994 1.5615278 4.0940006 1.5615278 5.656 0l5.216-5.216c1.5615278-1.5619994 1.5615278-4.0940006 0-5.656zm-10.166 8.752-3.315-3.315 8.045-8.045 3.315 3.315zm11.082-34.37-7.407-7.407 5.9-2.621 4.128 4.128zm5.111-12.967c.1280116-.06545371.2839042-.03811128.382.067.1039733.09770164.1323346.2516627.07.38l-2.07 4.66-3.04-3.04zm-14.251 6.654 3.315 3.313-5.505 5.506c-.2599566.2510745-.3642126.6228779-.2726972.9725073.0915155.3496295.3645604.6226744.7141899.7141899.3496294.0915154.7214328-.0127406.9725073-.2726972l5.509-5.503 3.316 3.316-11.861 11.849-3.311-3.311 2.563-2.564c.3789722-.3923789.3735524-1.0160848-.0121814-1.4018186s-1.0094397-.3911536-1.4018186-.0121814l-2.563 2.564-3.317-3.316zm-4.541 21.994c.007.008.01.018.017.026s.018.01.026.017l5.872 5.876-3.316 3.315-16.318-16.322c-.3923789-.3789722-1.0160848-.3735524-1.4018186.0121814s-.3911536 1.0094397-.0121814 1.4018186l16.318 16.318-3.311 3.316-5.873-5.873c-.007-.008-.009-.018-.016-.025s-.017-.009-.025-.016l-9.41-9.411c-.006-.007-.008-.016-.015-.023s-.017-.009-.024-.016l-12.548-12.545 3.311-3.315 7.806 7.806c.3923789.3789722 1.0160848.3735524 1.4018186-.0121814s.3911536-1.0094397.0121814-1.4018186l-7.802-7.809 3.314-3.315zm-36.626-28.581c.09532446-.10438627.24811356-.13331433.375-.071l4.663 2.071-3.033 3.038-2.071-4.659c-.06739601-.12653951-.04020331-.2826915.066-.379zm2.875 7 4.125-4.126 5.9 2.626-7.4 7.4zm18.881 25.629-5.181 5.182-3.311-3.311 5.182-5.182zm-13.222 6.6 3.315-3.316 3.995 3.995c.008.008.011.02.019.028s.02.011.028.019l4 3.994-3.321 3.316zm12.766 3.307-3.311-3.311 5.182-5.182 3.311 3.311zm34.014 7.564-5.214 5.214c-.791167.755814-2.036833.755814-2.828 0l-6.631-6.63 8.045-8.045 6.63 6.631c.7807639.7809997.7807639 2.0470003 0 2.828z"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </div>
+                  <h5 class="rs-services-title">
+                    <a href="services-details.html">Website Design</a>
+                  </h5>
+                  <div class="rs-services-description">
+                    <p>
+                        Saya berpengalaman dalam desain web, menciptakan antarmuka menarik dan fungsional. Fokus saya pada UX dan UI yang intuitif memastikan situs web tidak hanya estetis, tetapi juga mudah dinavigasi.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div
+                class="rs-services-wrapper wow fadeInUp"
+                data-wow-delay=".4s"
+                data-wow-duration="1s"
+              >
+                <div class="rs-services-item">
+                  <div class="rs-services-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      id="Capa_1"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 505.152 505.152"
+                      style="enable-background: new 0 0 505.152 505.152"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <g transform="translate(1 1)">
+                          <path
+                            style="fill: #fdd7ad"
+                            d="M76.086,411.051v67.148c0,9.271,7.516,16.787,16.787,16.787h318.951   c9.271,0,16.787-7.516,16.787-16.787v-37.14c-17.655,5.125-36.456,4.719-53.873-1.164c-47.843-15.533-74.412-66.543-59.716-114.65   c14.696-48.107,65.233-75.563,113.59-61.709V117.281L319.496,8.166H92.873c-9.271,0-16.787,7.516-16.787,16.787V411.051z"
+                          ></path>
+                          <path
+                            style="fill: #a4c2f7"
+                            d="M429.31,117.281v377.705H93.573c-9.26-0.027-16.76-7.527-16.787-16.787V24.953   c0.027-9.26,7.527-16.76,16.787-16.787h226.623L429.31,117.281z"
+                          ></path>
+                          <path
+                            style="fill: #e3e7f2"
+                            d="M404.13,117.281v377.705H93.573c-9.26-0.027-16.76-7.527-16.787-16.787V24.953   c0.027-9.26,7.527-16.76,16.787-16.787h201.443L404.13,117.281z"
+                          ></path>
+                          <path
+                            style="fill: #a4c2f7"
+                            d="M320.195,8.166v92.328c0,9.271,7.516,16.787,16.787,16.787h92.328L320.195,8.166z"
+                          ></path>
+                          <path
+                            style="fill: #d4e1f4"
+                            d="M495.758,352.297c0.014,24.491-9.709,47.983-27.027,65.301   c-17.318,17.318-40.81,27.041-65.301,27.027c-4.215,0.033-8.425-0.276-12.59-0.923c-45.688-6.259-79.737-45.29-79.737-91.405   s34.05-85.146,79.737-91.405c4.165-0.647,8.375-0.956,12.59-0.923c24.491-0.014,47.983,9.709,65.301,27.027   C486.049,304.314,495.772,327.806,495.758,352.297z"
+                          ></path>
+                          <ellipse
+                            style="fill: #f5f5f5"
+                            cx="390.84"
+                            cy="352.297"
+                            rx="79.738"
+                            ry="91.405"
+                          ></ellipse>
+                          <g>
+                            <path
+                              style="fill: #e3e7f2"
+                              d="M126.447,391.579v2.686c-16.032,0.001-31.337-6.693-42.219-18.466l-59.51-64.462l25.18-25.18    l61.272,66.392C120.981,363.18,126.434,377.112,126.447,391.579z"
+                            ></path>
+                            <path
+                              style="fill: #e3e7f2"
+                              d="M49.899,286.157l-25.18,25.18l-12.59-13.597c-6.675-7.232-6.224-18.505,1.007-25.18    s18.505-6.224,25.18,1.007L49.899,286.157z"
+                            ></path>
+                          </g>
+                        </g>
+                        <g transform="translate(10 1)">
+                          <path
+                            style="fill: #ffffff"
+                            d="M92.267,260.137V25.121c0-9.271,7.516-16.787,16.787-16.787h-25.18   c-9.271,0-16.787,7.516-16.787,16.787v235.016H92.267z"
+                          ></path>
+                          <path
+                            style="fill: #ffffff"
+                            d="M67.086,367.148v111.219c0,9.271,7.516,16.787,16.787,16.787h25.18   c-9.271,0-16.787-7.516-16.787-16.787v-92.496L67.086,367.148z"
+                          ></path>
+                        </g>
+                        <g>
+                          <polygon
+                            style="fill: #ffffff"
+                            points="68.693,244.182 68.693,135.068 68.693,25.953 85.48,25.953 85.48,135.068 85.48,244.182      "
+                          ></polygon>
+                          <g>
+                            <path
+                              style="fill: #428dff"
+                              d="M127.447,185.428H379.25c4.636,0,8.393-3.758,8.393-8.393c0-4.636-3.758-8.393-8.393-8.393    H127.447c-4.636,0-8.393,3.758-8.393,8.393C119.053,181.67,122.811,185.428,127.447,185.428z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M278.529,428.838H135.84c-4.636,0-8.393,3.758-8.393,8.393s3.758,8.393,8.393,8.393h142.689    c4.636,0,8.393-3.758,8.393-8.393S283.164,428.838,278.529,428.838z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M127.447,227.396H379.25c4.636,0,8.393-3.758,8.393-8.393c0-4.636-3.758-8.393-8.393-8.393    H127.447c-4.636,0-8.393,3.758-8.393,8.393C119.053,223.638,122.811,227.396,127.447,227.396z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M127.447,269.363h182.344c4.636,0,8.393-3.758,8.393-8.393c0-4.636-3.758-8.393-8.393-8.393    H127.447c-4.636,0-8.393,3.758-8.393,8.393C119.053,265.605,122.811,269.363,127.447,269.363z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M127.447,311.33h156.295c4.636,0,8.393-3.758,8.393-8.393s-3.758-8.393-8.393-8.393H127.447    c-4.636,0-8.393,3.758-8.393,8.393S122.811,311.33,127.447,311.33z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M278.529,336.51H152.627c-4.636,0-8.393,3.758-8.393,8.393c0,4.636,3.758,8.393,8.393,8.393    h125.902c4.636,0,8.393-3.758,8.393-8.393C286.922,340.268,283.164,336.51,278.529,336.51z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M505.152,353.297c-0.073-42.634-26.96-80.611-67.148-94.845V118.281    c0-0.179-0.092-0.339-0.103-0.516c-0.046-0.742-0.192-1.475-0.434-2.178c-0.079-0.264-0.171-0.524-0.277-0.779    c-0.396-0.913-0.953-1.747-1.645-2.462L326.431,3.232c-0.713-0.69-1.545-1.246-2.455-1.641c-0.261-0.109-0.527-0.203-0.797-0.284    c-0.693-0.237-1.414-0.38-2.145-0.427c-0.185-0.012-0.351-0.107-0.537-0.107H93.873c-13.9,0.015-25.165,11.28-25.18,25.18    v117.508c0,4.636,3.758,8.393,8.393,8.393c4.636,0,8.393-3.758,8.393-8.393V25.953c0.005-4.634,3.76-8.389,8.393-8.393h218.229    v83.934c0.015,13.9,11.28,25.165,25.18,25.18h83.934v127.352c-0.459-0.079-0.918-0.073-1.377-0.145    c-3.154-0.487-6.35-0.824-9.59-1.011c-1.166-0.07-2.328-0.149-3.492-0.177c-0.782-0.018-1.542-0.118-2.328-0.118    c-2.355,0-4.66,0.194-6.973,0.353c-0.875,0.06-1.756,0.05-2.627,0.133c-3.881,0.371-7.738,0.969-11.549,1.79    c-0.805,0.173-1.585,0.422-2.384,0.614c-3.013,0.725-5.974,1.569-8.875,2.558c-1.116,0.381-2.212,0.797-3.314,1.216    c-2.62,0.998-5.183,2.102-7.69,3.31c-1.058,0.507-2.122,0.983-3.163,1.526c-3.132,1.63-6.176,3.423-9.121,5.372    c-0.856,0.569-1.668,1.201-2.51,1.797c-2.378,1.692-4.693,3.459-6.911,5.346c-1.241,1.052-2.42,2.169-3.612,3.283    c-1.628,1.525-3.203,3.101-4.724,4.727c-0.717,0.767-1.524,1.43-2.219,2.221c-0.465,0.529-0.846,1.113-1.299,1.65    c-0.893,1.059-1.721,2.169-2.571,3.265c-1.204,1.556-2.422,3.097-3.528,4.714c-0.994,1.448-1.879,2.969-2.797,4.469    c-0.809,1.329-1.679,2.622-2.424,3.985c-5.041,9.176-8.608,19.088-10.572,29.371c-0.053,0.277-0.078,0.559-0.129,0.837    c-0.563,3.077-1.006,6.194-1.283,9.361c-0.086,0.969-0.088,1.946-0.148,2.92c-0.114,1.964-0.298,3.91-0.298,5.902    c0,0.488,0.066,0.96,0.074,1.446c0.017,1.522,0.145,3.045,0.232,4.571c0.112,1.887,0.209,3.773,0.424,5.631    c0.066,0.578,0.056,1.155,0.131,1.733c0.727,5.475,1.923,10.878,3.575,16.148c0.097,0.314,0.201,0.623,0.3,0.936    c0.851,2.653,1.807,5.262,2.871,7.826c0.172,0.42,0.329,0.847,0.508,1.264c1.111,2.567,2.324,5.083,3.64,7.547    c0.62,1.166,1.308,2.284,1.972,3.422c0.649,1.101,1.3,2.198,1.99,3.273c0.989,1.555,2.009,3.08,3.078,4.577    c0.109,0.151,0.224,0.296,0.334,0.446c17.165,23.848,43.897,38.999,73.175,41.474c1.175,0.103,2.351,0.118,3.528,0.178    c1.631,0.079,3.239,0.248,4.89,0.248c0.928,0,1.826-0.114,2.748-0.139c1.348-0.038,2.697-0.111,4.047-0.205    c2.823-0.19,5.604-0.504,8.361-0.923c0.543-0.085,1.088-0.086,1.631-0.18v26.627c-0.005,4.634-3.76,8.389-8.393,8.393H93.873    c-4.634-0.005-8.389-3.76-8.393-8.393v-67.148c0-4.636-3.758-8.393-8.393-8.393c-4.636,0-8.393,3.758-8.393,8.393v67.148    c0.015,13.9,11.28,25.165,25.18,25.18h318.951c13.9-0.015,25.165-11.28,25.18-25.18v-31.056    C478.192,433.908,505.079,395.931,505.152,353.297z M337.283,109.887c-4.634-0.005-8.389-3.76-8.393-8.393V29.428l80.459,80.459    H337.283z M427.154,434.021c-3.714,1.033-7.492,1.815-11.31,2.341c-0.431,0.059-0.853,0.145-1.288,0.197    c-3.723,0.465-7.474,0.671-11.225,0.616c-0.656-0.008-1.296-0.075-1.948-0.098c-3.455-0.116-6.898-0.455-10.309-1.013    c-0.293-0.047-0.589-0.084-0.881-0.134c-4.001-0.714-7.945-1.716-11.802-2.997c-18.613-6.217-34.519-18.652-45.045-35.215    c-0.248-0.395-0.486-0.797-0.727-1.197c-1.616-2.665-3.081-5.419-4.387-8.248c-0.28-0.605-0.603-1.185-0.868-1.799    c-1.295-3.001-2.409-6.076-3.335-9.211c-0.354-1.191-0.631-2.413-0.934-3.626c-0.572-2.285-1.053-4.596-1.422-6.941    c-0.197-1.216-0.417-2.424-0.56-3.657c-0.168-1.497-0.255-2.984-0.347-4.472c-0.089-1.432-0.201-2.858-0.217-4.308    c-0.018-1.374,0.061-2.733,0.11-4.096c0.061-1.648,0.094-3.302,0.249-4.924c0.084-0.902,0.246-1.786,0.359-2.681    c0.265-2.063,0.527-4.127,0.94-6.14l0.03-0.122c2.157-10.368,6.267-20.231,12.113-29.062c0.216-0.326,0.403-0.665,0.623-0.989    c1.083-1.593,2.271-3.106,3.457-4.618c0.598-0.761,1.174-1.536,1.801-2.281c0.897-1.066,1.861-2.07,2.809-3.09    c1.627-1.748,3.319-3.418,5.076-5.01c0.814-0.74,1.598-1.512,2.443-2.22c2.52-2.112,5.163-4.074,7.914-5.875    c0.718-0.472,1.472-0.89,2.205-1.341c2.443-1.499,4.962-2.873,7.545-4.116c0.627-0.302,1.246-0.621,1.881-0.908    c6.606-2.956,13.567-5.045,20.709-6.215c0.585-0.096,1.173-0.186,1.763-0.27c3.596-0.532,7.222-0.828,10.857-0.887h0.002    c3.905-0.037,7.808,0.199,11.68,0.706c0.231,0.03,0.458,0.074,0.688,0.105c39.393,5.342,69.617,37.616,72.367,77.274    C490.914,387.157,465.432,423.294,427.154,434.021L427.154,434.021z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M77.086,202.215c-4.63,0.013-8.38,3.763-8.393,8.393v50.361c0,4.636,3.758,8.393,8.393,8.393    c4.636,0,8.393-3.758,8.393-8.393v-50.361C85.466,205.979,81.716,202.229,77.086,202.215z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M80.279,169.314c-1.01-0.431-2.095-0.659-3.193-0.672c-3.394,0.013-6.449,2.061-7.75,5.196    s-0.596,6.744,1.791,9.157l1.258,1.008c0.468,0.319,0.977,0.574,1.512,0.758c0.476,0.242,0.986,0.41,1.512,0.5    c0.554,0.094,1.115,0.15,1.677,0.168c2.222-0.031,4.351-0.9,5.959-2.434c2.036-1.962,2.93-4.828,2.37-7.599    C84.855,172.624,82.918,170.33,80.279,169.314L80.279,169.314z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M463.185,344.904h-50.361v-50.361c0-4.636-3.758-8.393-8.393-8.393    c-4.636,0-8.393,3.758-8.393,8.393v50.361c0.011,9.267,7.52,16.776,16.787,16.787h50.361c4.636,0,8.393-3.758,8.393-8.393    S467.82,344.904,463.185,344.904z"
+                            ></path>
+                            <path
+                              style="fill: #428dff"
+                              d="M123.779,403.466l6.127,6.127c2.115,2.148,5.218,2.997,8.132,2.224    c2.913-0.773,5.189-3.048,5.961-5.961c0.772-2.913-0.077-6.017-2.224-8.132l-5.972-5.972    c-0.169-16.281-6.383-31.918-17.437-43.872l-72.91-78.996c-3.585-3.909-8.279-6.627-13.454-7.789    c-8.769-1.968-17.936,0.684-24.3,7.031c-9.978,9.921-10.301,25.965-0.73,36.279l72.058,78.062    C90.664,394.995,106.706,402.523,123.779,403.466z M118.627,386.072c-10.47-1.922-20.037-7.181-27.27-14.992l-54.003-58.509    l13.302-13.302l55.381,60C112.905,366.686,117.304,376.05,118.627,386.072z M19.308,293.019c-3.435-3.7-3.319-9.457,0.262-13.016    v-0.008c1.754-1.766,4.142-2.757,6.631-2.75l0.197,0.004c2.558,0.039,4.987,1.132,6.713,3.021h0.008l6.139,6.656l-13.3,13.3    L19.308,293.019z"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                    </svg>
+                  </div>
+                  <h5 class="rs-services-title">
+                    <a href="services-details.html">Web Developer</a>
+                  </h5>
+                  <div class="rs-services-description">
+                    <p>
+                        Sebagai web developer, saya menciptakan situs web dinamis dan responsif untuk pengalaman pengguna yang optimal. Dengan keahlian front-end dan back-end, saya membangun solusi web sesuai kebutuhan klien.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div
+                class="rs-services-wrapper wow fadeInUp"
+                data-wow-delay=".5s"
+                data-wow-duration="1s"
+              >
+                <div class="rs-services-item">
+                  <div class="rs-services-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="512"
+                      viewBox="0 0 60 60"
+                      width="512"
+                    >
+                      <g id="Page-71" fill="none" fill-rule="evenodd">
+                        <g id="Crossed-Pencils" fill-rule="nonzero">
+                          <path
+                            id="Shapez"
+                            d="m18.67 50.78-7.33 7.34c-1.1751514 1.1698661-3.07484863 1.1698661-4.25 0l-5.21-5.21c-1.16986609-1.1751514-1.16986609-3.0748486 0-4.25l7.34-7.33z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shapne"
+                            d="m9.22 41.33-1.5 1.5 7.95 7.95-7.33 7.34c-.18644981.1812832-.39590882.3372848-.623.464 1.17351135.6830574 2.6594993.492746 3.623-.464l7.33-7.34z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shapee"
+                            d="m48 12-13.27 13.27-4.73-4.73 13.09-13.09.46.1z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shapemm"
+                            d="m52.78 16.62c-.0174538.0370849-.0411293.070907-.07.1-.0478468.0677575-.1013733.1313202-.16.19l-13.1 13.09-4.72-4.73 13.27-13.27 4.45 4.45z"
+                            fill="#a4c2f7"
+                          ></path>
+                          <path
+                            id="Shdape"
+                            d="m56.26 8.78-3.43 7.73c-.0143741.0376661-.0310728.0744035-.05.11l-.33-.17-8.9-8.9-.46-.1c.1155894-.11641582.2510518-.21123952.4-.28l7.73-3.43.11.25 4.68 4.68z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shajjpe"
+                            d="m56.01 8.67-4.68-4.68-.11-.25-2.175.965 3.965 3.965.25.11-2.606 5.874 1.8 1.8.33.17c.0189272-.0355965.0356259-.0723339.05-.11l3.43-7.73z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shaddpe"
+                            d="m58.88 2.89-2.62 5.89-.25-.11-4.68-4.68-.11-.25 5.89-2.62c.5070274-.22529827 1.1004426-.11509044 1.4927665.27723346.3923239.39232391.5025318.98573914.2772335 1.49276654z"
+                            fill="#a4c2f7"
+                          ></path>
+                          <path
+                            id="Rectangle-pathw"
+                            d="m19.672 37.051h9.33v6.679h-9.33z"
+                            fill="#a4c2f7"
+                            transform="matrix(.707 -.707 .707 .707 -21.432 29.039)"
+                          ></path>
+                          <path
+                            id="Shappe"
+                            d="m23.4 46.05-4.73 4.73-9.45-9.45 4.73-4.73 4.72 4.73h.01z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shapffse"
+                            d="m58.12 52.91-5.21 5.21c-1.1751514 1.1698661-3.0748486 1.1698661-4.25 0l-7.33-7.34 9.45-9.45 7.34 7.33c1.1698661 1.1751514 1.1698661 3.0748486 0 4.25z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shaqwpe"
+                            d="m58.12 48.66-7.34-7.33-1.5 1.5 5.84 5.83c1.1698661 1.1751514 1.1698661 3.0748486 0 4.25l-5.21 5.21c-.1880488.1811377-.3988086.3371067-.627.464 1.1750352.6822623 2.6615585.4920922 3.627-.464l5.21-5.21c1.1698661-1.1751514 1.1698661-3.0748486 0-4.25z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shaffpe"
+                            d="m25.27 34.73-6.59 6.6h-.01l-4.72-4.73 6.6-6.6z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shafgpe"
+                            d="m50.78 41.33-9.45 9.45-4.73-4.73 4.73-4.72 4.72-4.73z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shaffpse"
+                            d="m41.33 41.33-4.73 4.72-6.6-6.6-4.73-4.72-4.72-4.73-13.1-13.09c-.11641582-.1155894-.21123952-.2510518-.28-.4l.38-.06 4.45-4.45z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shapde"
+                            d="m46.05 36.6-4.72 4.73-29.33-29.33 4.45-4.45.17-.33c.0370849.01745378.070907.04112927.1.07.0677575.04784683.1313202.10137331.19.16l13.09 13.09 4.73 4.73 4.72 4.73z"
+                            fill="#a4c2f7"
+                          ></path>
+                          <path
+                            id="Shapef"
+                            d="m16.62 7.22-.17.33-8.9 8.9-.38.06-3.43-7.73.25-.11 4.68-4.68.11-.25 7.73 3.43c.0376661.01437405.0744035.03107285.11.05z"
+                            fill="#e8edfc"
+                          ></path>
+                          <path
+                            id="Shaspe"
+                            d="m16.51 7.17-7.73-3.43-.11.25-.715.715 5.555 2.465c.0376661.01437405.0744035.03107285.11.05l-.17.33-7.1 7.1.82 1.86.38-.06 8.9-8.9.17-.33c-.0355965-.01892715-.0723339-.03562595-.11-.05z"
+                            fill="#cad9fc"
+                          ></path>
+                          <path
+                            id="Shapffe"
+                            d="m8.78 3.74-.11.25-4.68 4.68-.25.11-2.62-5.89c-.22529827-.5070274-.11509044-1.10044263.27723346-1.49276654.39232391-.3923239.98573914-.50253173 1.49276654-.27723346z"
+                            fill="#a4c2f7"
+                          ></path>
+                          <path
+                            id="Shapfde"
+                            d="m10.09 58.12-5.21-5.21c-1.16986609-1.1751514-1.16986609-3.0748486 0-4.25l5.839-5.831 1.5-1.5 4.73-4.73 6.6-6.6-13.099-13.089c-.1164158-.1155894-.2112395-.2510518-.28-.4l-3.43-7.73-2.62-5.89c-.17835104-.38515681-.15744576-.83312704.056-1.2l-1.286-.57c-.5070274-.22529827-1.10044263-.11509044-1.49276654.27723346-.3923239.39232391-.50253173.98573914-.27723346 1.49276654l2.62 5.89 3.43 7.73c.06876048.1489482.16358418.2844106.28.4l13.1 13.09-6.6 6.6-4.73 4.73-1.5 1.5-5.84 5.83c-1.16986609 1.1751514-1.16986609 3.0748486 0 4.25l5.21 5.21c.18804877.1811377.39880862.3371067.627.464.41902801.2422166.89043902.3794542 1.374.4h.024c.1171691.0018471.23435023-.0028267.351-.014.065 0 .13-.01.194-.019.1-.014.189-.034.283-.057.0879162-.0212414.174695-.0469413.26-.077.077-.027.154-.054.23-.087.0973046-.0448375.1921101-.0949108.284-.15-.2279627-.1256527-.4387118-.2802693-.627-.46z"
+                            fill="#fff"
+                          ></path>
+                          <path
+                            id="Rectangle-pathb"
+                            d="m.707 44.834h8v2h-8z"
+                            fill="#fff"
+                            transform="matrix(.707 -.707 .707 .707 -31.031 16.753)"
+                          ></path>
+                          <g fill="#428dff">
+                            <path
+                              id="Shfdfape"
+                              d="m7.314 53.685c-.26519481-.0000566-.51950727-.1054506-.707-.293l-1.9-1.9c-.39038194-.3904999-.39038194-1.0235001 0-1.414l1.9-1.9c.39425229-.3633867 1.00494187-.3511685 1.38434381.0276968.37940193.3788653.39248447.989537.02965619 1.3843032l-1.193 1.194 1.193 1.194c.28590792.2859943.37142191.7160366.21667798 1.0896546-.15474393.3736179-.51928208.6172591-.92367798.6173454z"
+                            ></path>
+                            <path
+                              id="Shafdpe"
+                              d="m52.685 53.685c-.4043959-.0000863-.7689341-.2437275-.923678-.6173454-.1547439-.373618-.0692299-.8036603.216678-1.0896546l1.194-1.194-1.194-1.194c-.3789722-.3923789-.3735524-1.0160848.0121814-1.4018186s1.0094397-.3911536 1.4018186-.0121814l1.9 1.9c.3903819.3904999.3903819 1.0235001 0 1.414l-1.9 1.9c-.1871648.188283-.4415178.2944134-.707.295z"
+                            ></path>
+                            <path
+                              id="Shapfge"
+                              d="m4.727 46.834c-.55228473.0027614-1.00223852-.4427153-1.00499994-.995-.00276143-.5522847.44271521-1.0022385.99499994-1.005h.01c.55228475 0 1 .4477153 1 1s-.44771525 1-1 1z"
+                            ></path>
+                            <path
+                              id="Shapdfe"
+                              d="m51.491 40.618-10.622-10.618 12.388-12.383c.2028169-.2023922.3677532-.4394669.487-.7l6.049-13.617c.3971913-.88623067.2059521-1.92566976-.4806558-2.61249966-.686608-.6868299-1.7259852-.87840515-2.6123442-.48150034l-13.634 6.058c-.2540921.11821002-.4853099.28036717-.683.479l-12.383 12.384-12.385-12.384c-.2014296-.20293536-.4387848-.36671045-.7-.483l-13.623-6.054c-.88405863-.39405643-1.91954288-.20236729-2.60395508.48204492-.68441221.6844122-.87610135 1.71989645-.48204492 2.60395508l6.055 13.624c.11635253.2609328.27974146.4982196.482.7l12.389 12.384-5.869 5.869c-.007.007-.017.009-.025.016s-.009.017-.016.025l-4.687 4.69c-.008.007-.018.009-.026.017l-1.681 1.683c-.39046532.3907415-.39024146 1.0240347.0005 1.4145s1.02403468.3902415 1.4145-.0005l.973-.973 8.045 8.044-6.631 6.63c-.791167.755814-2.036833.755814-2.828 0l-5.216-5.215c-.78076388-.7809997-.78076388-2.0470003 0-2.828.25995658-.2510745.3642126-.6228779.27269716-.9725073-.09151544-.3496295-.3645604-.6226744-.71418984-.7141899-.34962943-.0915154-.72143285.0127406-.97250732.2726972-1.56152775 1.5619994-1.56152775 4.0940006 0 5.656l5.216 5.216c1.56199941 1.5615278 4.0940006 1.5615278 5.656 0l7.338-7.337c.008-.008.011-.019.019-.028l4.683-4.683c.008-.008.019-.01.027-.018s.011-.019.018-.027l5.871-5.869 5.892 5.893 4.729 4.729 7.338 7.337c1.5619994 1.5615278 4.0940006 1.5615278 5.656 0l5.216-5.216c1.5615278-1.5619994 1.5615278-4.0940006 0-5.656zm-10.166 8.752-3.315-3.315 8.045-8.045 3.315 3.315zm11.082-34.37-7.407-7.407 5.9-2.621 4.128 4.128zm5.111-12.967c.1280116-.06545371.2839042-.03811128.382.067.1039733.09770164.1323346.2516627.07.38l-2.07 4.66-3.04-3.04zm-14.251 6.654 3.315 3.313-5.505 5.506c-.2599566.2510745-.3642126.6228779-.2726972.9725073.0915155.3496295.3645604.6226744.7141899.7141899.3496294.0915154.7214328-.0127406.9725073-.2726972l5.509-5.503 3.316 3.316-11.861 11.849-3.311-3.311 2.563-2.564c.3789722-.3923789.3735524-1.0160848-.0121814-1.4018186s-1.0094397-.3911536-1.4018186-.0121814l-2.563 2.564-3.317-3.316zm-4.541 21.994c.007.008.01.018.017.026s.018.01.026.017l5.872 5.876-3.316 3.315-16.318-16.322c-.3923789-.3789722-1.0160848-.3735524-1.4018186.0121814s-.3911536 1.0094397-.0121814 1.4018186l16.318 16.318-3.311 3.316-5.873-5.873c-.007-.008-.009-.018-.016-.025s-.017-.009-.025-.016l-9.41-9.411c-.006-.007-.008-.016-.015-.023s-.017-.009-.024-.016l-12.548-12.545 3.311-3.315 7.806 7.806c.3923789.3789722 1.0160848.3735524 1.4018186-.0121814s.3911536-1.0094397.0121814-1.4018186l-7.802-7.809 3.314-3.315zm-36.626-28.581c.09532446-.10438627.24811356-.13331433.375-.071l4.663 2.071-3.033 3.038-2.071-4.659c-.06739601-.12653951-.04020331-.2826915.066-.379zm2.875 7 4.125-4.126 5.9 2.626-7.4 7.4zm18.881 25.629-5.181 5.182-3.311-3.311 5.182-5.182zm-13.222 6.6 3.315-3.316 3.995 3.995c.008.008.011.02.019.028s.02.011.028.019l4 3.994-3.321 3.316zm12.766 3.307-3.311-3.311 5.182-5.182 3.311 3.311zm34.014 7.564-5.214 5.214c-.791167.755814-2.036833.755814-2.828 0l-6.631-6.63 8.045-8.045 6.63 6.631c.7807639.7809997.7807639 2.0470003 0 2.828z"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </div>
+                  <h5 class="rs-services-title">
+                    <a href="services-details.html">Management</a>
+                  </h5>
+                  <div class="rs-services-description">
+                    <p>
+                        Saat ini, saya mengelola beberapa proyek sekaligus. Saya bertanggung jawab merencanakan, mengorganisir, dan mengawasi semua aspek proyek, mulai dari pengumpulan kebutuhan hingga implementasi.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- services area end -->
 
-#pageContent, #siteNavigation {
-	background-color: #ccd;
-	}
+      <!-- experience area start -->
+      <section
+        class="rs-experience-area rs-experience-two has-bg section-space primary-bg p-relative"
+      >
+        <div class="rs-experience-shape-one">
+          <img src="assets/images/shape/color-blur-shape.png" alt="image" />
+        </div>
+        <div class="rs-experience-shape-two">
+          <img src="assets/images/shape/color-blur-shape-02.png" alt="image" />
+        </div>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-6">
+              <div
+                class="rs-section-title-wrapper section-title-space text-center"
+              >
+                <span class="rs-section-subtitle has-text-style">
+                  <img src="assets/images/shape/small-arrow.png" alt="image" />
+                  Resume
+                </span>
+                <h2 class="rs-section-title rs-split-text-enable split-in-fade">
+                  My Work Experience
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center gsap-fixed-yes">
+            <div class="col-xl-10 col-lg-10">
+              <div
+                class="rs-experience-wrapper pin-spacer pin-spacer--trigger-0"
+              >
+                <div class="rs-experience-item">
+                  <div class="rs-experience-top">
+                    <div class="rs-experience-designation-wrapper">
+                      <span class="rs-circle-shape"></span>
+                      <h5 class="rs-experience-designation">Head of website division</h5>
+                    </div>
+                    <span class="rs-experience-meta">
+                      2022
+                    </span>
+                  </div>
+                  <div class="rs-experience-bottom">
+                    <div class="rs-experience-brand-thumb">
+                      <img
+                        class="has-white"
+                        src="assets/images/LOGO-HUMMATECH_Hitam.png"
+                        alt="image"
+                      />
+                      <img
+                        class="has-black"
+                        src="assets/images/LOGO-HUMMATECH_Hitam.png"
+                        alt="image"
+                      />
+                    </div>
+                    <div class="rs-experience-content">
+                      <h6 class="rs-experience-place">Hummatech</h6>
+                      <div class="rs-experience-description">
+                        <p>
+                            Sebagai Ketua Divisi Website, saya memimpin tim dalam pengembangan dan pemeliharaan situs web, mengkoordinasikan proyek, serta memastikan kualitas dan inovasi dalam setiap produk yang dihasilkan di PT Humma Teknologi Indonesia.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-10 col-lg-10">
+              <div
+                class="rs-experience-wrapper pin-spacer pin-spacer--trigger-1"
+              >
+                <div class="rs-experience-item">
+                  <div class="rs-experience-top">
+                    <div class="rs-experience-designation-wrapper">
+                      <span class="rs-circle-shape"></span>
+                      <h5 class="rs-experience-designation">
+                        Web developer
+                      </h5>
+                    </div>
+                    <span class="rs-experience-meta"> 2024 </span>
+                  </div>
+                  <div class="rs-experience-bottom">
+                    <div class="rs-experience-brand-thumb">
+                      <img
+                        class="has-white"
+                        src="assets/images/LOGO-HUMMATECH_Hitam.png"
+                        alt="image"
+                      />
+                      <img
+                        class="has-black"
+                        src="assets/images/LOGO-HUMMATECH_Hitam.png"
+                        alt="image"
+                      />
+                    </div>
+                    <div class="rs-experience-content">
+                      <h6 class="rs-experience-place">Hummatech</h6>
+                      <div class="rs-experience-description">
+                        <p>
+                            Sebagai web developer di PT Humma Teknologi Indonesia, saya melaksanakan PKL untuk mengasah keterampilan dalam pengembangan situs web.
+                                                </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-10 col-lg-10">
+              <div
+                class="rs-experience-wrapper pin-spacer pin-spacer--trigger-2"
+              >
+                <div class="rs-experience-item">
+                  <div class="rs-experience-top">
+                    <div class="rs-experience-designation-wrapper">
+                      <span class="rs-circle-shape"></span>
+                      <h5 class="rs-experience-designation">
+                        Junior Developer
+                      </h5>
+                    </div>
+                    <span class="rs-experience-meta"> 2024 </span>
+                  </div>
+                  <div class="rs-experience-bottom">
+                    <div class="rs-experience-brand-thumb">
+                      <img
+                        class="has-white"
+                        src="assets/images/LOGO-HUMMATECH_Hitam.png"
+                        alt="image"
+                      />
+                      <img
+                        class="has-black"
+                        src="assets/images/LOGO-HUMMATECH_Hitam.png"
+                        alt="image"
+                      />
+                    </div>
+                    <div class="rs-experience-content">
+                      <h6 class="rs-experience-place">Hummatech</h6>
+                      <div class="rs-experience-description">
+                        <p>
+                            Sebagai Junior Developer di PT Humma Teknologi Indonesia, saya berkontribusi dalam pengembangan proyek dengan mempelajari teknologi baru, menulis kode, dan bekerja dalam tim untuk menciptakan solusi yang efisien dan inovatif.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-10 col-lg-10">
+              <div
+                class="rs-experience-wrapper pin-spacer pin-spacer--trigger-3"
+              >
+                <div class="rs-experience-item">
+                  <div class="rs-experience-top">
+                    <div class="rs-experience-designation-wrapper">
+                      <span class="rs-circle-shape"></span>
+                      <h5 class="rs-experience-designation">
+                        Industrial class mentor
+                      </h5>
+                    </div>
+                    <span class="rs-experience-meta"> 2023 </span>
+                  </div>
+                  <div class="rs-experience-bottom">
+                    <div class="rs-experience-brand-thumb">
+                      <img
+                        class="has-white"
+                        src="assets/images/LOGO-HUMMATECH_Hitam.png"
+                        alt="image"
+                      />
+                      <img
+                        class="has-black"
+                        src="assets/images/LOGO-HUMMATECH_Hitam.png"
+                        alt="image"
+                      />
+                    </div>
+                    <div class="rs-experience-content">
+                      <h6 class="rs-experience-place">Hummatech</h6>
+                      <div class="rs-experience-description">
+                        <p>
+                            Sebagai mentor kelas industri di PT Humma Teknologi Indonesia, saya membimbing siswa dalam pengembangan keterampilan praktis di bidang website, membantu mereka memahami teknologi dan tren terkini.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- experience area end -->
 
+      <!-- text slide area start -->
+      <div class="rs-text-slide-area rs-text-slide-one primary-bg">
+        <div class="container-fluid">
+          <div
+            class="rs-text-slide-wrapper wow fadeInUp"
+            data-wow-delay=".3s"
+            data-wow-duration="1s"
+          >
+            <div
+              class="gsap-marquee right speed-20 move-to-1000 text-gradient-no"
+            >
+              <span class="rs-text-slide-item">
+                . My Portofolio . My Portofolio . My Portofolio . My Portofolio
+                . My Portofolio . My Portofolio . My Portofolio . My Portofolio
+                .
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- text slide area end -->
 
-.imgLeft  { float: left;   margin-right: 10px;  margin-bottom: 10px; }
-.imgRight { float: right;  margin-left: 10px;   margin-bottom: 10px; }
+      <!-- portfolio area start -->
+      <section
+        class="rs-portfolio-area rs-portfolio-one primary-bg section-space-bottom"
+      >
+        <div class="container">
+          <div class="row g-5">
+            <div class="col-xl-6 col-lg-6 col-md-6">
+              <div
+                class="rs-portfolio-wrapper wow fadeInUp"
+                data-wow-delay=".3s"
+                data-wow-duration="1s"
+              >
+                <div class="rs-portfolio-inner portfolio-grid glass-effect-yes">
+                  <div class="rs-portfolio-item content-overlay">
+                    <div class="rs-portfolio-thumb">
+                      <a href="javascript:void(0);">
+                        <img
+                          src="assets/images/project/sipjaki.png"
+                          alt="image"
+                        />
+                      </a>
+                    </div>
+                    <div class="rs-portfolio-content">
+                      <h5 class="rs-portfolio-title">
+                        <a href="javascript:void(0);">
+                        Website Sipjaki Pasuruan</a
+                        >
+                      </h5>
+                      <span class="rs-portfolio-tag">Web Development</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6">
+              <div
+                class="rs-portfolio-wrapper wow fadeInUp"
+                data-wow-delay=".5s"
+                data-wow-duration="1s"
+              >
+                <div class="rs-portfolio-inner portfolio-grid glass-effect-yes">
+                  <div class="rs-portfolio-item content-overlay">
+                    <div class="rs-portfolio-thumb">
+                      <a href="javascript:void(0);">
+                        <img
+                          src="assets/images/project/mischool.png"
+                          alt="image"
+                        />
+                      </a>
+                    </div>
+                    <div class="rs-portfolio-content">
+                      <h5 class="rs-portfolio-title">
+                        <a href="javascript:void(0);">Website Mischool</a>
+                      </h5>
+                      <span class="rs-portfolio-tag">Web Development</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6">
+              <div
+                class="rs-portfolio-wrapper wow fadeInUp"
+                data-wow-delay=".7s"
+                data-wow-duration="1s"
+              >
+                <div class="rs-portfolio-inner portfolio-grid glass-effect-yes">
+                  <div class="rs-portfolio-item content-overlay">
+                    <div class="rs-portfolio-thumb">
+                      <a href="javascript:void(0);">
+                        <img
+                          src="assets/images/project/companyhumma.png"
+                          alt="image"
+                        />
+                      </a>
+                    </div>
+                    <div class="rs-portfolio-content">
+                      <h5 class="rs-portfolio-title">
+                        <a href="javascript:void(0);">Website Company Profile</a>
+                      </h5>
+                      <span class="rs-portfolio-tag">Web Development</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6">
+              <div
+                class="rs-portfolio-wrapper wow fadeInUp"
+                data-wow-delay=".9s"
+                data-wow-duration="1s"
+              >
+                <div class="rs-portfolio-inner portfolio-grid glass-effect-yes">
+                  <div class="rs-portfolio-item content-overlay">
+                    <div class="rs-portfolio-thumb">
+                      <a href="javascript:void(0);">
+                        <img
+                          src="assets/images/project/tracerstudy.png"
+                          alt="image"
+                        />
+                      </a>
+                    </div>
+                    <div class="rs-portfolio-content">
+                      <h5 class="rs-portfolio-title">
+                        <a href="javascript:void(0);">
+                          Website Tracer Study</a
+                        >
+                      </h5>
+                      <span class="rs-portfolio-tag">Web Development</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- portfolio area end -->
+      <section
+        class="rs-blog-area rs-blog-one section-space secondary-bg has-bg"
+      >
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-6">
+              <div
+                class="rs-section-title-wrapper section-title-space text-center"
+              >
+                <span class="rs-section-subtitle has-text-style"> Update </span>
+                <h2 class="rs-section-title rs-split-text-enable split-in-fade">
+                  New Certificate
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12">
+              <div
+                class="swiper blog_active_one wow fadeInUp"
+                data-wow-delay=".3s"
+                data-wow-duration="1s"
+              >
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <div class="rs-blog-wrapper">
+                      <div class="rs-blog-item">
+                        <div class="rs-blog-thumb">
+                          <a href="#">
+                            <img style="width: 500px; height: 300px; object-fit: cover;"
+                              src="assets/images/Certificate/2025/competition web devlopment.png"
+                              alt="image"
+                          /></a>
+                          <div class="rs-blog-tag">
+                            <a href="#"> App Development</a>
+                          </div>
+                        </div>
+                        <div class="rs-blog-content">
+                          <h5 class="rs-blog-title">
+                            <a href="#"
+                              >Competition web development</a
+                            >
+                          </h5>
+                          <div class="rs-blog-meta-list">
+                            <div class="rs-blog-meta-item has-separator">
+                              <span class="rs-meta-text"
+                                ><a class="meta-author" href="#"
+                                  >By Admin</a
+                                ></span
+                              >
+                            </div>
+                            <div class="rs-blog-meta-item">
+                              <span class="rs-meta-text"
+                                ><a href="#"
+                                  >February 02, 2025</a
+                                ></span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="rs-blog-wrapper">
+                      <div class="rs-blog-item">
+                        <div class="rs-blog-thumb">
+                          <a href="#">
+                            <img style="width: 500px; height: 300px; object-fit: cover;"
+                              src="assets/images/Certificate/2025/webinar ethichal pathway.jpg"
+                              alt="image"
+                          /></a>
+                          <div class="rs-blog-tag">
+                            <a href="#">Webinar</a>
+                          </div>
+                        </div>
+                        <div class="rs-blog-content">
+                          <h5 class="rs-blog-title">
+                            <a href="#"
+                              >Webinar : Ethichal pathway in the digital jungle</a
+                            >
+                          </h5>
+                          <div class="rs-blog-meta-list">
+                            <div class="rs-blog-meta-item has-separator">
+                                <span class="rs-meta-text"
+                                ><a class="meta-author" href="#"
+                                  >By Admin</a
+                                ></span
+                              >
+                            </div>
+                            <div class="rs-blog-meta-item">
+                              <span class="rs-meta-text"
+                                ><a href="#"
+                                  >February 02, 2025</a
+                                ></span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="rs-blog-wrapper">
+                      <div class="rs-blog-item">
+                        <div class="rs-blog-thumb">
+                          <a href="#">
+                            <img style="width: 500px; height: 300px;"
+                              src="assets/images/Certificate/2025/evolusi komunikasi dan budaya digital dalam generasi Z.png"
+                              alt="image"
+                          /></a>
+                          <div class="rs-blog-tag">
+                            <a href="#">Webinar</a>
+                          </div>
+                        </div>
+                        <div class="rs-blog-content">
+                          <h5 class="rs-blog-title">
+                            <a href="#"
+                              >Webinar evolusi komunikasi dan budaya digital dalam generasi Z</a
+                            >
+                          </h5>
+                          <div class="rs-blog-meta-list">
+                            <div class="rs-blog-meta-item has-separator">
+                                <span class="rs-meta-text"
+                                ><a class="meta-author" href="#"
+                                  >By Admin</a
+                                ></span
+                              >
+                            </div>
+                            <div class="rs-blog-meta-item">
+                              <span class="rs-meta-text"
+                                ><a href="#"
+                                  >February 02, 2025</a
+                                ></span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="rs-blog-wrapper">
+                      <div class="rs-blog-item">
+                        <div class="rs-blog-thumb">
+                          <a href="#">
+                            <img style="width: 500px; height: 300px; object-fit: cover;"
+                              src="assets/images/Certificate/2025/webinar hamd.jpg"
+                              alt="image"
+                          /></a>
+                          <div class="rs-blog-tag">
+                            <a href="#">Webinar</a>
+                          </div>
+                        </div>
+                        <div class="rs-blog-content">
+                          <h5 class="rs-blog-title">
+                            <a href="#"
+                              >Webinar HAMD Public speaking</a
+                            >
+                          </h5>
+                          <div class="rs-blog-meta-list">
+                            <div class="rs-blog-meta-item has-separator">
+                                <span class="rs-meta-text"
+                                ><a class="meta-author" href="#"
+                                  >By Admin</a
+                                ></span
+                              >
+                            </div>
+                            <div class="rs-blog-meta-item">
+                              <span class="rs-meta-text"
+                                ><a href="#"
+                                  >February 02, 2025</a
+                                ></span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="rs-blog-wrapper">
+                      <div class="rs-blog-item">
+                        <div class="rs-blog-thumb">
+                          <a href="#">
+                            <img style="width: 500px; height: 300px;"
+                              src="assets/images/Certificate/2025/Webinar lifestyle digital.png"
+                              alt="image"
+                          /></a>
+                          <div class="rs-blog-tag">
+                            <a href="#">Webinar</a>
+                          </div>
+                        </div>
+                        <div class="rs-blog-content">
+                          <h5 class="rs-blog-title">
+                            <a href="#"
+                              >Webinar : Digital lifestyle di Era Sosial media dan AI</a
+                            >
+                          </h5>
+                          <div class="rs-blog-meta-list">
+                            <div class="rs-blog-meta-item has-separator">
+                                <span class="rs-meta-text"
+                                ><a class="meta-author" href="#"
+                                  >By Admin</a
+                                ></span
+                              >
+                            </div>
+                            <div class="rs-blog-meta-item">
+                              <span class="rs-meta-text"
+                                ><a href="#"
+                                  >February 02, 2025</a
+                                ></span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="rs-blog-wrapper">
+                      <div class="rs-blog-item">
+                        <div class="rs-blog-thumb">
+                          <a href="#">
+                            <img style="width: 500px; height: 300px;"
+                              src="assets/images/Certificate/2025/Tingkatkan minat baca di era teknologi 5.0.png"
+                              alt="image"
+                          /></a>
+                          <div class="rs-blog-tag">
+                            <a href="#">Webinar</a>
+                          </div>
+                        </div>
+                        <div class="rs-blog-content">
+                          <h5 class="rs-blog-title">
+                            <a href="#"
+                              >Webinar : Tingkatkan minat baca di era teknologi 5.0</a
+                            >
+                          </h5>
+                          <div class="rs-blog-meta-list">
+                            <div class="rs-blog-meta-item has-separator">
+                                <span class="rs-meta-text"
+                                ><a class="meta-author" href="#"
+                                  >By Admin</a
+                                ></span
+                              >
+                            </div>
+                            <div class="rs-blog-meta-item">
+                              <span class="rs-meta-text"
+                                ><a href="#"
+                                  >February 02, 2025</a
+                                ></span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="rs-blog-pagination rs-pagination d-flex justify-content-center mt-50"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- blog area end -->
+    </main>
+    <!-- Body main wrapper end -->
 
-hr { height: 1px;  color: #000;  background-color: #000;  margin-bottom: 15px; }
+    <!-- footer area start -->
+    <footer class="rs-footer-area rs-footer-one primary-bg">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-6">
+            <div class="rs-footer-widget footer-1-col-1">
+              <div class="rs-footer-widget-logo text-center">
+                <a class="logo-black" href="index.html"
+                  ><img src="assets/images/logo.png" alt="logo"
+                /></a>
+                <a class="logo-white" href="index.html"
+                  ><img src="assets/images/logo-dark.png" alt="logo"
+                /></a>
+              </div>
+              <div class="rs-footer-widget-content">
+                <div class="rs-footer-list-wrapper">
+                  <ul class="rs-footer-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Portofolio</a></li>
+                    <li><a href="#">Certificate</a></li>
+                    <li><a href="#">Contact</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rs-footer-copyright-area rs-copyright-one">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-12">
+              <div class="rs-footer-copyright text-center">
+                <p>
+                  © <span id="year"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- footer area end -->
 
-h1 { margin: 0;  font-weight: bold;  font-size: 2em; }
-h2 { margin: 0;  font-weight: bold;  font-size: 1.6em; }
-h3 { margin: 0;  font-weight: bold;  font-size: 1.3em; }
-h4 { margin: 0;  font-weight: bold;  font-size: 1.18em; }
+    <!-- back to top -->
+    <!-- Backtotop start -->
+    <div class="backtotop-wrap cursor-pointer">
+      <svg
+        class="backtotop-circle svg-content"
+        width="100%"
+        height="100%"
+        viewBox="-1 -1 102 102"
+      >
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+      </svg>
+    </div>
+    <!-- Backtotop end -->
 
-.blak { background-color: #000; }
-.hide { display: none; }
-.tableWidth { min-width: 400px; }
+    <!-- JS here -->
+    <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/plugins/waypoints.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/plugins/meanmenu.min.js"></script>
+    <script src="assets/js/plugins/swiper.min.js"></script>
+    <script src="assets/js/plugins/wow.js"></script>
+    <script src="assets/js/vendor/magnific-popup.min.js"></script>
+    <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
+    <script src="assets/js/vendor/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/plugins/nice-select.min.js"></script>
+    <script src="assets/js/plugins/jarallax.min.js"></script>
+    <script src="assets/js/vendor/ajax-form.js"></script>
+    <script src="assets/js/plugins/easypie.js"></script>
+    <script src="assets/js/plugins/headding-title.js"></script>
+    <script src="assets/js/plugins/lenis.min.js"></script>
+    <script src="assets/js/plugins/gsap.min.js"></script>
+    <script src="assets/js/plugins/rs-anim-int.js"></script>
+    <script src="assets/js/plugins/rs-scroll-trigger.min.js"></script>
+    <script src="assets/js/plugins/rs-splitText.min.js"></script>
+    <script src="assets/js/plugins/jquery.lettering.js"></script>
+    <script src="assets/js/plugins/parallax-effect.min.js"></script>
+    <script src="assets/js/vendor/purecounter.js"></script>
+    <script src="assets/js/vendor/dark-light.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
 
-.tblRegular       { border-collapse: collapse; }
-.tblRegular td    { padding: 6px;  background-image: url(fade.gif);  border: 2px solid #99c; }
-.tblHeaderColor, .tblHeaderColor td { background: #99c; }
-.tblNoBorder td   { border: 0; }
-
-
-// -->
-</style>
-
-</head>
-
-<table width="76%" border="0" align="center" cellspacing="0" cellpadding="3" class="tableWidth">
-	<tr>
-	<td id="subTitle">HTTrack Website Copier - Open Source offline browser</td>
-	</tr>
-</table>
-<table width="76%" border="0" align="center" cellspacing="0" cellpadding="0" class="tableWidth">
-<tr class="blak">
-<td>
-	<table width="100%" border="0" align="center" cellspacing="1" cellpadding="0">
-	<tr>
-	<td colspan="6"> 
-		<table width="100%" border="0" align="center" cellspacing="0" cellpadding="10">
-		<tr> 
-		<td id="pageContent"> 
-<!-- ==================== End prologue ==================== -->
-
-	<meta name="generator" content="HTTrack Website Copier/3.x">
-	<TITLE>Local index - HTTrack</TITLE>
-</HEAD>
-<BODY>
-<H1 ALIGN=Center>Index of locally available sites:</H1>
-	<TABLE BORDER="0" WIDTH="100%" CELLSPACING="1" CELLPADDING="0">
-		<TR>
-			<TD BACKGROUND="fade.gif">
-				&middot;
-					<A HREF="=home/index.html">
-						ABDUL KADER
-					</A>		
-			</TD>
-		</TR>
-	</TABLE>
-	<BR>
-	<BR>
-	<BR>
-  	<H6 ALIGN="RIGHT">
-	<I>Mirror and index made by HTTrack Website Copier [XR&amp;CO'2008]</I>
-	</H6>
-	<!-- Mirror and index made by HTTrack Website Copier/3.49-2 [XR&CO'2014] -->
-	<!-- Thanks for using HTTrack Website Copier! -->
-	<meta HTTP-EQUIV="Refresh" CONTENT="0; URL=home/index.html">
-
-
-<!-- ==================== Start epilogue ==================== -->
-		</td>
-		</tr>
-		</table>
-	</td>
-	</tr>
-	</table>
-</td>
-</tr>
-</table>
-
-<table width="76%" border="0" align="center" valign="bottom" cellspacing="0" cellpadding="0">
-	<tr>
-	<td id="footer"><small>&copy; 2008 Xavier Roche & other contributors - Web Design: Leto Kauler.</small></td>
-	</tr>
-</table>
-
-</body>
-
+  <!-- Mirrored from demo.rstheme.com/html/flixta/index-freelance-copywriter.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 10 Feb 2025 13:31:46 GMT -->
 </html>
-
-
