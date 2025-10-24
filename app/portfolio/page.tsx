@@ -241,7 +241,7 @@ export default function Portfolio() {
             href="#contact"
             className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-700 text-white font-medium rounded-lg shadow-lg hover:from-blue-700 hover:to-purple-800 transform hover:scale-105 transition"
           >
-            <i className="fa-solid fa-paper-plane mr-2" /> Let's Collaborate
+            <i className="fa-solid fa-paper-plane mr-2" /> Collaborate
           </a>
         </div>
       </section>
