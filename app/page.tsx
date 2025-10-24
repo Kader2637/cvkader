@@ -109,12 +109,12 @@ export default function Page() {
                   <i className="fas fa-rocket mr-2" /> View My Work
                 </a>
                 <a
-                  href="/contact"
-                  className="inline-flex items-center px-7 py-4 border-2 border-gray-300 text-gray-700 font-medium rounded-xl hover:border-blue-500 hover:text-blue-600 transform hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  <i className="fas fa-comment mr-2" /> Let&apos;s Talk
-                </a>
-              </div>
+  href="#contact"
+  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-700 text-white font-medium rounded-lg shadow-lg hover:from-blue-700 hover:to-purple-800 transform hover:scale-105 transition"
+>
+  <i className="fa-solid fa-paper-plane mr-2" /> Let&apos;s Collaborate
+</a>
+
               {/* Stats */}
               <div className="flex flex-wrap justify-center lg:justify-start gap-6 mt-12">
                 <div
