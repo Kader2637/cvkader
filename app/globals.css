@@ -1,0 +1,256 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animations & utilities (match HTML config) */
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+    100% {
+        opacity: 1
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bg-move {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce-slow {
+    animation: bounce 3s infinite;
+}
+
+.animate-fade-in {
+    animation: fadeIn .8s ease-out;
+}
+
+.animate-slide-up {
+    animation: slideUp .8s ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft .8s ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight .8s ease-out;
+}
+
+.animate-bg-move {
+    animation: bg-move 8s ease-in-out infinite;
+}
+
+
+/* Helpers from HTML */
+
+.size-2 {
+    width: .5rem;
+    height: .5rem;
+}
+
+
+/* Aspect helpers to keep .aspect-w-16 .aspect-h-9 working (from HTML) */
+
+.aspect-w-16 {
+    position: relative;
+}
+
+.aspect-w-16.aspect-h-9::before {
+    content: "";
+    display: block;
+    padding-bottom: 56.25%;
+}
+
+.aspect-w-16.aspect-h-9>* {
+    position: absolute;
+    inset: 0;
+}
+
+
+/* Skills bars */
+
+.skill-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bar-container {
+    height: 8px;
+    background: rgba(0, 0, 0, .08);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 8px;
+    width: 0;
+    border-radius: 9999px;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+}
+
+
+/* Tags (portfolio) */
+
+.tag {
+    font-size: .75rem;
+    background: #f3f4f6;
+    color: #374151;
+    padding: 2px 8px;
+    border-radius: 9999px;
+}
+
+
+/* Animasi yang dipakai oleh kelas: animate-float & animate-bounce-slow */
+
+@keyframes float {
+    0% {
+        transform: translateY(0)
+    }
+    50% {
+        transform: translateY(-14px)
+    }
+    100% {
+        transform: translateY(0)
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes bounceSlow {
+    0%,
+    100% {
+        transform: translateY(0)
+    }
+    50% {
+        transform: translateY(-12px)
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounceSlow 2.4s ease-in-out infinite;
+}
+
+
+/* === Reveal on scroll (fade-up) === */
+
+.reveal,
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease;
+    will-change: opacity, transform;
+}
+
+.reveal-show {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.reveal,
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease;
+    will-change: opacity, transform
+}
+
+.reveal-show {
+    opacity: 1!important;
+    transform: translateY(0)!important
+}
+
+
+/* animasi halus saat konten hero muncul setelah intro */
+
+@keyframes heroEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hero-animate {
+    animation: heroEnter 1.2s ease-out forwards;
+}
+
+
+/* Reveal on scroll (halus + bisa di-stagger) */
+
+.will-reveal {
+    opacity: 0;
+    transform: translateY(22px) scale(0.995);
+}
+
+.revealed {
+    opacity: 1;
+    transform: none;
+    transition: opacity 600ms ease-out var(--d, 0ms), transform 700ms cubic-bezier(.22, 1, .36, 1) var(--d, 0ms);
+    will-change: transform, opacity;
+}
