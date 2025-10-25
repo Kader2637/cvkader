@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import BackToTop from "./components/BackToTop";
 import UseRevealOnScroll from "./components/UseRevealOnScroll";
 import VideoIntro from "./components/VideoIntro";
+import Link from "next/link";
+
 
 export default function Page() {
   const [introDone, setIntroDone] = useState(false);
@@ -133,18 +135,18 @@ export default function Page() {
 
               {/* Buttons wrapper — INI yang sebelumnya belum ditutup */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <a
-                  href="#services"
+                <Link
+                  href="/portfolio"
                   className="inline-flex items-center px-7 py-4 bg-gray-900 text-white font-medium rounded-xl shadow-lg hover:bg-black transform hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <i className="fas fa-rocket mr-2" /> View My Work
-                </a>
-                <a
-                  href="#contact"
+                </Link>
+                <Link
+                  href="/contact"
                   className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-700 text-white font-medium rounded-lg shadow-lg hover:from-blue-700 hover:to-purple-800 transform hover:scale-105 transition"
                 >
                   <i className="fa-solid fa-paper-plane mr-2" /> Collaborate
-                </a>
+                </Link>
               </div>
               {/* <-- TERTUTUP sekarang */}
 
