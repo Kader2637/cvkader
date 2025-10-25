@@ -421,9 +421,9 @@ export default function Page() {
                     data-reveal
                   >
                     <div className="text-3xl font-bold text-blue-600 mb-2">
-                      99.95%
+                      90%
                     </div>
-                    <div className="text-sm text-gray-600">Uptime Produksi</div>
+                    <div className="text-sm text-gray-600">Fast Respon</div>
                   </div>
                   <div
                     className="bg-white p-6 rounded-2xl shadow-lg transform -rotate-2 hover:rotate-0 transition-transform"
@@ -431,10 +431,10 @@ export default function Page() {
                     data-reveal-delay="0.1s"
                   >
                     <div className="text-3xl font-bold text-purple-600 mb-2">
-                      +38%
+                      98%
                     </div>
                     <div className="text-sm text-gray-600">
-                      Kenaikan Konversi
+                      Tepat Waktu
                     </div>
                   </div>
                 </div>
@@ -446,10 +446,10 @@ export default function Page() {
                     data-reveal-delay="0.15s"
                   >
                     <div className="text-3xl font-bold text-green-600 mb-2">
-                      -40%
+                      95%
                     </div>
                     <div className="text-sm text-gray-600">
-                      Biaya Infrastruktur
+                      Kecepatan pengerjaan
                     </div>
                   </div>
                   <div
