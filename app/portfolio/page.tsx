@@ -11,7 +11,7 @@ export default function Portfolio() {
 
     const disposers: Array<() => void> = [];
 
-    buttons.forEach((btn) => {
+    buttons.forEach((btn: HTMLButtonElement) => {
       const handler = () => {
         buttons.forEach((b) => {
           b.classList.remove("bg-gray-900", "text-white");
@@ -20,9 +20,9 @@ export default function Portfolio() {
         btn.classList.add("bg-gray-900", "text-white");
         btn.classList.remove("bg-gray-100");
         const f = btn.dataset.filter;
-        cards.forEach((c) => {
+        cards.forEach((c: HTMLElement) => {
           const show = f === "all" || (c.dataset.cat || "").includes(f || "");
-          (c.style as any).display = show ? "" : "none";
+          c.style.display = show ? "" : "none";
         });
       };
       btn.addEventListener("click", handler);
@@ -30,26 +30,37 @@ export default function Portfolio() {
     });
 
     // === REVEAL ON SCROLL (fade + slide + blur + zoom + stagger) ===
-    const revealSet = new Set<HTMLElement>();
+    const revealSet: Set<HTMLElement> = new Set<HTMLElement>();
 
     // Header keseluruhan
-    document.querySelectorAll<HTMLElement>("#portfolio header").forEach((el) => revealSet.add(el));
+    document
+      .querySelectorAll<HTMLElement>("#portfolio header")
+      .forEach((el: HTMLElement) => revealSet.add(el));
+
     // Tombol filter
-    document.querySelectorAll<HTMLElement>("#portfolio .portfolio-filter").forEach((el, idx) => {
-      el.dataset.delay = String(idx * 40); // stagger kecil antar tombol
-      revealSet.add(el);
-    });
+    document
+      .querySelectorAll<HTMLElement>("#portfolio .portfolio-filter")
+      .forEach((el: HTMLElement, idx: number) => {
+        el.dataset.delay = String(idx * 40); // stagger kecil antar tombol
+        revealSet.add(el);
+      });
+
     // Kartu
-    document.querySelectorAll<HTMLElement>("#portfolio .portfolio-card").forEach((el, idx) => {
-      // kalau belum ada, kasih delay default berbasis kolom (bikin gelombang halus)
-      if (!el.dataset.delay) el.dataset.delay = String((idx % 6) * 70);
-      revealSet.add(el);
-    });
+    document
+      .querySelectorAll<HTMLElement>("#portfolio .portfolio-card")
+      .forEach((el: HTMLElement, idx: number) => {
+        // kalau belum ada, kasih delay default berbasis kolom (bikin gelombang halus)
+        if (!el.dataset.delay) el.dataset.delay = String((idx % 6) * 70);
+        revealSet.add(el);
+      });
+
     // CTA
-    document.querySelectorAll<HTMLElement>("#portfolio .cta-reveal").forEach((el) => revealSet.add(el));
+    document
+      .querySelectorAll<HTMLElement>("#portfolio .cta-reveal")
+      .forEach((el: HTMLElement) => revealSet.add(el));
 
     // Initial state sebelum muncul
-    revealSet.forEach((el) => {
+    revealSet.forEach((el: HTMLElement) => {
       el.style.opacity = "0";
       el.style.transform = "translateY(26px) scale(.98)";
       el.style.filter = "blur(6px)";
@@ -57,21 +68,25 @@ export default function Portfolio() {
     });
 
     const io = new IntersectionObserver(
-      (entries) => {
+      (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
+
           const el = entry.target as HTMLElement;
           const delay = Number(el.dataset.delay || 0);
+
           const reduced =
-            window.matchMedia &&
+            typeof window !== "undefined" &&
+            "matchMedia" in window &&
             window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
           if (reduced) {
             el.style.opacity = "1";
             el.style.transform = "none";
             el.style.filter = "none";
-          } else if ("animate" in el) {
-            el.animate(
+          } else if ((el as any).animate && typeof (el as any).animate === "function") {
+            // Web Animations API (aman dengan cast)
+            (el as any).animate(
               [
                 { opacity: 0, transform: "translateY(26px) scale(.98)", filter: "blur(6px)" },
                 { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0)" },
@@ -86,7 +101,7 @@ export default function Portfolio() {
           } else {
             // fallback CSS transition
             el.style.transition = "opacity .68s ease, transform .68s ease, filter .68s ease";
-            setTimeout(() => {
+            window.setTimeout(() => {
               el.style.opacity = "1";
               el.style.transform = "translateY(0) scale(1)";
               el.style.filter = "blur(0)";
@@ -96,10 +111,10 @@ export default function Portfolio() {
           io.unobserve(el);
         });
       },
-      { threshold: 0.18 }
+      { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
     );
 
-    revealSet.forEach((el) => io.observe(el));
+    revealSet.forEach((el: HTMLElement) => io.observe(el));
 
     return () => {
       // bersihkan semua listener & observer
@@ -191,7 +206,6 @@ export default function Portfolio() {
               className={`portfolio-filter px-4 py-2 rounded-full text-sm font-medium ${
                 i === 0 ? "bg-gray-900 text-white" : "bg-gray-100 hover:bg-gray-200"
               }`}
-              // kasih delay untuk stagger halus di filter
               data-delay={String(i * 40)}
             >
               {f === "all" ? "All" : f[0].toUpperCase() + f.slice(1)}
@@ -205,7 +219,6 @@ export default function Portfolio() {
               key={it.title}
               className="portfolio-card group relative overflow-hidden rounded-2xl bg-white/80 backdrop-blur-xl shadow-lg border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition"
               data-cat={it.cat}
-              // delay per kolom/baris biar wave efeknya natural
               data-delay={String((idx % 6) * 70)}
             >
               <img

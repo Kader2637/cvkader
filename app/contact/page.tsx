@@ -86,77 +86,87 @@ export default function Contact() {
     };
     form?.addEventListener("submit", onSubmit);
 
-    // =============== REVEAL ON SCROLL ===============
-    // Target: header, form, dan 3 kartu di aside → stagger halus
-    const reveal: HTMLElement[] = [];
-    const header = document.querySelector<HTMLElement>("#contact header");
-    const formBox = document.querySelector<HTMLElement>("#contact #contactForm");
-    const asideItems = Array.from(document.querySelectorAll<HTMLElement>("#contact aside > *"));
+   // =============== REVEAL ON SCROLL ===============
+const reveal: HTMLElement[] = [];
+const header = document.querySelector<HTMLElement>("#contact header");
+const formBox = document.querySelector<HTMLElement>("#contact #contactForm");
+const asideItems = Array.from(
+  document.querySelectorAll<HTMLElement>("#contact aside > *")
+);
 
-    if (header) {
-      header.dataset.delay = "0";
-      reveal.push(header);
-    }
-    if (formBox) {
-      formBox.dataset.delay = "80";
-      reveal.push(formBox);
-    }
-    asideItems.forEach((el, i) => {
-      el.dataset.delay = String(140 + i * 90); // 140ms, 230ms, 320ms...
-      reveal.push(el);
-    });
+// set delay (ms) via data-delay
+if (header) {
+  header.dataset.delay = "0";
+  reveal.push(header);
+}
+if (formBox) {
+  formBox.dataset.delay = "80";
+  reveal.push(formBox);
+}
+asideItems.forEach((el, i) => {
+  el.dataset.delay = String(140 + i * 90); // 140ms, 230ms, 320ms...
+  reveal.push(el);
+});
 
-    // State awal tersembunyi
-    reveal.forEach((el) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(26px) scale(.985)";
-      el.style.filter = "blur(6px)";
-      el.style.willChange = "opacity, transform, filter";
-    });
+// state awal
+reveal.forEach((el) => {
+  el.style.opacity = "0";
+  el.style.transform = "translateY(26px) scale(.985)";
+  el.style.filter = "blur(6px)";
+  el.style.willChange = "opacity, transform, filter";
+});
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
-          const delay = Number(el.dataset.delay || 0);
-          const reduced =
-            window.matchMedia &&
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const io = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
 
-          if (reduced) {
-            el.style.opacity = "1";
-            el.style.transform = "none";
-            el.style.filter = "none";
-          } else if ("animate" in el) {
-            el.animate(
-              [
-                { opacity: 0, transform: "translateY(26px) scale(.985)", filter: "blur(6px)" },
-                { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0)" },
-              ],
-              {
-                duration: 720,
-                easing: "cubic-bezier(.22,1,.36,1)",
-                delay,
-                fill: "forwards",
-              }
-            );
-          } else {
-            el.style.transition = "opacity .72s ease, transform .72s ease, filter .72s ease";
-            setTimeout(() => {
-              el.style.opacity = "1";
-              el.style.transform = "translateY(0) scale(1)";
-              el.style.filter = "blur(0)";
-            }, delay);
+      const el = entry.target as HTMLElement; // <-- penting
+      const delay = Number(el.dataset.delay || 0);
+
+      // hormati prefers-reduced-motion
+      const reduced =
+        typeof window !== "undefined" &&
+        "matchMedia" in window &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (reduced) {
+        el.style.opacity = "1";
+        el.style.transform = "none";
+        el.style.filter = "none";
+      } else if ("animate" in el && typeof (el as any).animate === "function") {
+        // Web Animations API
+        (el as any).animate(
+          [
+            { opacity: 0, transform: "translateY(26px) scale(.985)", filter: "blur(6px)" },
+            { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0)" },
+          ],
+          {
+            duration: 720,
+            easing: "cubic-bezier(.22,1,.36,1)",
+            delay,
+            fill: "forwards",
           }
+        );
+      } else {
+        // fallback CSS transition
+        el.style.transition = "opacity .72s ease, transform .72s ease, filter .72s ease";
+        setTimeout(() => {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0) scale(1)";
+          el.style.filter = "blur(0)";
+        }, delay);
+      }
 
-          io.unobserve(el);
-        });
-      },
-      { threshold: 0.18 }
-    );
+      io.unobserve(el);
+    });
+  },
+  { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
+);
 
-    reveal.forEach((el) => io.observe(el));
+reveal.forEach((el) => io.observe(el));
+return () => io.disconnect();
+
 
     // =============== CLEANUP ===============
     return () => {
