@@ -218,9 +218,9 @@ export default function Certificates() {
       desc: "Pengetahuan pipeline rekrutmen, rubric teknis, dan onboarding.",
     },
     {
-      key: "indypro-2025",
+      key: "indevpro-2025",
       year: 2025,
-      title: "Indypro — Apresiasi",
+      title: "Indevro — Apresiasi",
       file: "/assets/sertifikat/2025/indevpro.png",
       kind: "image",
       desc: "Apresiasi atas kolaborasi proyek dan delivery di Indevpro.",
