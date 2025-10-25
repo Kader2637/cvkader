@@ -474,10 +474,7 @@ export default function Contact() {
                 width="600"
                 height="450"
                 className="w-full h-48 object-cover"
-                allowfullscreen=""
                 loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                alt="Malang"
               ></iframe>
               <div className="p-5 bg-white">
                 <div className="font-semibold text-gray-900">
