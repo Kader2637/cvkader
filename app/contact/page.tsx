@@ -34,7 +34,9 @@ export default function Contact() {
     btn?.addEventListener("click", onCopy);
 
     // =============== LIVE CHAR COUNT ===============
-    const msg = document.getElementById("message") as HTMLTextAreaElement | null;
+    const msg = document.getElementById(
+      "message"
+    ) as HTMLTextAreaElement | null;
     const cc = document.getElementById("charCount");
     const onInput = () => {
       if (cc && msg) cc.textContent = String(msg.value.length);
@@ -43,17 +45,26 @@ export default function Contact() {
     onInput();
 
     // =============== SUBMIT (DUMMY) ===============
-    const form = document.getElementById("contactForm") as HTMLFormElement | null;
+    const form = document.getElementById(
+      "contactForm"
+    ) as HTMLFormElement | null;
     const onSubmit = async (e: Event) => {
       e.preventDefault();
       // honeypot
       // @ts-ignore
       if ((form as any).company && (form as any).company.value) return;
 
-      const name = (form!.querySelector("#name") as HTMLInputElement).value.trim();
-      const email = (form!.querySelector("#email") as HTMLInputElement).value.trim();
-      const subject = (form!.querySelector("#subject") as HTMLSelectElement).value;
-      const message = (form!.querySelector("#message") as HTMLTextAreaElement).value.trim();
+      const name = (
+        form!.querySelector("#name") as HTMLInputElement
+      ).value.trim();
+      const email = (
+        form!.querySelector("#email") as HTMLInputElement
+      ).value.trim();
+      const subject = (form!.querySelector("#subject") as HTMLSelectElement)
+        .value;
+      const message = (
+        form!.querySelector("#message") as HTMLTextAreaElement
+      ).value.trim();
 
       const invalid: string[] = [];
       if (name.length < 2) invalid.push("name");
@@ -65,13 +76,18 @@ export default function Contact() {
         invalid.forEach((id) => {
           const el = form!.querySelector("#" + id) as HTMLElement;
           el.classList.add("shake", "ring-2", "ring-red-400");
-          setTimeout(() => el.classList.remove("shake", "ring-2", "ring-red-400"), 500);
+          setTimeout(
+            () => el.classList.remove("shake", "ring-2", "ring-red-400"),
+            500
+          );
         });
         showToast("Please complete the required fields.");
         return;
       }
 
-      const submitBtn = form!.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const submitBtn = form!.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement;
       const originalHTML = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
@@ -86,87 +102,100 @@ export default function Contact() {
     };
     form?.addEventListener("submit", onSubmit);
 
-   // =============== REVEAL ON SCROLL ===============
-const reveal: HTMLElement[] = [];
-const header = document.querySelector<HTMLElement>("#contact header");
-const formBox = document.querySelector<HTMLElement>("#contact #contactForm");
-const asideItems = Array.from(
-  document.querySelectorAll<HTMLElement>("#contact aside > *")
-);
+    // =============== REVEAL ON SCROLL ===============
+    const reveal: HTMLElement[] = [];
+    const header = document.querySelector<HTMLElement>("#contact header");
+    const formBox = document.querySelector<HTMLElement>(
+      "#contact #contactForm"
+    );
+    const asideItems = Array.from(
+      document.querySelectorAll<HTMLElement>("#contact aside > *")
+    );
 
-// set delay (ms) via data-delay
-if (header) {
-  header.dataset.delay = "0";
-  reveal.push(header);
-}
-if (formBox) {
-  formBox.dataset.delay = "80";
-  reveal.push(formBox);
-}
-asideItems.forEach((el, i) => {
-  el.dataset.delay = String(140 + i * 90); // 140ms, 230ms, 320ms...
-  reveal.push(el);
-});
-
-// state awal
-reveal.forEach((el) => {
-  el.style.opacity = "0";
-  el.style.transform = "translateY(26px) scale(.985)";
-  el.style.filter = "blur(6px)";
-  el.style.willChange = "opacity, transform, filter";
-});
-
-const io = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-
-      const el = entry.target as HTMLElement; // <-- penting
-      const delay = Number(el.dataset.delay || 0);
-
-      // hormati prefers-reduced-motion
-      const reduced =
-        typeof window !== "undefined" &&
-        "matchMedia" in window &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (reduced) {
-        el.style.opacity = "1";
-        el.style.transform = "none";
-        el.style.filter = "none";
-      } else if ("animate" in el && typeof (el as any).animate === "function") {
-        // Web Animations API
-        (el as any).animate(
-          [
-            { opacity: 0, transform: "translateY(26px) scale(.985)", filter: "blur(6px)" },
-            { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0)" },
-          ],
-          {
-            duration: 720,
-            easing: "cubic-bezier(.22,1,.36,1)",
-            delay,
-            fill: "forwards",
-          }
-        );
-      } else {
-        // fallback CSS transition
-        el.style.transition = "opacity .72s ease, transform .72s ease, filter .72s ease";
-        setTimeout(() => {
-          el.style.opacity = "1";
-          el.style.transform = "translateY(0) scale(1)";
-          el.style.filter = "blur(0)";
-        }, delay);
-      }
-
-      io.unobserve(el);
+    // set delay (ms) via data-delay
+    if (header) {
+      header.dataset.delay = "0";
+      reveal.push(header);
+    }
+    if (formBox) {
+      formBox.dataset.delay = "80";
+      reveal.push(formBox);
+    }
+    asideItems.forEach((el, i) => {
+      el.dataset.delay = String(140 + i * 90); // 140ms, 230ms, 320ms...
+      reveal.push(el);
     });
-  },
-  { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
-);
 
-reveal.forEach((el) => io.observe(el));
-return () => io.disconnect();
+    // state awal
+    reveal.forEach((el) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(26px) scale(.985)";
+      el.style.filter = "blur(6px)";
+      el.style.willChange = "opacity, transform, filter";
+    });
 
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const el = entry.target as HTMLElement; // <-- penting
+          const delay = Number(el.dataset.delay || 0);
+
+          // hormati prefers-reduced-motion
+          const reduced =
+            typeof window !== "undefined" &&
+            "matchMedia" in window &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          if (reduced) {
+            el.style.opacity = "1";
+            el.style.transform = "none";
+            el.style.filter = "none";
+          } else if (
+            "animate" in el &&
+            typeof (el as any).animate === "function"
+          ) {
+            // Web Animations API
+            (el as any).animate(
+              [
+                {
+                  opacity: 0,
+                  transform: "translateY(26px) scale(.985)",
+                  filter: "blur(6px)",
+                },
+                {
+                  opacity: 1,
+                  transform: "translateY(0) scale(1)",
+                  filter: "blur(0)",
+                },
+              ],
+              {
+                duration: 720,
+                easing: "cubic-bezier(.22,1,.36,1)",
+                delay,
+                fill: "forwards",
+              }
+            );
+          } else {
+            // fallback CSS transition
+            el.style.transition =
+              "opacity .72s ease, transform .72s ease, filter .72s ease";
+            setTimeout(() => {
+              el.style.opacity = "1";
+              el.style.transform = "translateY(0) scale(1)";
+              el.style.filter = "blur(0)";
+            }, delay);
+          }
+
+          io.unobserve(el);
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    reveal.forEach((el) => io.observe(el));
+    return () => io.disconnect();
 
     // =============== CLEANUP ===============
     return () => {
@@ -205,10 +234,19 @@ return () => io.disconnect();
             id="contactForm"
             className="lg:col-span-3 space-y-6 p-8 rounded-2xl bg-white/70 backdrop-blur-xl border border-gray-200/70 shadow-sm"
           >
-            <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" />
+            <input
+              type="text"
+              name="company"
+              className="hidden"
+              tabIndex={-1}
+              autoComplete="off"
+            />
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-gray-800 mb-2">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
+                >
                   Full Name *
                 </label>
                 <input
@@ -221,7 +259,10 @@ return () => io.disconnect();
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-gray-800 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
+                >
                   Email *
                 </label>
                 <input
@@ -237,7 +278,10 @@ return () => io.disconnect();
 
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="subject" className="block text-sm font-semibold text-gray-800 mb-2">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
+                >
                   Subject *
                 </label>
                 <select
@@ -246,7 +290,10 @@ return () => io.disconnect();
                   required
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="" disabled> Pilih subject…</option>
+                  <option value="" disabled>
+                    {" "}
+                    Pilih subject…
+                  </option>
                   <option value="project">Project Inquiry</option>
                   <option value="collab">Collaboration</option>
                   <option value="consult">Consultation</option>
@@ -255,7 +302,10 @@ return () => io.disconnect();
                 </select>
               </div>
               <div>
-                <label htmlFor="budget" className="block text-sm font-semibold text-gray-800 mb-2">
+                <label
+                  htmlFor="budget"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
+                >
                   Budget Range
                 </label>
                 <select
@@ -263,7 +313,10 @@ return () => io.disconnect();
                   name="budget"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="" disabled> Pilih budget…</option>
+                  <option value="" disabled>
+                    {" "}
+                    Pilih budget…
+                  </option>
                   <option value="<10m">&lt; Rp 10 Juta</option>
                   <option value="10_25m">Rp 10 – 25 Juta</option>
                   <option value="25_50m">Rp 25 – 50 Juta</option>
@@ -274,7 +327,10 @@ return () => io.disconnect();
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-semibold text-gray-800 mb-2">
+              <label
+                htmlFor="message"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
                 Message *
               </label>
               <textarea
@@ -292,7 +348,12 @@ return () => io.disconnect();
             </div>
 
             <div className="flex items-center gap-3">
-              <input id="nda" name="nda" type="checkbox" className="w-4 h-4 text-blue-600 rounded" />
+              <input
+                id="nda"
+                name="nda"
+                type="checkbox"
+                className="w-4 h-4 text-blue-600 rounded"
+              />
               <label htmlFor="nda" className="text-sm text-gray-700">
                 Butuh NDA (Non-Disclosure Agreement)
               </label>
@@ -306,7 +367,8 @@ return () => io.disconnect();
             </button>
 
             <p className="text-xs text-gray-500 text-center">
-              Dengan mengirim form ini, kamu menyetujui untuk dihubungi kembali via email/WhatsApp.
+              Dengan mengirim form ini, kamu menyetujui untuk dihubungi kembali
+              via email/WhatsApp.
             </p>
           </form>
 
@@ -314,7 +376,9 @@ return () => io.disconnect();
           <aside className="lg:col-span-2 space-y-6">
             <div className="p-[1.5px] rounded-2xl bg-gradient-to-tr from-blue-500/50 via-purple-500/50 to-cyan-500/50">
               <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  Quick Actions
+                </h3>
                 <div className="grid sm:grid-cols-3 gap-3">
                   <a
                     href="mailto:abdulkader0126@gmail.com"
@@ -328,27 +392,34 @@ return () => io.disconnect();
                     rel="noopener"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 transition"
                   >
-                    <i className="fa-brands fa-whatsapp text-emerald-600"></i> WhatsApp
+                    <i className="fa-brands fa-whatsapp text-emerald-600"></i>{" "}
+                    WhatsApp
                   </a>
                   <a
                     href="/contact"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 transition"
                   >
-                    <i className="fa-solid fa-calendar-days text-purple-600"></i> Schedule
+                    <i className="fa-solid fa-calendar-days text-purple-600"></i>{" "}
+                    Schedule
                   </a>
                 </div>
               </div>
             </div>
 
             <div className="rounded-2xl border border-gray-200/70 bg-white/70 backdrop-blur-xl p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                Contact Information
+              </h3>
               <div className="space-y-4 text-gray-700">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <i className="fa-solid fa-envelope text-blue-600"></i>
                     <span id="emailText">abdulkader0126@email.com</span>
                   </div>
-                  <button id="copyEmail" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                  <button
+                    id="copyEmail"
+                    className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                  >
                     Copy
                   </button>
                 </div>
@@ -369,16 +440,28 @@ return () => io.disconnect();
               <div className="mt-6">
                 <h4 className="font-semibold mb-3 text-gray-900">Socials</h4>
                 <div className="flex gap-3">
-                  <a href="#" className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition">
+                  <a
+                    href="#"
+                    className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition"
+                  >
                     <i className="fab fa-linkedin-in text-gray-700"></i>
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition">
+                  <a
+                    href="#"
+                    className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition"
+                  >
                     <i className="fab fa-github text-gray-700"></i>
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition">
+                  <a
+                    href="#"
+                    className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition"
+                  >
                     <i className="fab fa-twitter text-gray-700"></i>
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition">
+                  <a
+                    href="#"
+                    className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition"
+                  >
                     <i className="fab fa-instagram text-gray-700"></i>
                   </a>
                 </div>
@@ -386,14 +469,23 @@ return () => io.disconnect();
             </div>
 
             <div className="overflow-hidden rounded-2xl border border-gray-200">
-              <img
-                src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1200&h=600&fit=crop"
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63219.15529079024!2d112.59058342461867!3d-7.978558312256577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62822063dc2fb%3A0x78879446481a4da2!2sMalang%2C%20Kota%20Malang%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1761395821547!5m2!1sid!2sid"
+                width="600"
+                height="450"
                 className="w-full h-48 object-cover"
-                alt="Jakarta"
-              />
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                alt="Malang"
+              ></iframe>
               <div className="p-5 bg-white">
-                <div className="font-semibold text-gray-900">Malang - Indonesia</div>
-                <div className="text-sm text-gray-600">Central Malang • abdul kader</div>
+                <div className="font-semibold text-gray-900">
+                  Malang - Indonesia
+                </div>
+                <div className="text-sm text-gray-600">
+                  Central Malang • abdul kader
+                </div>
               </div>
             </div>
           </aside>
@@ -401,7 +493,10 @@ return () => io.disconnect();
       </section>
 
       {/* Toast */}
-      <div id="toast" className="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+      <div
+        id="toast"
+        className="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
+      >
         <div className="toast-enter flex items-center gap-3 bg-gray-900 text-white px-4 py-3 rounded-xl shadow-2xl">
           <i className="fa-solid fa-circle-check"></i>
           <span id="toastMsg">Message sent successfully.</span>
@@ -411,26 +506,58 @@ return () => io.disconnect();
       {/* animations */}
       <style jsx>{`
         @keyframes toastIn {
-          from { transform: translate(-50%, 20px); opacity: 0; }
-          to { transform: translate(-50%, 0); opacity: 1; }
+          from {
+            transform: translate(-50%, 20px);
+            opacity: 0;
+          }
+          to {
+            transform: translate(-50%, 0);
+            opacity: 1;
+          }
         }
         @keyframes toastOut {
-          from { transform: translate(-50%, 0); opacity: 1; }
-          to { transform: translate(-50%, 20px); opacity: 0; }
+          from {
+            transform: translate(-50%, 0);
+            opacity: 1;
+          }
+          to {
+            transform: translate(-50%, 20px);
+            opacity: 0;
+          }
         }
-        .toast-enter { animation: toastIn 0.25s ease-out forwards; }
-        .toast-leave { animation: toastOut 0.25s ease-in forwards; }
+        .toast-enter {
+          animation: toastIn 0.25s ease-out forwards;
+        }
+        .toast-leave {
+          animation: toastOut 0.25s ease-in forwards;
+        }
 
         @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          20% { transform: translateX(-6px); }
-          40% { transform: translateX(6px); }
-          60% { transform: translateX(-4px); }
-          80% { transform: translateX(4px); }
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          20% {
+            transform: translateX(-6px);
+          }
+          40% {
+            transform: translateX(6px);
+          }
+          60% {
+            transform: translateX(-4px);
+          }
+          80% {
+            transform: translateX(4px);
+          }
         }
-        .shake { animation: shake 0.3s ease-in-out; }
+        .shake {
+          animation: shake 0.3s ease-in-out;
+        }
 
-        .size-2 { width: 0.5rem; height: 0.5rem; }
+        .size-2 {
+          width: 0.5rem;
+          height: 0.5rem;
+        }
       `}</style>
     </div>
   );
