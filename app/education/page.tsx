@@ -4,35 +4,40 @@ import { useEffect } from "react";
 
 export default function Education() {
   useEffect(() => {
-    const nodes = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-reveal]")
+    // Ambil elemen yang akan direveal (batasi ke dalam #education supaya aman)
+    const nodes: HTMLElement[] = Array.from(
+      document.querySelectorAll<HTMLElement>("#education [data-reveal]")
     );
 
-    // set initial style (agar pasti invisible sebelum di-reveal)
-    nodes.forEach((el) => {
+    if (!nodes.length) return;
+
+    // State awal (invisible + siap animasi)
+    nodes.forEach((el: HTMLElement) => {
       el.style.opacity = "0";
       el.style.transform = "translateY(24px)";
       el.style.willChange = "opacity, transform";
     });
 
     const io = new IntersectionObserver(
-      (entries) => {
+      (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
 
-          // prefer-reduced-motion: jangan animasi, langsung tampil
+          const el = entry.target as HTMLElement;
+          const delay = Number(el.dataset.delay || 0);
+
           const reduced =
-            window.matchMedia &&
+            typeof window !== "undefined" &&
+            "matchMedia" in window &&
             window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-          const delay = Number(el.dataset.delay || 0); // bisa set data-delay="120" dlsb
-
           if (reduced) {
+            // Tanpa animasi untuk prefer-reduced-motion
             el.style.opacity = "1";
             el.style.transform = "none";
-          } else if ("animate" in el) {
-            el.animate(
+          } else if ((el as any).animate && typeof (el as any).animate === "function") {
+            // Web Animations API (pakai cast agar aman di TS)
+            (el as any).animate(
               [
                 { opacity: 0, transform: "translateY(24px)" },
                 { opacity: 1, transform: "translateY(0px)" },
@@ -45,9 +50,9 @@ export default function Education() {
               }
             );
           } else {
-            // fallback CSS transition
+            // Fallback CSS transition
             el.style.transition = "opacity .65s ease, transform .65s ease";
-            setTimeout(() => {
+            window.setTimeout(() => {
               el.style.opacity = "1";
               el.style.transform = "translateY(0)";
             }, delay);
@@ -59,15 +64,13 @@ export default function Education() {
       { threshold: 0.18 }
     );
 
-    nodes.forEach((n) => io.observe(n));
+    nodes.forEach((n: HTMLElement) => io.observe(n));
+
     return () => io.disconnect();
   }, []);
 
   return (
-    <div
-      id="education"
-      className="page relative overflow-hidden bg-white py-10"
-    >
+    <div id="education" className="page relative overflow-hidden bg-white py-10">
       {/* soft bg blobs */}
       <div className="pointer-events-none absolute inset-0 opacity-60">
         <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-3xl" />
@@ -78,15 +81,13 @@ export default function Education() {
         {/* Header */}
         <header className="text-center max-w-3xl mx-auto mb-14" data-reveal>
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-blue-100">
-            <span className="size-2 rounded-full bg-blue-500 animate-pulse" />{" "}
-            Education
+            <span className="size-2 rounded-full bg-blue-500 animate-pulse" /> Education
           </span>
           <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
             Academic Background
           </h2>
           <p className="mt-4 text-lg text-gray-600">
-            Fondasi akademik yang kuat di rekayasa perangkat lunak dan sistem
-            informasi.
+            Fondasi akademik yang kuat di rekayasa perangkat lunak dan sistem informasi.
           </p>
         </header>
 
@@ -107,56 +108,40 @@ export default function Education() {
                 <h3 className="text-2xl font-bold text-gray-900">
                   Bachelor of Information Systems (Sistem Informasi)
                 </h3>
-                <p className="text-blue-600 font-semibold">
-                  Universitas Merdeka Malang
-                </p>
+                <p className="text-blue-600 font-semibold">Universitas Merdeka Malang</p>
                 <p className="text-gray-500 text-sm mt-1">Mahasiswa aktif</p>
                 <div className="inline-block mt-4 text-left">
                   <div className="rounded-2xl border border-gray-200/70 bg-white/70 backdrop-blur-xl p-5 shadow-sm">
                     <p className="text-gray-700">
                       Fokus pada{" "}
                       <span className="font-medium text-gray-900">
-                        analisis bisnis, arsitektur sistem, data & integrasi
+                        analisis bisnis, arsitektur sistem, data &amp; integrasi
                       </span>
                       .
                     </p>
                     <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                      <li>• Business Process & System Analysis</li>
-                      <li>• Database Systems & Data Modelling</li>
-                      <li>• Web/App Development & Integrations</li>
+                      <li>• Business Process &amp; System Analysis</li>
+                      <li>• Database Systems &amp; Data Modelling</li>
+                      <li>• Web/App Development &amp; Integrations</li>
                     </ul>
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                        UML/BPMN
-                      </span>
-                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                        SQL
-                      </span>
-                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                        React/Next.js
-                      </span>
+                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">UML/BPMN</span>
+                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">SQL</span>
+                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">React/Next.js</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* node */}
-              <div
-                className="relative z-10 order-1 lg:order-2"
-                data-reveal
-                data-delay="0"
-              >
+              <div className="relative z-10 order-1 lg:order-2" data-reveal data-delay="0">
                 <div className="flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg">
                   <i className="fa-solid fa-graduation-cap" />
                 </div>
               </div>
 
               {/* image/side card */}
-              <div
-                className="w-full lg:w-1/2 order-3"
-                data-reveal
-                data-delay="160"
-              >
+              <div className="w-full lg:w-1/2 order-3" data-reveal data-delay="160">
                 <div className="p-[1.5px] rounded-2xl bg-gradient-to-tr from-blue-500/50 via-purple-500/50 to-cyan-500/50">
                   <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 shadow-lg hover:-translate-y-1 transition">
                     <img
@@ -168,10 +153,7 @@ export default function Education() {
                       <span className="inline-flex items-center gap-2 px-3 py-1 text-xs rounded-full bg-blue-50 text-blue-700 ring-1 ring-blue-100">
                         <i className="fa-solid fa-award" /> Ongoing
                       </span>
-                      <a
-                        href="#"
-                        className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                      >
+                      <a href="#" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
                         Lihat kurikulum →
                       </a>
                     </div>
@@ -183,14 +165,8 @@ export default function Education() {
             {/* SMKN 1 Kraksaan — RPL */}
             <div className="relative flex flex-col lg:flex-row items-start lg:items-center gap-8">
               {/* text */}
-              <div
-                className="w-full lg:w-1/2 order-2 lg:order-3 lg:pl-10"
-                data-reveal
-                data-delay="80"
-              >
-                <h3 className="text-2xl font-bold text-gray-900">
-                  Rekayasa Perangkat Lunak (RPL)
-                </h3>
+              <div className="w-full lg:w-1/2 order-2 lg:order-3 lg:pl-10" data-reveal data-delay="80">
+                <h3 className="text-2xl font-bold text-gray-900">Rekayasa Perangkat Lunak (RPL)</h3>
                 <p className="text-purple-600 font-semibold">SMKN 1 Kraksaan</p>
                 <p className="text-gray-500 text-sm mt-1">Lulusan</p>
                 <div className="mt-4">
@@ -204,21 +180,13 @@ export default function Education() {
                     </p>
                     <ul className="mt-3 text-sm text-gray-600 space-y-1">
                       <li>• Algoritma, Struktur Data, OOP</li>
-                      <li>
-                        • Web Programming (HTML/CSS/JS, PHP/Laravel dasar)
-                      </li>
-                      <li>• Database (MySQL) & Version Control (Git)</li>
+                      <li>• Web Programming (HTML/CSS/JS, PHP/Laravel dasar)</li>
+                      <li>• Database (MySQL) &amp; Version Control (Git)</li>
                     </ul>
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                        PHP/Laravel
-                      </span>
-                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                        MySQL
-                      </span>
-                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                        Git
-                      </span>
+                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">PHP/Laravel</span>
+                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">MySQL</span>
+                      <span className="px-2.5 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">Git</span>
                     </div>
                   </div>
                 </div>
@@ -232,11 +200,7 @@ export default function Education() {
               </div>
 
               {/* image/side card */}
-              <div
-                className="w-full lg:w-1/2 order-3 lg:order-1 lg:pr-10"
-                data-reveal
-                data-delay="160"
-              >
+              <div className="w-full lg:w-1/2 order-3 lg:order-1 lg:pr-10" data-reveal data-delay="160">
                 <div className="p-[1.5px] rounded-2xl bg-gradient-to-tr from-purple-500/50 via-pink-500/50 to-blue-500/50">
                   <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 shadow-lg hover:-translate-y-1 transition">
                     <img
@@ -246,13 +210,9 @@ export default function Education() {
                     />
                     <div className="mt-4 flex flex-wrap items-center gap-3">
                       <span className="inline-flex items-center gap-2 px-3 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
-                        <i className="fa-solid fa-trophy text-amber-500" />{" "}
-                        Project-Based Learning
+                        <i className="fa-solid fa-trophy text-amber-500" /> Project-Based Learning
                       </span>
-                      <a
-                        href="#"
-                        className="text-sm text-purple-600 hover:text-purple-800 font-medium"
-                      >
+                      <a href="#" className="text-sm text-purple-600 hover:text-purple-800 font-medium">
                         Lihat project akhir →
                       </a>
                     </div>
@@ -267,13 +227,8 @@ export default function Education() {
         {/* Certifications */}
         <div className="mt-6" data-reveal>
           <div className="flex items-center justify-between gap-4 mb-6">
-            <h3 className="text-xl font-semibold text-gray-900">
-              Professional Certifications
-            </h3>
-            <a
-              href="#"
-              className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-            >
+            <h3 className="text-xl font-semibold text-gray-900">Professional Certifications</h3>
+            <a href="#" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
               Lihat semua →
             </a>
           </div>
@@ -290,12 +245,8 @@ export default function Education() {
                   <i className="fa-brands fa-aws text-amber-600" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900">
-                    AWS Solutions Architect — Professional
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    Issued Jan 2023 • Expires Jan 2026
-                  </p>
+                  <h4 className="font-semibold text-gray-900">AWS Solutions Architect — Professional</h4>
+                  <p className="text-xs text-gray-500">Issued Jan 2023 • Expires Jan 2026</p>
                 </div>
               </div>
               <p className="mt-3 text-sm text-gray-700">
@@ -303,20 +254,11 @@ export default function Education() {
               </p>
               <div className="mt-4 flex items-center justify-between">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    VPC
-                  </span>
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    EKS
-                  </span>
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    IAM
-                  </span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">VPC</span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">EKS</span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">IAM</span>
                 </div>
-                <a
-                  href="#"
-                  className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                >
+                <a href="#" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
                   Verify →
                 </a>
               </div>
@@ -333,12 +275,8 @@ export default function Education() {
                   <i className="fa-solid fa-cloud text-sky-700" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900">
-                    Google Cloud Professional Developer
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    Issued Mar 2023 • Expires Mar 2025
-                  </p>
+                  <h4 className="font-semibold text-gray-900">Google Cloud Professional Developer</h4>
+                  <p className="text-xs text-gray-500">Issued Mar 2023 • Expires Mar 2025</p>
                 </div>
               </div>
               <p className="mt-3 text-sm text-gray-700">
@@ -346,20 +284,11 @@ export default function Education() {
               </p>
               <div className="mt-4 flex items-center justify-between">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    GKE
-                  </span>
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    Pub/Sub
-                  </span>
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    Cloud Run
-                  </span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">GKE</span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">Pub/Sub</span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">Cloud Run</span>
                 </div>
-                <a
-                  href="#"
-                  className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                >
+                <a href="#" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
                   Verify →
                 </a>
               </div>
@@ -376,12 +305,8 @@ export default function Education() {
                   <i className="fa-solid fa-cubes-stacked text-emerald-700" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900">
-                    Certified Kubernetes Administrator
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    Issued Oct 2022 • Expires Oct 2025
-                  </p>
+                  <h4 className="font-semibold text-gray-900">Certified Kubernetes Administrator</h4>
+                  <p className="text-xs text-gray-500">Issued Oct 2022 • Expires Oct 2025</p>
                 </div>
               </div>
               <p className="mt-3 text-sm text-gray-700">
@@ -389,20 +314,11 @@ export default function Education() {
               </p>
               <div className="mt-4 flex items-center justify-between">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    RBAC
-                  </span>
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    CNI
-                  </span>
-                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">
-                    Helm
-                  </span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">RBAC</span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">CNI</span>
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">Helm</span>
                 </div>
-                <a
-                  href="#"
-                  className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                >
+                <a href="#" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
                   Verify →
                 </a>
               </div>
@@ -411,11 +327,7 @@ export default function Education() {
         </div>
 
         {/* CTA */}
-        <div
-          className="mt-12 flex flex-col sm:flex-row gap-3 justify-center"
-          data-reveal
-          data-delay="80"
-        >
+        <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center" data-reveal data-delay="80">
           <a
             href="#"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-700 text-white font-medium hover:from-blue-700 hover:to-purple-800 transition"
