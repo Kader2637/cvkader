@@ -23,12 +23,11 @@ type Skill = {
 };
 
 export default function Skills() {
-  // ====== STATE: filter & paginate (gaya Portfolio) ======
   const [filter, setFilter] = useState<Cat>("all");
   const [page, setPage] = useState<number>(1);
   const pageSize = 12;
 
-  // ====== DATA (disesuaikan ke proyekmu) ======
+  // ====== DATA (ditambah Next.js, Bootstrap, HTML/CSS, Go, Dart, Flutter, Arduino) ======
   const SKILLS: Skill[] = [
     // Backend
     {
@@ -55,14 +54,30 @@ export default function Skills() {
       chips: ["LKS Juara 3", "SQL Server"],
       grad: "from-amber-500/30 via-fuchsia-500/30 to-blue-500/30",
     },
+    {
+      cat: "backend",
+      icon: <i className="devicon-go-plain colored text-4xl" />,
+      title: "Go",
+      sub: "HTTP • Concurrency • CLI",
+      chips: ["Service kecil & tooling"],
+      grad: "from-amber-500/30 via-fuchsia-500/30 to-blue-500/30",
+    },
 
     // Frontend
     {
       cat: "frontend",
       icon: <i className="devicon-react-original colored text-4xl" />,
-      title: "React / Next.js",
-      sub: "SSR • ISR • Realtime",
-      chips: ["Get Media", "Brand Nolima", "Chat RT"],
+      title: "React",
+      sub: "SPA • Realtime • Hooks",
+      chips: ["Chat Real-Time", "MindMasters"],
+      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "frontend",
+      icon: <i className="devicon-nextjs-plain text-4xl" />, // Next.js (ikon default hitam/monokrom)
+      title: "Next.js",
+      sub: "SSR • ISR • App Router",
+      chips: ["Get Media", "Brand Nolima", "Landing Birthday"],
       grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
     },
     {
@@ -75,10 +90,34 @@ export default function Skills() {
     },
     {
       cat: "frontend",
+      icon: <i className="devicon-bootstrap-plain colored text-4xl" />,
+      title: "Bootstrap",
+      sub: "Rapid UI • Utility",
+      chips: ["Company Profile", "Dashboard CRUD"],
+      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "frontend",
+      icon: <i className="devicon-html5-plain colored text-4xl" />,
+      title: "HTML5",
+      sub: "Semantic • A11y",
+      chips: ["Landing", "CMS Pages"],
+      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "frontend",
+      icon: <i className="devicon-css3-plain colored text-4xl" />,
+      title: "CSS3",
+      sub: "Responsive • Flex/Grid",
+      chips: ["Marketing Site", "Microsite"],
+      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "frontend",
       icon: <i className="devicon-tailwindcss-plain colored text-4xl" />,
       title: "Tailwind CSS",
       sub: "Design System • Responsive",
-      chips: ["Landing Nolima", "Landing Birthday", "LQS Question"],
+      chips: ["Landing Nolima", "LQS Question"],
       grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
     },
 
@@ -91,6 +130,22 @@ export default function Skills() {
       chips: ["KR_Money", "Smart Pump App"],
       grad: "from-pink-500/30 via-purple-500/30 to-indigo-500/30",
     },
+    {
+      cat: "mobile",
+      icon: <i className="devicon-dart-plain colored text-4xl" />,
+      title: "Dart",
+      sub: "Async • Isolates",
+      chips: ["Flutter base"],
+      grad: "from-pink-500/30 via-purple-500/30 to-indigo-500/30",
+    },
+    {
+      cat: "mobile",
+      icon: <i className="devicon-flutter-plain colored text-4xl" />,
+      title: "Flutter",
+      sub: "Widget • State • REST",
+      chips: ["Prototype Mobile"],
+      grad: "from-pink-500/30 via-purple-500/30 to-indigo-500/30",
+    },
 
     // IoT / Vision
     {
@@ -99,6 +154,14 @@ export default function Skills() {
       title: "IoT • MQTT",
       sub: "ESP32/8266 • Telemetry",
       chips: ["GreenGuard", "Smart Pump"],
+      grad: "from-emerald-500/30 via-lime-500/30 to-teal-500/30",
+    },
+    {
+      cat: "iot",
+      icon: <i className="devicon-arduino-plain colored text-4xl" />,
+      title: "Arduino",
+      sub: "Sensors • Serial • PWM",
+      chips: ["Smart Pump", "Prototyping"],
       grad: "from-emerald-500/30 via-lime-500/30 to-teal-500/30",
     },
     {
@@ -205,7 +268,7 @@ export default function Skills() {
     },
     {
       cat: "tools",
-      icon: <i className="fa-solid fa-microchip text-amber-600 text-3xl" />,
+      icon: <i className="devicon-arduino-plain colored text-4xl" />,
       title: "Arduino IDE",
       sub: "ESP32/8266 • Serial",
       chips: ["IoT Smart Pump"],
@@ -248,12 +311,10 @@ export default function Skills() {
   const endIdx = Math.min(startIdx + pageSize, filtered.length);
   const pageItems = filtered.slice(startIdx, endIdx);
 
-  // reset halaman saat filter berubah
   useEffect(() => setPage(1), [filter]);
 
-  // ====== REVEAL ANIMATION (dari kode awal — dipertahankan) ======
+  // ====== REVEAL ANIMATION (dipertahankan) ======
   useEffect(() => {
-    // Reveal untuk header / filter / kartu
     const revealNodes = new Set<HTMLElement>();
     document
       .querySelectorAll<HTMLElement>(
@@ -311,7 +372,7 @@ export default function Skills() {
               }
             );
           } else {
-            const node = el as HTMLElement; // pastikan tipe bukan 'never'
+            const node = el as HTMLElement;
             node.style.transition =
               "opacity .68s ease, transform .68s ease, filter .68s ease";
             window.setTimeout(() => {
@@ -328,7 +389,7 @@ export default function Skills() {
 
     revealNodes.forEach((n) => ioReveal.observe(n));
     return () => ioReveal.disconnect();
-  }, [filter, clampedPage]); // re-run saat halaman / filter berubah agar animasinya muncul lagi
+  }, [filter, clampedPage]);
 
   // ====== UI ======
   const filters: Cat[] = [
@@ -400,24 +461,23 @@ export default function Skills() {
             Stack Utama, Tools & Platform
           </h2>
           <p className="mt-2 text-gray-600">
-            Disarikan dari proyekmu: Get Media, PKL HummaTech (Face
-            Recognition), Company Profile (HummaTech & Cakra Parama), Tracer
-            Study Balikpapan, SIPJAKI Pasuruan, Mischoll, Travel, Brand Nolima,
-            GreenGuard (IoT), KR_Money, MindMasters, Sisfo Akuntansi
-            Keberlanjutan, LQS Question, NewLearning Era, Journal SMKN 1, dan
-            IoT Smart Pump.
+            Disarikan dari proyek: Get Media, PKL HummaTech (Face Recognition),
+            Company Profile (HummaTech & Cakra Parama), Tracer Study Balikpapan,
+            SIPJAKI Pasuruan, Mischoll, Travel, Brand Nolima, GreenGuard (IoT),
+            KR_Money, MindMasters, Sisfo Akuntansi Keberlanjutan, LQS Question,
+            NewLearning Era, Journal SMKN 1, dan IoT Smart Pump.
           </p>
         </header>
 
-        {/* Filter (state-based) */}
+        {/* Filter */}
         <div
           className="filters-wrap flex flex-wrap justify-center gap-3 mb-8"
           data-reveal
         >
-          {filters.map((f, i) => (
+          {["all","frontend","backend","mobile","iot","cloud","data","tools"].map((f, i) => (
             <button
               key={f}
-              onClick={() => setFilter(f)}
+              onClick={() => setFilter(f as Cat)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition ${
                 filter === f
                   ? "bg-gray-900 text-white"
@@ -487,7 +547,7 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Pagination Controls */}
+        {/* Pagination */}
         {totalPages > 1 && (
           <div
             className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4"
@@ -506,7 +566,22 @@ export default function Skills() {
             </button>
 
             <div className="flex flex-wrap items-center gap-2">
-              {renderPages()}
+              {Array.from({ length: totalPages }).length <= 7
+                ? Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                    <button
+                      key={`p-${p}`}
+                      onClick={() => setPage(p)}
+                      className={`min-w-9 h-9 px-3 rounded-lg text-sm font-medium ${
+                        p === clampedPage
+                          ? "bg-gray-900 text-white"
+                          : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                      }`}
+                      aria-current={p === clampedPage ? "page" : undefined}
+                    >
+                      {p}
+                    </button>
+                  ))
+                : renderPages()}
             </div>
 
             <button
