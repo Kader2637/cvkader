@@ -1,69 +1,273 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import React from "react";
+
+type Cat =
+  | "all"
+  | "frontend"
+  | "backend"
+  | "mobile"
+  | "iot"
+  | "cloud"
+  | "data"
+  | "tools";
+
+type Skill = {
+  cat: Exclude<Cat, "all">;
+  icon: React.ReactNode;
+  title: string;
+  sub: string;
+  chips?: string[];
+  grad?: string;
+};
 
 export default function Skills() {
+  // ====== STATE: filter & paginate (gaya Portfolio) ======
+  const [filter, setFilter] = useState<Cat>("all");
+  const [page, setPage] = useState<number>(1);
+  const pageSize = 12;
+
+  // ====== DATA (disesuaikan ke proyekmu) ======
+  const SKILLS: Skill[] = [
+    // Backend
+    {
+      cat: "backend",
+      icon: <i className="devicon-laravel-plain colored text-4xl" />,
+      title: "Laravel",
+      sub: "REST • Auth • Queues",
+      chips: ["Get Media", "Mischoll", "SIPJAKI", "Tracer Study"],
+      grad: "from-red-500/40 via-rose-500/40 to-orange-500/40",
+    },
+    {
+      cat: "backend",
+      icon: <i className="devicon-php-plain colored text-4xl" />,
+      title: "PHP 8+",
+      sub: "Modern PHP • Clean Code",
+      chips: ["Policy/ACL", "Service/Repo"],
+      grad: "from-amber-500/30 via-fuchsia-500/30 to-blue-500/30",
+    },
+    {
+      cat: "backend",
+      icon: <i className="devicon-dotnetcore-plain colored text-4xl" />,
+      title: ".NET (C#)",
+      sub: "MVC • EF • API",
+      chips: ["LKS Juara 3", "SQL Server"],
+      grad: "from-amber-500/30 via-fuchsia-500/30 to-blue-500/30",
+    },
+
+    // Frontend
+    {
+      cat: "frontend",
+      icon: <i className="devicon-react-original colored text-4xl" />,
+      title: "React / Next.js",
+      sub: "SSR • ISR • Realtime",
+      chips: ["Get Media", "Brand Nolima", "Chat RT"],
+      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "frontend",
+      icon: <i className="devicon-vuejs-plain colored text-4xl" />,
+      title: "Vue / Nuxt",
+      sub: "SPA • SSR",
+      chips: ["NewLearning Era"],
+      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "frontend",
+      icon: <i className="devicon-tailwindcss-plain colored text-4xl" />,
+      title: "Tailwind CSS",
+      sub: "Design System • Responsive",
+      chips: ["Landing Nolima", "Landing Birthday", "LQS Question"],
+      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+    },
+
+    // Mobile
+    {
+      cat: "mobile",
+      icon: <i className="devicon-react-original colored text-4xl" />,
+      title: "React Native",
+      sub: "iOS • Android",
+      chips: ["KR_Money", "Smart Pump App"],
+      grad: "from-pink-500/30 via-purple-500/30 to-indigo-500/30",
+    },
+
+    // IoT / Vision
+    {
+      cat: "iot",
+      icon: <i className="fa-solid fa-microchip text-emerald-600 text-3xl" />,
+      title: "IoT • MQTT",
+      sub: "ESP32/8266 • Telemetry",
+      chips: ["GreenGuard", "Smart Pump"],
+      grad: "from-emerald-500/30 via-lime-500/30 to-teal-500/30",
+    },
+    {
+      cat: "iot",
+      icon: <i className="fa-solid fa-brain text-teal-600 text-3xl" />,
+      title: "Computer Vision",
+      sub: "OpenCV • Face Recognition",
+      chips: ["PKL HummaTech"],
+      grad: "from-emerald-500/30 via-lime-500/30 to-teal-500/30",
+    },
+
+    // Cloud/DevOps
+    {
+      cat: "cloud",
+      icon: <i className="devicon-docker-plain colored text-4xl" />,
+      title: "Docker / Kubernetes",
+      sub: "Images • Orchestration",
+      chips: ["CI/CD", "Scaling"],
+      grad: "from-emerald-500/30 via-teal-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "cloud",
+      icon: <i className="devicon-amazonwebservices-plain colored text-4xl" />,
+      title: "AWS",
+      sub: "ECS/EKS • VPC • IAM",
+      chips: ["S3", "CloudFront"],
+      grad: "from-emerald-500/30 via-teal-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "cloud",
+      icon: <i className="devicon-googlecloud-plain colored text-4xl" />,
+      title: "Google Cloud",
+      sub: "GKE • Cloud Run • Pub/Sub",
+      chips: ["Logs", "Tracing"],
+      grad: "from-emerald-500/30 via-teal-500/30 to-cyan-500/30",
+    },
+
+    // Data
+    {
+      cat: "data",
+      icon: <i className="devicon-mysql-plain colored text-4xl" />,
+      title: "MySQL",
+      sub: "Index • Query Plan",
+      chips: ["Mayoritas Laravel"],
+      grad: "from-indigo-500/30 via-sky-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "data",
+      icon: <i className="devicon-postgresql-plain colored text-4xl" />,
+      title: "PostgreSQL",
+      sub: "Schema • TX",
+      chips: ["Tracer Study", "Analytics"],
+      grad: "from-indigo-500/30 via-sky-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "data",
+      icon: <i className="devicon-redis-plain colored text-4xl" />,
+      title: "Redis",
+      sub: "Cache • Queue • Rate-limit",
+      chips: ["SIPJAKI", "Chat RT"],
+      grad: "from-indigo-500/30 via-sky-500/30 to-cyan-500/30",
+    },
+    {
+      cat: "data",
+      icon: <i className="devicon-microsoftsqlserver-plain colored text-4xl" />,
+      title: "SQL Server",
+      sub: "T-SQL • Index",
+      chips: ["LKS IT Software"],
+      grad: "from-indigo-500/30 via-sky-500/30 to-cyan-500/30",
+    },
+
+    // Tools
+    {
+      cat: "tools",
+      icon: <i className="devicon-git-plain colored text-4xl" />,
+      title: "Git (GitHub/GitLab)",
+      sub: "Flow • PR • Release",
+      chips: ["Code Review", "Release"],
+      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+    },
+    {
+      cat: "tools",
+      icon: <i className="devicon-githubactions-plain colored text-4xl" />,
+      title: "CI/CD",
+      sub: "GitHub Actions • Jenkins",
+      chips: ["Tests", "Auto Deploy"],
+      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+    },
+    {
+      cat: "tools",
+      icon: <i className="devicon-visualstudio-plain colored text-4xl" />,
+      title: "Visual Studio",
+      sub: ".NET Dev",
+      chips: ["C#", "EF Core"],
+      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+    },
+    {
+      cat: "tools",
+      icon: <i className="devicon-vscode-plain colored text-4xl" />,
+      title: "VS Code",
+      sub: "Daily Driver • Ext",
+      chips: ["Laravel", "React"],
+      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+    },
+    {
+      cat: "tools",
+      icon: <i className="fa-solid fa-microchip text-amber-600 text-3xl" />,
+      title: "Arduino IDE",
+      sub: "ESP32/8266 • Serial",
+      chips: ["IoT Smart Pump"],
+      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+    },
+    {
+      cat: "tools",
+      icon: <i className="devicon-androidstudio-plain colored text-4xl" />,
+      title: "Android Studio",
+      sub: "RN Modules • Debug",
+      chips: ["KR_Money"],
+      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+    },
+    {
+      cat: "tools",
+      icon: <i className="fa-solid fa-vial text-purple-600 text-3xl" />,
+      title: "Postman",
+      sub: "API Testing • Mock",
+      chips: ["Collections", "Envs"],
+      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+    },
+    {
+      cat: "tools",
+      icon: <i className="devicon-figma-plain colored text-4xl" />,
+      title: "Figma",
+      sub: "Wireframe • Handoff",
+      chips: ["Nolima", "GreenGuard"],
+      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+    },
+  ];
+
+  // ====== DERIVED (filter + pagination) ======
+  const filtered = useMemo(
+    () => SKILLS.filter((s) => filter === "all" || s.cat === filter),
+    [filter]
+  );
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const clampedPage = Math.min(page, totalPages);
+  const startIdx = (clampedPage - 1) * pageSize;
+  const endIdx = Math.min(startIdx + pageSize, filtered.length);
+  const pageItems = filtered.slice(startIdx, endIdx);
+
+  // reset halaman saat filter berubah
+  useEffect(() => setPage(1), [filter]);
+
+  // ====== REVEAL ANIMATION (dari kode awal — dipertahankan) ======
   useEffect(() => {
-    // Filter kategori skills
-    const buttons = document.querySelectorAll<HTMLButtonElement>(
-      "#skills .skill-filter"
-    );
-    const cards = document.querySelectorAll<HTMLElement>("#skills .skill-card");
-    buttons.forEach((btn) => {
-      const onClick = () => {
-        buttons.forEach((b) => {
-          b.classList.remove("bg-gray-900", "text-white");
-          b.classList.add("bg-gray-100");
-        });
-        btn.classList.add("bg-gray-900", "text-white");
-        btn.classList.remove("bg-gray-100");
-        const f = btn.dataset.filter!;
-        cards.forEach((c) => {
-          const show = f === "all" || c.dataset.cat!.includes(f);
-          (c as HTMLElement).style.display = show ? "" : "none";
-        });
-      };
-      btn.addEventListener("click", onClick);
-    });
-
-    // Progress bar animation
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.querySelectorAll<HTMLElement>(".bar-fill").forEach((b) => {
-              const v = parseInt(b.dataset.value || "0", 10) || 0;
-              b.style.width = v + "%";
-              b.style.transition = "width .8s ease-out";
-            });
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    document
-      .querySelectorAll("#skills .skill-card")
-      .forEach((card) => io.observe(card));
-    // ====== REVEAL ON SCROLL (Web Animations API, lebih “kerasa”) ======
+    // Reveal untuk header / filter / kartu
     const revealNodes = new Set<HTMLElement>();
-
-    // header + filter area + paragraf/keterangan opsional
     document
       .querySelectorAll<HTMLElement>(
         "#skills [data-reveal], #skills header, #skills .filters-wrap"
       )
       .forEach((el) => revealNodes.add(el));
 
-    // semua kartu (stagger otomatis)
     document
       .querySelectorAll<HTMLElement>("#skills .skill-card")
       .forEach((el, idx) => {
-        el.dataset.delay = String(70 * (idx % 8)); // 0..490ms per baris
+        el.dataset.delay = String(70 * (idx % 8));
         revealNodes.add(el);
       });
 
-    // SESUDAH (fix: el dipastikan HTMLElement, hilang error "style on never")
     revealNodes.forEach((el: HTMLElement) => {
       const node = el as HTMLElement;
       node.style.opacity = "0";
@@ -77,13 +281,10 @@ export default function Skills() {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
-
           const reduced =
             window.matchMedia &&
             window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
           const delay = Number(el.dataset.delay || 0);
-
           if (reduced) {
             el.style.opacity = "1";
             el.style.transform = "none";
@@ -104,7 +305,7 @@ export default function Skills() {
               ],
               {
                 duration: 680,
-                easing: "cubic-bezier(.22,1,.36,1)", // smooth decel
+                easing: "cubic-bezier(.22,1,.36,1)",
                 delay,
                 fill: "forwards",
               }
@@ -126,9 +327,61 @@ export default function Skills() {
     );
 
     revealNodes.forEach((n) => ioReveal.observe(n));
+    return () => ioReveal.disconnect();
+  }, [filter, clampedPage]); // re-run saat halaman / filter berubah agar animasinya muncul lagi
 
-    return () => io.disconnect();
-  }, []);
+  // ====== UI ======
+  const filters: Cat[] = [
+    "all",
+    "frontend",
+    "backend",
+    "mobile",
+    "iot",
+    "cloud",
+    "data",
+    "tools",
+  ];
+
+  const renderPages = () => {
+    const btn = (p: number) => (
+      <button
+        key={`p-${p}`}
+        onClick={() => setPage(p)}
+        className={`min-w-9 h-9 px-3 rounded-lg text-sm font-medium ${
+          p === clampedPage
+            ? "bg-gray-900 text-white"
+            : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+        }`}
+        aria-current={p === clampedPage ? "page" : undefined}
+      >
+        {p}
+      </button>
+    );
+
+    if (totalPages <= 7)
+      return Array.from({ length: totalPages }, (_, i) => btn(i + 1));
+
+    const nodes: React.ReactNode[] = [];
+    const push = (n: React.ReactNode) => nodes.push(n);
+    push(btn(1));
+    if (clampedPage > 3)
+      push(
+        <span key="e1" className="px-1 text-gray-500">
+          …
+        </span>
+      );
+    const start = Math.max(2, clampedPage - 1);
+    const stop = Math.min(totalPages - 1, clampedPage + 1);
+    for (let p = start; p <= stop; p++) push(btn(p));
+    if (clampedPage < totalPages - 2)
+      push(
+        <span key="e2" className="px-1 text-gray-500">
+          …
+        </span>
+      );
+    push(btn(totalPages));
+    return nodes;
+  };
 
   return (
     <div id="skills" className="page relative overflow-hidden bg-white py-10">
@@ -138,485 +391,137 @@ export default function Skills() {
       </div>
 
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <header className="text-center max-w-3xl mx-auto mb-12">
+        <header className="text-center max-w-3xl mx-auto mb-12" data-reveal>
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-blue-100">
             <span className="size-2 rounded-full bg-blue-500 animate-pulse"></span>{" "}
             Skills
           </span>
+          <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900">
+            Stack Utama, Tools & Platform
+          </h2>
+          <p className="mt-2 text-gray-600">
+            Disarikan dari proyekmu: Get Media, PKL HummaTech (Face
+            Recognition), Company Profile (HummaTech & Cakra Parama), Tracer
+            Study Balikpapan, SIPJAKI Pasuruan, Mischoll, Travel, Brand Nolima,
+            GreenGuard (IoT), KR_Money, MindMasters, Sisfo Akuntansi
+            Keberlanjutan, LQS Question, NewLearning Era, Journal SMKN 1, dan
+            IoT Smart Pump.
+          </p>
         </header>
 
-        {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          <button
-            className="skill-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-900 text-white"
-            data-filter="all"
-          >
-            All
-          </button>
-          <button
-            className="skill-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
-            data-filter="frontend"
-          >
-            Frontend
-          </button>
-          <button
-            className="skill-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
-            data-filter="backend"
-          >
-            Backend
-          </button>
-          <button
-            className="skill-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
-            data-filter="mobile"
-          >
-            Mobile
-          </button>
-          <button
-            className="skill-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
-            data-filter="cloud"
-          >
-            Cloud/DevOps
-          </button>
-          <button
-            className="skill-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
-            data-filter="data"
-          >
-            Data
-          </button>
-          <button
-            className="skill-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
-            data-filter="tools"
-          >
-            Tools
-          </button>
+        {/* Filter (state-based) */}
+        <div
+          className="filters-wrap flex flex-wrap justify-center gap-3 mb-8"
+          data-reveal
+        >
+          {filters.map((f, i) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+                filter === f
+                  ? "bg-gray-900 text-white"
+                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+              }`}
+              data-delay={String(i * 45)}
+            >
+              {f === "all" ? "All" : f[0].toUpperCase() + f.slice(1)}
+            </button>
+          ))}
         </div>
 
-        {/* Logo Wall (copy struktur dari HTML) */}
+        {/* Info jumlah */}
+        <div
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6 text-sm text-gray-600"
+          data-reveal
+        >
+          <div>
+            Showing{" "}
+            <span className="font-medium text-gray-900">
+              {filtered.length ? startIdx + 1 : 0}
+            </span>
+            –<span className="font-medium text-gray-900">{endIdx}</span> of{" "}
+            <span className="font-medium text-gray-900">{filtered.length}</span>{" "}
+            skills
+          </div>
+          <div>
+            Page{" "}
+            <span className="font-medium text-gray-900">{clampedPage}</span> /{" "}
+            <span className="font-medium text-gray-900">{totalPages}</span>
+          </div>
+        </div>
+
+        {/* Grid */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* LARAVEL */}
-          <div
-            className="skill-card group p-[1.5px] rounded-2xl bg-gradient-to-tr from-red-500/40 via-rose-500/40 to-orange-500/40"
-            data-cat="backend"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 shadow-sm hover:shadow-lg transition hover:-translate-y-1">
-              <div className="flex items-center gap-4">
-                <i className="devicon-laravel-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">Laravel</div>
-                  <div className="text-xs text-gray-500">
-                    Backend • REST • Queues
+          {pageItems.map((s, idx) => (
+            <div
+              key={`${s.title}-${idx}`}
+              className={`skill-card group p-[1.5px] rounded-2xl bg-gradient-to-tr ${
+                s.grad || "from-slate-500/30 via-gray-500/30 to-zinc-500/30"
+              }`}
+              data-cat={s.cat}
+              data-reveal
+            >
+              <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 shadow-sm hover:shadow-lg transition hover:-translate-y-1">
+                <div className="flex items-center gap-4">
+                  {s.icon}
+                  <div>
+                    <div className="font-semibold text-gray-900">{s.title}</div>
+                    <div className="text-xs text-gray-500">{s.sub}</div>
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>92%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="92"></div>
-                </div>
+                {!!s.chips?.length && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {s.chips!.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2 py-0.5 rounded text-[11px] bg-gray-100 text-gray-700 ring-1 ring-gray-200"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-
-          {/* FRONTEND */}
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-blue-500/30 via-purple-500/30 to-cyan-500/30"
-            data-cat="frontend"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-react-original colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">
-                    React / Next.js
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    SSR • ISR • Web Vitals
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>95%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="95"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-blue-500/30 via-purple-500/30 to-cyan-500/30"
-            data-cat="frontend"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-vuejs-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">Vue / Nuxt</div>
-                  <div className="text-xs text-gray-500">SPAs • SSR</div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>88%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="88"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-blue-500/30 via-purple-500/30 to-cyan-500/30"
-            data-cat="frontend"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-tailwindcss-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">
-                    Tailwind CSS
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    Design system • Responsive
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>94%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="94"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* BACKEND */}
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-amber-500/30 via-fuchsia-500/30 to-blue-500/30"
-            data-cat="backend"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-nodejs-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">
-                    Node.js / Express
-                  </div>
-                  <div className="text-xs text-gray-500">REST • Workers</div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>93%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="93"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-amber-500/30 via-fuchsia-500/30 to-blue-500/30"
-            data-cat="backend"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-php-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">PHP 8+</div>
-                  <div className="text-xs text-gray-500">
-                    Modern PHP • Laravel-ready
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>90%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="90"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* MOBILE */}
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-pink-500/30 via-purple-500/30 to-indigo-500/30"
-            data-cat="mobile"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-react-original colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">
-                    React Native
-                  </div>
-                  <div className="text-xs text-gray-500">iOS & Android</div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>86%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="86"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* CLOUD/DEVOPS */}
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-emerald-500/30 via-teal-500/30 to-cyan-500/30"
-            data-cat="cloud"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-amazonwebservices-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">AWS</div>
-                  <div className="text-xs text-gray-500">
-                    ECS/EKS • VPC • IAM
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>92%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="92"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-emerald-500/30 via-teal-500/30 to-cyan-500/30"
-            data-cat="cloud"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-googlecloud-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">
-                    Google Cloud
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    GKE • Cloud Run • Pub/Sub
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>90%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="90"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-emerald-500/30 via-teal-500/30 to-cyan-500/30"
-            data-cat="cloud"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-docker-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">
-                    Docker / Kubernetes
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    Images • Orchestration
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>90%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="90"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* DATA */}
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-indigo-500/30 via-sky-500/30 to-cyan-500/30"
-            data-cat="data"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-postgresql-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">PostgreSQL</div>
-                  <div className="text-xs text-gray-500">
-                    Schema • Perf • TX
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>92%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="92"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-indigo-500/30 via-sky-500/30 to-cyan-500/30"
-            data-cat="data"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-mongodb-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">MongoDB</div>
-                  <div className="text-xs text-gray-500">
-                    Doc DB • Aggregation
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>89%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="89"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-indigo-500/30 via-sky-500/30 to-cyan-500/30"
-            data-cat="data"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-redis-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">Redis</div>
-                  <div className="text-xs text-gray-500">
-                    Cache • Queue • Rate-limit
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>90%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="90"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* TOOLS */}
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-slate-500/30 via-gray-500/30 to-zinc-500/30"
-            data-cat="tools"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-git-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">
-                    Git (GitHub/GitLab)
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    Flow • PR • Release
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>96%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="96"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="skill-card p-[1.5px] rounded-2xl bg-gradient-to-tr from-slate-500/30 via-gray-500/30 to-zinc-500/30"
-            data-cat="tools"
-          >
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="flex items-center gap-4">
-                <i className="devicon-githubactions-plain colored text-4xl"></i>
-                <div>
-                  <div className="font-semibold text-gray-900">CI/CD</div>
-                  <div className="text-xs text-gray-500">
-                    GitHub Actions • Jenkins
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 skill-bar">
-                <div className="flex justify-between text-xs text-gray-700">
-                  <span>Proficiency</span>
-                  <span>87%</span>
-                </div>
-                <div className="bar-container">
-                  <div className="bar-fill" data-value="87"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
-          * Nilai persentase bersifat indikatif kemampuan kerja harian.
-        </p>
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div
+            className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4"
+            data-reveal
+          >
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={clampedPage === 1}
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
+                clampedPage === 1
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
+              }`}
+            >
+              <i className="fa-solid fa-chevron-left" /> Prev
+            </button>
 
-        <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href="/portfolio"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-700 text-white font-medium hover:from-blue-700 hover:to-purple-800 transition"
-          >
-            <i className="fa-solid fa-briefcase"></i> Lihat Portfolio
-          </a>
-          <a
-            href="/contact"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-gray-300 text-gray-800 hover:border-blue-500 hover:text-blue-600 transition"
-          >
-            <i className="fa-solid fa-paper-plane"></i> Diskusi Proyek
-          </a>
-        </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {renderPages()}
+            </div>
+
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={clampedPage === totalPages}
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
+                clampedPage === totalPages
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
+              }`}
+            >
+              Next <i className="fa-solid fa-chevron-right" />
+            </button>
+          </div>
+        )}
       </section>
     </div>
   );

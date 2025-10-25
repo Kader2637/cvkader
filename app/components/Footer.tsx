@@ -32,7 +32,7 @@ export default function Footer(){
             <ul className="space-y-3">
               {["home","about","experience","portfolio"].map(id=>(
                 <li key={id}><a href={`#${id}`} className="text-gray-300 hover:text-white transition-colors">{id[0].toUpperCase()+id.slice(1)}</a></li>
-              ))}
+              ))}wwh
             </ul>
           </div>
 
@@ -45,7 +45,7 @@ export default function Footer(){
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-          <p className="text-gray-400">&copy; 2025 Abdul Kader. All rights reserved. Built with ❤️ using Tailwind CSS</p>
+          <p className="text-gray-400">&copy; 2025 Abdul Kader. All rights reserved.</p>
         </div>
       </div>
     </footer>
