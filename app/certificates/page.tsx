@@ -229,7 +229,7 @@ export default function Certificates() {
       key: "senior-2025",
       year: 2025,
       title: "Senior Developer — Full-Stack",
-      file: "/assets/sertifikat/2025/senior developer.pdf",
+      file: "/assets/sertifikat/2025/Senior Developer.pdf",
       kind: "pdf",
       desc: "End-to-end dev, standardisasi CI/CD, code review lintas tim.",
       tags: ["Full-Stack"],
