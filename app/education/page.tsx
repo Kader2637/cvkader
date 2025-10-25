@@ -202,7 +202,7 @@ export default function Education() {
         color: "bg-gray-100 text-gray-800",
       },
       image: { src: "/assets/foto/smkn1.jpg", alt: "SMKN 1 Kraksaan RPL" },
-      links: [{ href: "#", label: "Lihat project akhir →" }],
+      links: [{ href: "https://pkl.hummatech.com/", label: "Lihat project akhir →" }],
     },
   ];
 
