@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: '/',
+    basePath: '/cvkader',
+    // tidak perlu redirects tambahan
 };
 
 module.exports = nextConfig;
