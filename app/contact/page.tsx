@@ -317,13 +317,13 @@ return () => io.disconnect();
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h3>
                 <div className="grid sm:grid-cols-3 gap-3">
                   <a
-                    href="mailto:abdul.kader@email.com"
+                    href="mailto:abdulkader0126@gmail.com"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 transition"
                   >
                     <i className="fa-solid fa-envelope text-blue-600"></i> Email
                   </a>
                   <a
-                    href="https://wa.me/6281234567890?text=Halo%20Abdul%2C%20saya%20ingin%20diskusi%20proyek."
+                    href="https://wa.me/62895428183064?text=Halo%20Abdul%2C%20saya%20ingin%20diskusi%20proyek."
                     target="_blank"
                     rel="noopener"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 transition"
