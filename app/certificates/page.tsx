@@ -535,13 +535,13 @@ export default function Certificates() {
                     >
                       <i className="fa-solid fa-eye" /> Preview
                     </button>
-                    <a
+                    {/* <a
                       href={src}
                       download
                       className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-medium hover:bg-blue-700"
                     >
                       <i className="fa-solid fa-download" /> Download
-                    </a>
+                    </a> */}
                   </div>
                 </div>
 
@@ -695,13 +695,13 @@ export default function Certificates() {
                     ) : null}
 
                     <div className="mt-6 flex flex-wrap gap-3">
-                      <a
+                      {/* <a
                         href={enc(active.file)}
                         download
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition"
                       >
                         <i className="fa-solid fa-download" /> Unduh Sertifikat
-                      </a>
+                      </a> */}
                       <button
                         type="button"
                         onClick={closeModal}
