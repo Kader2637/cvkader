@@ -1,6 +1,6 @@
-module.exports = {
-    basePath: '/cvkader',
-    async redirects() {
-        return [{ source: '/', destination: '/cvkader', permanent: false }];
-    },
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    basePath: '/',
 };
+
+module.exports = nextConfig;
