@@ -77,7 +77,7 @@ export default function Skills() {
       icon: <i className="devicon-nextjs-plain text-4xl" />, // Next.js (ikon default hitam/monokrom)
       title: "Next.js",
       sub: "SSR • ISR • App Router",
-      chips: ["Get Media", "Brand Nolima", "Landing Birthday"],
+      chips: ["My Website" , "Api"],
       grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
     },
     {
@@ -295,7 +295,7 @@ export default function Skills() {
       icon: <i className="devicon-figma-plain colored text-4xl" />,
       title: "Figma",
       sub: "Wireframe • Handoff",
-      chips: ["Nolima", "GreenGuard"],
+      chips: ["Nolima", "GreenGuard","All"],
       grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
     },
   ];

@@ -87,7 +87,9 @@ export default function RootLayout({
 
       <body className="bg-gray-50 text-gray-900 overflow-x-hidden antialiased">
         <Navbar />
-        <main className="pt-16">{children}</main>
+        <main className="pt-16 sm:pt-8 md:pt-20 lg:pt-4 xl:pt-0">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

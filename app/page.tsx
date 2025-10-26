@@ -196,7 +196,7 @@ export default function Page() {
                 <div className="relative bg-white rounded-3xl p-3 shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-500">
                   <div className="relative rounded-2xl overflow-hidden">
                     <img
-                      src="/assets/foto/i'm.jpg"
+                      src="/assets/foto/im.png"
                       alt="Abdul Kader"
                       className="w-full h-full object-cover rounded-2xl"
                     />
@@ -207,7 +207,7 @@ export default function Page() {
                 <div className="absolute -top-4 -right-4 w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg animate-bounce-slow">
                   <i className="fas fa-code text-2xl" />
                 </div>
-                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white shadow-lg animate-float">
+                <div className="absolute -bottom-11 -left-4 w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white shadow-lg animate-float">
                   <i className="fas fa-laptop text-xl" />
                 </div>
               </div>

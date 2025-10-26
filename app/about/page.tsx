@@ -143,7 +143,7 @@ export default function About() {
                 <div className="p-6">
                   <div className="tilt-card relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-100 will-change-transform">
                     <img
-                      src="/assets/foto/i'm1.png"
+                      src="/assets/foto/im1.png"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       alt="Abdul Kader"
                       loading="lazy"
