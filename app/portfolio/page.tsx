@@ -221,8 +221,7 @@ export default function Portfolio() {
                     <i className="fa-solid fa-magnifying-glass" /> Preview
                   </button>
                   <a
-                    href={it.url || "#"}
-                    target="_blank"
+                    href="#"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-medium hover:bg-blue-700"
                     title="Visit Site"
