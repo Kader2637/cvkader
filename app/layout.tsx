@@ -22,7 +22,7 @@ export const metadata = {
     siteName: "Abdul Kader Portfolio",
     images: [
       {
-        url: "/assets/foto/logo.png", // bisa ganti dengan banner og-image
+        url: "/assets/foto/logo.png",
         width: 1200,
         height: 630,
         alt: "Abdul Kader Portfolio Preview",
@@ -50,6 +50,7 @@ export const metadata = {
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import MainWrapper from "./components/MainWrapper";
 
 export default function RootLayout({
   children,
@@ -87,9 +88,7 @@ export default function RootLayout({
 
       <body className="bg-gray-50 text-gray-900 overflow-x-hidden antialiased">
         <Navbar />
-        <main className="pt-16 sm:pt-8 md:pt-20 lg:pt-4 xl:pt-0">
-          {children}
-        </main>
+        <MainWrapper>{children}</MainWrapper>
         <Footer />
       </body>
     </html>

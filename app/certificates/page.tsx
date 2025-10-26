@@ -334,6 +334,21 @@ export default function Certificates() {
   const startIdx = (clampedPage - 1) * pageSize;
   const endIdx = Math.min(startIdx + pageSize, filtered.length);
   const pageItems = filtered.slice(startIdx, endIdx);
+  // (di dekat state lain)
+  const [loading, setLoading] = useState(true);
+
+  // skeleton saat pertama kali masuk halaman
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 420);
+    return () => clearTimeout(t);
+  }, []);
+
+  // skeleton saat filter/search/pagination berubah
+  useEffect(() => {
+    setLoading(true);
+    const t = setTimeout(() => setLoading(false), 320);
+    return () => clearTimeout(t);
+  }, [yearFilter, q, clampedPage]);
 
   // ====== Reveal ringan tiap halaman berubah ======
   useEffect(() => {
@@ -415,7 +430,7 @@ export default function Certificates() {
         {/* Header */}
         <header className="text-center max-w-3xl mx-auto mb-8" data-reveal>
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-blue-100">
-            <span className="size-2 rounded-full bg-blue-500 animate-pulse" />{" "}
+            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />{" "}
             Sertifikat
           </span>
           <h1 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
@@ -535,13 +550,7 @@ export default function Certificates() {
                     >
                       <i className="fa-solid fa-eye" /> Preview
                     </button>
-                    {/* <a
-                      href={src}
-                      download
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-medium hover:bg-blue-700"
-                    >
-                      <i className="fa-solid fa-download" /> Download
-                    </a> */}
+                    {/* download optional */}
                   </div>
                 </div>
 
@@ -616,9 +625,10 @@ export default function Certificates() {
             if (e.target === e.currentTarget) closeModal();
           }}
         >
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          {/* backdrop pakai kelas aman */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm backdrop-fade" />
 
-          <div className="relative z-10 w-full max-w-4xl">
+          <div className="relative z-10 w-full max-w-4xl modal-pop">
             <div className="p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 shadow-2xl">
               <div className="rounded-2xl bg-white">
                 {/* header */}
@@ -695,13 +705,6 @@ export default function Certificates() {
                     ) : null}
 
                     <div className="mt-6 flex flex-wrap gap-3">
-                      {/* <a
-                        href={enc(active.file)}
-                        download
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition"
-                      >
-                        <i className="fa-solid fa-download" /> Unduh Sertifikat
-                      </a> */}
                       <button
                         type="button"
                         onClick={closeModal}
@@ -725,10 +728,36 @@ export default function Certificates() {
         </div>
       )}
 
-      {/* pastikan blob di bawah modal */}
+      {/* pastikan blob di bawah modal + animasi aman build */}
       <style jsx>{`
         :global(#cert-page .pointer-events-none) {
           z-index: 0;
+        }
+
+        @keyframes backdropFade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        .backdrop-fade {
+          animation: backdropFade 0.22s ease-out both;
+        }
+
+        @keyframes modalPop {
+          0% {
+            opacity: 0;
+            transform: translateY(14px) scale(0.98);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        .modal-pop {
+          animation: modalPop 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
       `}</style>
     </div>

@@ -17,6 +17,9 @@ export default function Education() {
   const [open, setOpen] = useState(false);
   const [activeCert, setActiveCert] = useState<Certificate | null>(null);
 
+  // ====== STATE POPUP INFO (untuk "Lihat kurikulum →") ======
+  const [showInfo, setShowInfo] = useState(false);
+
   // === DATA SERTIFIKAT (disesuaikan) ===
   const certificates: Certificate[] = [
     {
@@ -64,13 +67,32 @@ export default function Education() {
     document.documentElement.style.overflow = "";
   }, []);
 
+  // Handler khusus link "Lihat kurikulum →"
+  const onKurikulumClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      setShowInfo(true);
+      // optional: lock scroll saat info modal muncul
+      document.documentElement.style.overflow = "hidden";
+    },
+    []
+  );
+
+  const closeInfo = useCallback(() => {
+    setShowInfo(false);
+    document.documentElement.style.overflow = "";
+  }, []);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeModal();
+      if (e.key === "Escape") {
+        if (open) closeModal();
+        if (showInfo) closeInfo();
+      }
     };
-    if (open) window.addEventListener("keydown", onKey);
+    if (open || showInfo) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, closeModal]);
+  }, [open, showInfo, closeModal, closeInfo]);
 
   // ====== REVEAL ON SCROLL ======
   useEffect(() => {
@@ -162,6 +184,7 @@ export default function Education() {
       ),
       badge: { text: "Ongoing", color: "bg-blue-50 text-blue-700 ring-blue-100" },
       image: { src: "/assets/foto/unmer.jpg", alt: "Universitas Merdeka Malang" },
+      // “Lihat kurikulum →” akan dipasang handler popup (onKurikulumClick)
       links: [{ href: "#", label: "Lihat kurikulum →" }],
     },
     {
@@ -202,6 +225,7 @@ export default function Education() {
         color: "bg-gray-100 text-gray-800",
       },
       image: { src: "/assets/foto/smkn1.jpg", alt: "SMKN 1 Kraksaan RPL" },
+      // “Lihat project akhir →” harus buka tab baru (tanpa popup)
       links: [{ href: "https://pkl.hummatech.com/", label: "Lihat project akhir →" }],
     },
   ];
@@ -244,6 +268,7 @@ export default function Education() {
           <div className="space-y-12 md:space-y-16">
             {timeline.map((t, idx) => {
               const isLeft = t.side === "left";
+              const isKurikulum = t.links?.some((l) => l.label.toLowerCase().includes("kurikulum"));
               return (
                 <div key={idx} className="relative" data-reveal data-delay={idx * 80}>
                   {/* NODE */}
@@ -260,7 +285,7 @@ export default function Education() {
                     </div>
                   </div>
 
-                  {/* GRID CARD (dengan gutter lebih lebar di desktop) */}
+                  {/* GRID CARD */}
                   <div className="md:grid md:grid-cols-2 md:gap-16">
                     {/* Kolom teks */}
                     <div
@@ -297,19 +322,39 @@ export default function Education() {
                                 >
                                   <i className="fa-solid fa-award" /> {t.badge.text}
                                 </span>
-                                {t.links.map((l) => (
-                                  <a
-                                    key={l.label}
-                                    href={l.href}
-                                    className={`text-sm ${
-                                      isLeft
-                                        ? "text-blue-600 hover:text-blue-800"
-                                        : "text-purple-600 hover:text-purple-800"
-                                    } font-medium`}
-                                  >
-                                    {l.label}
-                                  </a>
-                                ))}
+                                {t.links.map((l) =>
+                                  isKurikulum ? (
+                                    // === LINK KURIKULUM → POPUP ===
+                                    <a
+                                      key={l.label}
+                                      href={l.href}
+                                      data-popup="info"
+                                      onClick={onKurikulumClick}
+                                      className={`text-sm ${
+                                        isLeft
+                                          ? "text-blue-600 hover:text-blue-800"
+                                          : "text-purple-600 hover:text-purple-800"
+                                      } font-medium`}
+                                    >
+                                      {l.label}
+                                    </a>
+                                  ) : (
+                                    // === LINK PROJECT AKHIR → TAB BARU ===
+                                    <a
+                                      key={l.label}
+                                      href={l.href}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className={`text-sm ${
+                                        isLeft
+                                          ? "text-blue-600 hover:text-blue-800"
+                                          : "text-purple-600 hover:text-purple-800"
+                                      } font-medium`}
+                                    >
+                                      {l.label}
+                                    </a>
+                                  )
+                                )}
                               </div>
                             </div>
                           </div>
@@ -327,6 +372,41 @@ export default function Education() {
                           <div className="rounded-2xl border border-gray-200/70 bg-white/70 backdrop-blur-xl p-5 shadow-sm">
                             <div className="text-gray-700">{t.text}</div>
                           </div>
+                        </div>
+                        <div className="mt-3 flex flex-wrap gap-3">
+                          {t.links.map((l) =>
+                            isKurikulum ? (
+                              // === LINK KURIKULUM → POPUP (DESKTOP) ===
+                              <a
+                                key={l.label}
+                                href={l.href}
+                                data-popup="info"
+                                onClick={onKurikulumClick}
+                                className={`text-sm ${
+                                  isLeft
+                                    ? "text-blue-600 hover:text-blue-800"
+                                    : "text-purple-600 hover:text-purple-800"
+                                } font-medium`}
+                              >
+                                {l.label}
+                              </a>
+                            ) : (
+                              // === LINK PROJECT AKHIR → TAB BARU (DESKTOP) ===
+                              <a
+                                key={l.label}
+                                href={l.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`text-sm ${
+                                  isLeft
+                                    ? "text-blue-600 hover:text-blue-800"
+                                    : "text-purple-600 hover:text-purple-800"
+                                } font-medium`}
+                              >
+                                {l.label}
+                              </a>
+                            )
+                          )}
                         </div>
                       </div>
                     </div>
@@ -349,19 +429,39 @@ export default function Education() {
                             >
                               <i className="fa-solid fa-award" /> {t.badge.text}
                             </span>
-                            {t.links.map((l) => (
-                              <a
-                                key={l.label}
-                                href={l.href}
-                                className={`text-sm ${
-                                  isLeft
-                                    ? "text-blue-600 hover:text-blue-800"
-                                    : "text-purple-600 hover:text-purple-800"
-                                } font-medium`}
-                              >
-                                {l.label}
-                              </a>
-                            ))}
+                            {t.links.map((l) =>
+                              isKurikulum ? (
+                                // === LINK KURIKULUM → POPUP (DESKTOP, KARTU GAMBAR) ===
+                                <a
+                                  key={l.label}
+                                  href={l.href}
+                                  data-popup="info"
+                                  onClick={onKurikulumClick}
+                                  className={`text-sm ${
+                                    isLeft
+                                      ? "text-blue-600 hover:text-blue-800"
+                                      : "text-purple-600 hover:text-purple-800"
+                                  } font-medium`}
+                                >
+                                  {l.label}
+                                </a>
+                              ) : (
+                                // === LINK PROJECT AKHIR → TAB BARU (DESKTOP, KARTU GAMBAR) ===
+                                <a
+                                  key={l.label}
+                                  href={l.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className={`text-sm ${
+                                    isLeft
+                                      ? "text-blue-600 hover:text-blue-800"
+                                      : "text-purple-600 hover:text-purple-800"
+                                  } font-medium`}
+                                >
+                                  {l.label}
+                                </a>
+                              )
+                            )}
                           </div>
                         </div>
                       </div>
@@ -569,13 +669,6 @@ export default function Education() {
                       </>
                     ) : null}
                     <div className="mt-6 flex flex-wrap gap-3">
-                      {/* <a
-                        href={activeCert.image}
-                        download
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition"
-                      >
-                        <i className="fa-solid fa-download" /> Unduh Sertifikat
-                      </a> */}
                       <button
                         type="button"
                         onClick={closeModal}
@@ -591,6 +684,58 @@ export default function Education() {
                   <p className="text-xs text-gray-500">
                     Tekan <span className="font-semibold">Esc</span> untuk menutup.
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== MODAL INFO: Data belum tersedia (khusus “Lihat kurikulum →”) ===== */}
+      {showInfo && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="info-title"
+          className="fixed inset-0 z-[1000] flex items-center justify-center px-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeInfo();
+          }}
+        >
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          <div className="relative z-10 w-full max-w-md">
+            <div className="p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 shadow-2xl">
+              <div className="rounded-2xl bg-white">
+                <div className="flex items-start gap-4 p-5 border-b border-gray-100">
+                  <div className="w-10 h-10 rounded-lg bg-gray-50 grid place-items-center ring-1 ring-gray-200">
+                    <i className="fa-solid fa-circle-info text-blue-600" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 id="info-title" className="text-base font-semibold text-gray-900">
+                      Data Belum Tersedia
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Kurikulum sedang dalam proses penyusunan. Silakan cek kembali nanti.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={closeInfo}
+                    className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:bg-gray-100 transition"
+                    aria-label="Tutup"
+                    title="Tutup"
+                  >
+                    <i className="fa-solid fa-xmark text-gray-600" />
+                  </button>
+                </div>
+                <div className="p-5">
+                  <button
+                    type="button"
+                    onClick={closeInfo}
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition"
+                  >
+                    Mengerti
+                  </button>
                 </div>
               </div>
             </div>
