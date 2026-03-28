@@ -10,7 +10,6 @@ function cx(...cls: Array<string | false | null | undefined>) {
   return cls.filter(Boolean).join(" ");
 }
 
-// Daftar navigasi utama (✅ sudah termasuk Certificates)
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
@@ -18,7 +17,7 @@ const NAV_ITEMS = [
   { href: "/education", label: "Education" },
   { href: "/skills", label: "Skills" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/certificates", label: "Certificates" }, // 🔥 Tambahan menu baru
+  { href: "/certificates", label: "Certificates" },
 ];
 
 export default function Navbar() {
@@ -26,14 +25,12 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Ganti background dan shadow saat di-scroll
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Tutup menu mobile saat berpindah halaman
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
@@ -88,14 +85,31 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* Tombol Contact */}
-            <Link
-              href="/contact"
-              className="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transform hover:scale-[1.03] transition-all"
-            >
-              <i className="fas fa-paper-plane" />
-              Contact
-            </Link>
+            <div className="flex items-center gap-2 ml-4">
+              {/* 🔥 TOMBOL BLOG YANG DIPERBAGUS */}
+              <a
+                href="https://catatan-kader.web.id"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 border-2 border-blue-500/20 rounded-lg overflow-hidden transition-all hover:border-blue-500/0 hover:text-white"
+              >
+                <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-600 to-blue-400 transition-all duration-300 ease-out group-hover:w-full"></span>
+                <span className="relative flex items-center gap-2">
+                  <i className="fas fa-rss text-xs" />
+                  Blog
+                  <i className="fas fa-external-link-alt text-[10px] opacity-50 group-hover:opacity-100" />
+                </span>
+              </a>
+
+              {/* Tombol Contact */}
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transform hover:scale-[1.03] shadow-md hover:shadow-lg transition-all"
+              >
+                <i className="fas fa-paper-plane" />
+                Contact
+              </Link>
+            </div>
           </div>
 
           {/* TOGGLE MOBILE */}
@@ -114,10 +128,10 @@ export default function Navbar() {
       <div
         className={cx(
           "md:hidden overflow-hidden border-t transition-all duration-300",
-          open ? "max-h-[480px] border-gray-200" : "max-h-0 border-transparent"
+          open ? "max-h-[550px] border-gray-200" : "max-h-0 border-transparent"
         )}
       >
-        <div className="px-4 py-3 bg-white">
+        <div className="px-4 py-4 bg-white space-y-3">
           <div className="grid gap-1">
             {NAV_ITEMS.map((item) => (
               <Link
@@ -133,13 +147,28 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
+          </div>
 
-            {/* Tombol Contact (mobile) */}
+          <hr className="border-gray-100" />
+
+          {/* Tombol Aksi di Mobile */}
+          <div className="flex flex-col gap-2">
+            <a
+              href="https://catatan-kader.web.id"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-blue-600 border border-blue-100 bg-blue-50 hover:bg-blue-100 transition-colors"
+            >
+              <i className="fas fa-rss" />
+              Kunjungi Blog
+            </a>
+
             <Link
               href="/contact"
-              className="block px-3 py-2 rounded-md text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-sm"
             >
-              Contact
+              <i className="fas fa-paper-plane" />
+              Contact Me
             </Link>
           </div>
         </div>
