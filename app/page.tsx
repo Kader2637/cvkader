@@ -77,7 +77,7 @@ export default function Page() {
 
   return (
     <>
-      <VideoIntro onFinish={() => setIntroDone(true)} />
+      {/* <VideoIntro onFinish={() => setIntroDone(true)} /> */}
 
       {/* Fade-in container kecil untuk transisi awal setelah intro */}
       <div
