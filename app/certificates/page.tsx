@@ -193,6 +193,23 @@ export default function Certificates() {
     },
 
     // 2025
+
+    {
+      key: "huawei-dev-apac-2025",
+      year: 2025,
+      title: "Huawei APAC Developer 2025",
+      file: "/assets/sertifikat/2025/SERTIFIKAT HUAWEI APAC DEVELOPER 2025.pdf",
+      kind: "pdf",
+      desc: "Program pengembang tingkat regional Asia-Pasifik yang berfokus pada ekosistem teknologi.",
+    },
+    {
+      key: "huawei-ai-class-2025",
+      year: 2025,
+      title: "Huawei AI Certification Class",
+      file: "/assets/sertifikat/2025/huawei class.png",
+      kind: "image",
+      desc: "Pelatihan intensif mengenai implementasi Artificial Intelligence dan fundamental AI dari Huawei.",
+    },
     {
       key: "comp-webdev-2025",
       year: 2025,
@@ -380,11 +397,10 @@ export default function Certificates() {
       <button
         key={`p-${p}`}
         onClick={() => setPage(p)}
-        className={`min-w-9 h-9 px-3 rounded-lg text-sm font-medium ${
-          p === clampedPage
+        className={`min-w-9 h-9 px-3 rounded-lg text-sm font-medium ${p === clampedPage
             ? "bg-gray-900 text-white"
             : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-        }`}
+          }`}
         aria-current={p === clampedPage ? "page" : undefined}
       >
         {p}
@@ -453,11 +469,10 @@ export default function Certificates() {
               <button
                 key={String(y)}
                 onClick={() => setYearFilter(y)}
-                className={`px-4 py-2 rounded-full text-sm font-medium ${
-                  yearFilter === y
+                className={`px-4 py-2 rounded-full text-sm font-medium ${yearFilter === y
                     ? "bg-gray-900 text-white"
                     : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-                }`}
+                  }`}
               >
                 {y === "all" ? "Semua" : y}
               </button>
@@ -586,11 +601,10 @@ export default function Certificates() {
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={clampedPage === 1}
-              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
-                clampedPage === 1
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${clampedPage === 1
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
-              }`}
+                }`}
             >
               <i className="fa-solid fa-chevron-left" /> Prev
             </button>
@@ -602,11 +616,10 @@ export default function Certificates() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={clampedPage === totalPages}
-              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
-                clampedPage === totalPages
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${clampedPage === totalPages
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
-              }`}
+                }`}
             >
               Next <i className="fa-solid fa-chevron-right" />
             </button>
