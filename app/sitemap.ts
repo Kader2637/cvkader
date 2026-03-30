@@ -1,17 +1,22 @@
 export default function sitemap() {
   const baseUrl = "https://abdkader.my.id";
-
-  const routes = [
-    "",
-    "/projects",
-    "/certificates",
+  
+  const staticRoutes = [
+    "", 
     "/about",
+    "/certificates",
+    "/contact",
+    "/education",
+    "/experience",
+    "/portfolio",
+    "/skills",
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
-    changeFrequency: "monthly",
-    priority: 1,
+    changeFrequency: "weekly",
+    priority: route === "" ? 1.0 : 0.8,
   }));
 
-  return [...routes];
+
+  return [...staticRoutes];
 }
