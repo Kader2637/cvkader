@@ -1,3 +1,8 @@
+import "./globals.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import MainWrapper from "./components/MainWrapper";
+
 export const metadata = {
   title: "Abdul Kader — Full Stack Developer & Digital Solutions Expert",
   description:
@@ -12,13 +17,14 @@ export const metadata = {
     "Web Developer Indonesia",
     "Software Engineer",
     "Portfolio",
+    "Huawei Developer APAC",
   ],
-  authors: [{ name: "Abdul Kader", url: "https://abdulkader.vercel.app" }],
+  authors: [{ name: "Abdul Kader", url: "https://abdkader.my.id" }],
   openGraph: {
     title: "Abdul Kader — Full Stack Developer & Digital Solutions Expert",
     description:
       "Eksplorasi karya, pengalaman, dan keahlian Abdul Kader dalam pengembangan web modern & solusi digital.",
-    url: "https://abdulkader.vercel.app",
+    url: "https://abdkader.my.id",
     siteName: "Abdul Kader Portfolio",
     images: [
       {
@@ -44,23 +50,32 @@ export const metadata = {
     shortcut: "/assets/foto/favicon.png",
     apple: "/assets/foto/favicon.png",
   },
-  metadataBase: new URL("https://abdulkader.vercel.app"),
+  // Update metadataBase ke domain utama
+  metadataBase: new URL("https://abdkader.my.id"),
 };
-
-import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import MainWrapper from "./components/MainWrapper";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Abdul Kader",
+    "url": "https://abdkader.my.id/",
+    "jobTitle": "Full Stack Developer",
+    "description": "Software Engineer berfokus pada Laravel, React, dan ekosistem Huawei.",
+    "alumniOf": {
+      "@type": "Organization",
+      "name": "Huawei Developer APAC"
+    },
+    "knowsAbout": ["Web Development", "Artificial Intelligence", "Next.js", "React", "Laravel", "DevOps"]
+  };
+
   return (
     <html lang="id" className="scroll-smooth">
       <head>
-        {/* Font Awesome & Devicon */}
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -69,20 +84,16 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
-
-        {/* Favicon */}
-        <link rel="icon" href="/assets/foto/favicon.png" sizes="any" />
-        <link rel="apple-touch-icon" href="/assets/foto/favicon.png" />
         <meta name="theme-color" content="#2563eb" />
-
-        {/* Extra SEO */}
-        <meta
-          name="robots"
-          content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
-        />
         <meta
           name="google-site-verification"
-          content="YOUR_GOOGLE_SITE_VERIFICATION_CODE"
+          content="8nY7z8e81_z2k1nAO5SbEz-x2dxSVgzHugUceJXd5GY"
+        />
+
+        {/* Script JSON-LD Sekarang di posisi yang benar */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
 

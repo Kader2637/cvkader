@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, useCallback } from "react";
 
-type Year = 2023 | 2024 | 2025;
+type Year = 2023 | 2024 | 2025 | 2026;
 type Kind = "image" | "pdf";
 
 type CertItem = {
@@ -323,6 +323,33 @@ export default function Certificates() {
       kind: "image",
       desc: "Dampak gaya hidup digital pada produktivitas & kesehatan.",
     },
+    {
+      key: "webinar-literasi-digital-2026",
+      year: 2026,
+      title: "Webinar Literasi Digital",
+      file: "/assets/sertifikat/2026/WEBINAR LITERACY DIGITAL.png",
+      kind: "image",
+      desc: "Pemahaman mendalam mengenai etika, keamanan, dan kecakapan dalam menggunakan platform digital.",
+      tags: ["Literasi Digital", "Edukasi"],
+    },
+    {
+      key: "informasi-era-40-2026",
+      year: 2026,
+      title: "Kunci Menghadapi Informasi di Era 4.0",
+      file: "/assets/sertifikat/2026/kunci menghadapi informasi di era 4.0.png",
+      kind: "image",
+      desc: "Strategi mengelola arus informasi besar (Big Data) dan memverifikasi data di era Revolusi Industri 4.0.",
+      tags: ["Big Data", "Informasi", "Industri 4.0"],
+    },
+    {
+      key: "pengaruh-media-digital-2026",
+      year: 2026,
+      title: "Webinar Pengaruh Media Digital",
+      file: "/assets/sertifikat/2026/WEBINAR PENGARUH MEDIA DIGITAL.png",
+      kind: "image",
+      desc: "Analisis dampak media digital terhadap perilaku sosial dan perkembangan teknologi informasi.",
+      tags: ["Social Media", "Digital Impact"],
+    },
   ];
 
   // ====== FILTER + SEARCH + PAGINATION ======
@@ -398,8 +425,8 @@ export default function Certificates() {
         key={`p-${p}`}
         onClick={() => setPage(p)}
         className={`min-w-9 h-9 px-3 rounded-lg text-sm font-medium ${p === clampedPage
-            ? "bg-gray-900 text-white"
-            : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-800 hover:bg-gray-200"
           }`}
         aria-current={p === clampedPage ? "page" : undefined}
       >
@@ -465,13 +492,13 @@ export default function Certificates() {
           data-reveal
         >
           <div className="flex flex-wrap gap-2">
-            {(["all", 2025, 2024, 2023] as const).map((y) => (
+            {(["all", 2026, 2025, 2024, 2023] as const).map((y) => (
               <button
                 key={String(y)}
                 onClick={() => setYearFilter(y)}
                 className={`px-4 py-2 rounded-full text-sm font-medium ${yearFilter === y
-                    ? "bg-gray-900 text-white"
-                    : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                  ? "bg-gray-900 text-white"
+                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
                   }`}
               >
                 {y === "all" ? "Semua" : y}
@@ -602,8 +629,8 @@ export default function Certificates() {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={clampedPage === 1}
               className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${clampedPage === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
                 }`}
             >
               <i className="fa-solid fa-chevron-left" /> Prev
@@ -617,8 +644,8 @@ export default function Certificates() {
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={clampedPage === totalPages}
               className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${clampedPage === totalPages
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
                 }`}
             >
               Next <i className="fa-solid fa-chevron-right" />
