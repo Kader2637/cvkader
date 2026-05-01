@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://abdkader.my.id/</loc>
+    <lastmod>2026-05-01</lastmod>
+    <image:image>
+      <image:loc>https://abdkader.my.id/im.jpg</image:loc>
+      <image:title>Abdul Kader Portfolio</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://abdkader.my.id/about</loc>
+    <lastmod>2026-05-01</lastmod>
+    <image:image>
+      <image:loc>https://abdkader.my.id/im.jpg</image:loc>
+      <image:title>About Abdul Kader</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://abdkader.my.id/certificates</loc>
+    <lastmod>2026-05-01</lastmod>
+    <image:image>
+      <image:loc>https://abdkader.my.id/im.jpg</image:loc>
+      <image:title>Certificates</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://abdkader.my.id/contact</loc>
+    <lastmod>2026-05-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://abdkader.my.id/education</loc>
+    <lastmod>2026-05-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://abdkader.my.id/experience</loc>
+    <lastmod>2026-05-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://abdkader.my.id/portfolio</loc>
+    <lastmod>2026-05-01</lastmod>
+    <image:image>
+      <image:loc>https://abdkader.my.id/im.jpg</image:loc>
+      <image:title>Portfolio Projects</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://abdkader.my.id/skills</loc>
+    <lastmod>2026-05-01</lastmod>
+  </url>
+
+</urlset>
