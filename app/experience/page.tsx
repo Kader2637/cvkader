@@ -106,7 +106,7 @@ export default function Experience() {
   return (
     <div
       id="experience"
-      className="page relative overflow-hidden py-16 sm:py-20"
+      className="page relative overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-20"
     >
       <section className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}

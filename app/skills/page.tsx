@@ -399,11 +399,11 @@ export default function Skills() {
   };
 
   return (
-    <div id="skills" className="page relative overflow-hidden py-10">
+    <div id="skills" className="page relative overflow-hidden pt-12 pb-10 sm:pt-16 sm:pb-16">
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <header className="text-center max-w-3xl mx-auto mb-12" data-reveal>
+        <header className="text-center max-w-3xl mx-auto mb-16" data-reveal>
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 ring-1 ring-blue-100">
             <span className="size-2 rounded-full bg-blue-500 animate-pulse"></span>{" "}
             Skills

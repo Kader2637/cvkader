@@ -445,12 +445,12 @@ export default function Certificates() {
   return (
     <div
       id="cert-page"
-      className="page relative overflow-hidden py-10"
+      className="page relative overflow-hidden pt-12 pb-10 sm:pt-16 sm:pb-16"
     >
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <header className="text-center max-w-3xl mx-auto mb-10" data-reveal>
+        <header className="text-center max-w-3xl mx-auto mb-16" data-reveal>
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 ring-1 ring-blue-100">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />{" "}
             Sertifikat
@@ -709,7 +709,7 @@ export default function Certificates() {
                       <h4 className="text-sm font-bold text-slate-900">
                         Deskripsi Sertifikat
                       </h4>
-                      <p className="mt-2.5 text-sm text-slate-650 leading-relaxed">{active.desc}</p>
+                      <p className="mt-2.5 text-sm text-slate-600 leading-relaxed">{active.desc}</p>
 
                       {active.tags?.length ? (
                         <>

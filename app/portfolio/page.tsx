@@ -99,12 +99,12 @@ export default function Portfolio() {
   return (
     <div
       id="portfolio"
-      className="relative overflow-hidden py-12"
+      className="relative overflow-hidden pt-12 pb-12 sm:pt-16 sm:pb-16"
     >
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <header className="max-w-3xl mx-auto text-center mb-10" data-reveal>
+        <header className="max-w-3xl mx-auto text-center mb-16" data-reveal>
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 ring-1 ring-blue-100">
             <span className="size-2 rounded-full bg-blue-500 animate-pulse" /> Portfolio
           </span>

@@ -207,24 +207,24 @@ export default function Contact() {
   }, []);
 
   return (
-    <div id="contact" className="page relative overflow-hidden bg-white py-10">
-      <div className="pointer-events-none absolute inset-0 opacity-60">
-        <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-3xl"></div>
-        <div className="absolute -bottom-28 -right-20 w-80 h-80 rounded-full bg-gradient-to-tr from-cyan-200 to-indigo-200 blur-3xl"></div>
+    <div id="contact" className="page relative overflow-hidden pt-12 pb-10 sm:pt-16 sm:pb-16">
+      {/* Soft bg blobs */}
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-60">
+        <div className="absolute -top-24 -left-16 h-72 w-72 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-3xl animate-pulse-slow" />
+        <div className="absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-gradient-to-tr from-cyan-200 to-indigo-200 blur-3xl animate-pulse-slow" style={{ animationDelay: "-3s" }} />
       </div>
 
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <header className="text-center max-w-3xl mx-auto mb-14">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-blue-100">
-            <span className="size-2 rounded-full bg-blue-500 animate-pulse"></span>{" "}
+        <header className="text-center max-w-3xl mx-auto mb-16">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></span>{" "}
             Get In Touch
           </span>
-          <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-4 text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
             Let’s Build Something Great
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            Butuh bantuan proyek web, mobile, atau cloud? Kirim detailnya—aku
-            balas cepat.
+          <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+            Butuh bantuan proyek web, mobile, atau cloud? Kirim detailnya—aku balas cepat.
           </p>
         </header>
 
@@ -232,7 +232,7 @@ export default function Contact() {
           {/* Form */}
           <form
             id="contactForm"
-            className="lg:col-span-3 space-y-6 p-8 rounded-2xl bg-white/70 backdrop-blur-xl border border-gray-200/70 shadow-sm"
+            className="lg:col-span-3 space-y-6 p-8 rounded-3xl bg-white/70 backdrop-blur-xl border border-slate-200/60 shadow-xl"
           >
             <input
               type="text"
@@ -245,7 +245,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-semibold text-gray-800 mb-2"
+                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
                 >
                   Full Name *
                 </label>
@@ -254,14 +254,14 @@ export default function Contact() {
                   name="name"
                   type="text"
                   required
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 placeholder-slate-400 text-sm text-slate-800"
                   placeholder="Nama lengkap kamu"
                 />
               </div>
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-semibold text-gray-800 mb-2"
+                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
                 >
                   Email *
                 </label>
@@ -270,7 +270,7 @@ export default function Contact() {
                   name="email"
                   type="email"
                   required
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 placeholder-slate-400 text-sm text-slate-800"
                   placeholder="you@email.com"
                 />
               </div>
@@ -280,7 +280,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="subject"
-                  className="block text-sm font-semibold text-gray-800 mb-2"
+                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
                 >
                   Subject *
                 </label>
@@ -288,7 +288,7 @@ export default function Contact() {
                   id="subject"
                   name="subject"
                   required
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 text-sm text-slate-800"
                 >
                   <option value="" disabled>
                     {" "}
@@ -304,14 +304,14 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="budget"
-                  className="block text-sm font-semibold text-gray-800 mb-2"
+                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
                 >
                   Budget Range
                 </label>
                 <select
                   id="budget"
                   name="budget"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 text-sm text-slate-800"
                 >
                   <option value="" disabled>
                     {" "}
@@ -329,7 +329,7 @@ export default function Contact() {
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-semibold text-gray-800 mb-2"
+                className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
               >
                 Message *
               </label>
@@ -338,10 +338,10 @@ export default function Contact() {
                 name="message"
                 rows={6}
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 placeholder-slate-400 text-sm text-slate-800"
                 placeholder="Ceritakan kebutuhanmu, timeline, dan target yang ingin dicapai…"
               ></textarea>
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <div className="flex justify-between text-xs text-slate-500 mt-1">
                 <span>Min 20 karakter</span>
                 <span id="charCount">0</span>
               </div>
@@ -352,21 +352,21 @@ export default function Contact() {
                 id="nda"
                 name="nda"
                 type="checkbox"
-                className="w-4 h-4 text-blue-600 rounded"
+                className="w-4 h-4 text-blue-600 border-slate-350 rounded focus:ring-blue-500/20"
               />
-              <label htmlFor="nda" className="text-sm text-gray-700">
+              <label htmlFor="nda" className="text-sm text-slate-700 font-semibold">
                 Butuh NDA (Non-Disclosure Agreement)
               </label>
             </div>
 
             <button
               type="submit"
-              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-700 text-white py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-800 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-650 text-white py-4 rounded-xl font-bold hover:shadow-[0_8px_30px_rgba(37,99,235,0.3)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-sm"
             >
               <i className="fa-solid fa-paper-plane"></i> Send Message
             </button>
 
-            <p className="text-xs text-gray-500 text-center">
+            <p className="text-xs text-slate-500 text-center leading-relaxed">
               Dengan mengirim form ini, kamu menyetujui untuk dihubungi kembali
               via email/WhatsApp.
             </p>
@@ -374,114 +374,127 @@ export default function Contact() {
 
           {/* Sidebar */}
           <aside className="lg:col-span-2 space-y-6">
-            <div className="p-[1.5px] rounded-2xl bg-gradient-to-tr from-blue-500/50 via-purple-500/50 to-cyan-500/50">
-              <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  Quick Actions
-                </h3>
-                <div className="grid sm:grid-cols-3 gap-3">
-                  <a
-                    href="mailto:abdulkader0126@gmail.com"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 transition"
-                  >
-                    <i className="fa-solid fa-envelope text-blue-600"></i> Email
-                  </a>
-                  <a
-                    href="https://wa.me/62895428183064?text=Halo%20Abdul%2C%20saya%20ingin%20diskusi%20proyek."
-                    target="_blank"
-                    rel="noopener"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 transition"
-                  >
-                    <i className="fa-brands fa-whatsapp text-emerald-600"></i>{" "}
-                    WhatsApp
-                  </a>
-                  <a
-                    href="/contact"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 transition"
-                  >
-                    <i className="fa-solid fa-calendar-days text-purple-600"></i>{" "}
-                    Schedule
-                  </a>
-                </div>
+            <div className="rounded-3xl border border-slate-200/60 bg-white/70 backdrop-blur-xl p-6 shadow-sm">
+              <h3 className="text-lg font-black text-slate-900 mb-4 tracking-tight">
+                Quick Actions
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <a
+                  href="mailto:abdulkader0126@gmail.com"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-250 bg-white px-4 py-3 text-xs font-bold text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-slate-50 hover:text-slate-950 transition-all duration-200"
+                >
+                  <i className="fa-solid fa-envelope text-blue-600"></i> Email
+                </a>
+                <a
+                  href="https://wa.me/62895428183064?text=Halo%20Abdul%2C%20saya%20ingin%20diskusi%20proyek."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-250 bg-white px-4 py-3 text-xs font-bold text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-slate-50 hover:text-slate-950 transition-all duration-200"
+                >
+                  <i className="fa-brands fa-whatsapp text-emerald-600"></i>{" "}
+                  WhatsApp
+                </a>
+                <a
+                  href="https://wa.me/62895428183064?text=Halo%20Abdul%2C%20saya%20ingin%20jadwalkan%20meeting%20diskusi%20proyek."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-250 bg-white px-4 py-3 text-xs font-bold text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-slate-50 hover:text-slate-950 transition-all duration-200"
+                >
+                  <i className="fa-solid fa-calendar-days text-purple-600"></i>{" "}
+                  Meeting
+                </a>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-gray-200/70 bg-white/70 backdrop-blur-xl p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+            <div className="rounded-3xl border border-slate-200/60 bg-white/70 backdrop-blur-xl p-6 shadow-sm">
+              <h3 className="text-lg font-black text-slate-900 mb-4 tracking-tight">
                 Contact Information
               </h3>
-              <div className="space-y-4 text-gray-700">
+              <div className="space-y-4 text-slate-700 text-sm">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <i className="fa-solid fa-envelope text-blue-600"></i>
-                    <span id="emailText">abdulkader0126@email.com</span>
+                    <span id="emailText" className="font-semibold text-slate-800">abdulkader0126@gmail.com</span>
                   </div>
                   <button
                     id="copyEmail"
-                    className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                    className="text-xs font-bold text-blue-600 hover:text-blue-800 transition"
                   >
                     Copy
                   </button>
                 </div>
                 <div className="flex items-center gap-3">
                   <i className="fa-solid fa-phone text-purple-600"></i>
-                  <span>+62 895 4281 8306 4</span>
+                  <span className="font-semibold text-slate-800">+62 895 4281 8306 4</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <i className="fa-solid fa-location-dot text-cyan-600"></i>
-                  <span>Malang, Indonesia</span>
+                  <span className="font-semibold text-slate-800">Malang, Indonesia</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <i className="fa-solid fa-clock text-amber-600"></i>
-                  <span>Mon–Fri: 09.00–18.00 WIB</span>
+                  <span className="font-semibold text-slate-800">Mon–Fri: 09.00–18.00 WIB</span>
                 </div>
               </div>
 
-              <div className="mt-6">
-                <h4 className="font-semibold mb-3 text-gray-900">Socials</h4>
+              <div className="mt-6 border-t border-slate-100 pt-4">
+                <h4 className="font-bold mb-3 text-slate-900 text-xs uppercase tracking-wider">Social Channels</h4>
                 <div className="flex gap-3">
                   <a
-                    href="#"
-                    className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition"
+                    href="https://www.linkedin.com/in/abdul-kader-53b22930a"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl border border-slate-200 bg-white grid place-items-center hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-200"
+                    aria-label="LinkedIn"
                   >
-                    <i className="fab fa-linkedin-in text-gray-700"></i>
+                    <i className="fab fa-linkedin-in text-sm"></i>
                   </a>
                   <a
-                    href="#"
-                    className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition"
+                    href="https://github.com/Kader2637"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl border border-slate-200 bg-white grid place-items-center hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-200"
+                    aria-label="GitHub"
                   >
-                    <i className="fab fa-github text-gray-700"></i>
+                    <i className="fab fa-github text-sm"></i>
                   </a>
                   <a
-                    href="#"
-                    className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition"
+                    href="https://instagram.com/abdulkader2637"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl border border-slate-200 bg-white grid place-items-center hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-200"
+                    aria-label="Instagram"
                   >
-                    <i className="fab fa-twitter text-gray-700"></i>
+                    <i className="fab fa-instagram text-sm"></i>
                   </a>
                   <a
-                    href="#"
-                    className="w-10 h-10 rounded-xl bg-gray-100 grid place-items-center hover:bg-gray-200 transition"
+                    href="https://wa.me/62895428183064"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl border border-slate-200 bg-white grid place-items-center hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-200"
+                    aria-label="WhatsApp"
                   >
-                    <i className="fab fa-instagram text-gray-700"></i>
+                    <i className="fab fa-whatsapp text-sm"></i>
                   </a>
                 </div>
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-gray-200">
+            <div className="overflow-hidden rounded-3xl border border-slate-200/60 bg-white/70 backdrop-blur-xl shadow-sm hover:shadow-md transition-all duration-300">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63219.15529079024!2d112.59058342461867!3d-7.978558312256577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62822063dc2fb%3A0x78879446481a4da2!2sMalang%2C%20Kota%20Malang%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1761395821547!5m2!1sid!2sid"
                 width="600"
                 height="450"
                 className="w-full h-48 object-cover"
                 loading="lazy"
+                title="Location Map"
               ></iframe>
-              <div className="p-5 bg-white">
-                <div className="font-semibold text-gray-900">
+              <div className="p-5 bg-white/80 border-t border-slate-100">
+                <div className="font-bold text-slate-900 text-sm">
                   Malang - Indonesia
                 </div>
-                <div className="text-sm text-gray-600">
-                  Central Malang • abdul kader
+                <div className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">
+                  Central Malang • Abdul Kader
                 </div>
               </div>
             </div>

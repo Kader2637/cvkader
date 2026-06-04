@@ -43,7 +43,7 @@ export default function About() {
   return (
     <div
       id="about"
-      className="page relative overflow-hidden py-16 sm:py-24"
+      className="page relative overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-24"
     >
       <section className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
@@ -51,10 +51,10 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* Left Column: Portrait & Details (4 cols) */}
-          <aside className="lg:col-span-4 space-y-8 lg:sticky lg:top-28" data-reveal>
+          <aside className="lg:col-span-4 space-y-8 lg:sticky lg:top-28">
             
             {/* Portrait Container */}
-            <div className="relative rounded-3xl bg-white/70 backdrop-blur-md p-4 shadow-xl border border-slate-200/60 overflow-hidden">
+            <div className="relative rounded-3xl bg-white/70 backdrop-blur-md p-4 shadow-xl border border-slate-200/60 overflow-hidden" data-reveal>
               <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-slate-50 border border-slate-100">
                 {/* Profile Photo */}
                 <img
@@ -73,9 +73,9 @@ export default function About() {
             </div>
 
             {/* Profile Info Cards */}
-            <div className="rounded-3xl bg-white/70 backdrop-blur-md p-6 border border-slate-200/65 shadow-sm space-y-4">
+            <div className="rounded-3xl bg-white/70 backdrop-blur-md p-6 border border-slate-200/65 shadow-sm space-y-4" data-reveal data-reveal-delay="100ms">
               <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">Contact &amp; Info</h3>
-              <ul className="space-y-3.5 text-xs text-slate-650 font-semibold">
+              <ul className="space-y-3.5 text-xs text-slate-600 font-semibold">
                 <li className="flex items-center gap-3">
                   <i className="fa-solid fa-location-dot w-5 text-center text-blue-500 text-sm" />
                   Malang, Indonesia
@@ -143,7 +143,7 @@ export default function About() {
                 Full Stack Developer · Founder AETHER NUSANTARA
               </p>
               
-              <p className="text-slate-650 text-sm sm:text-base leading-relaxed pt-2">
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed pt-2">
                 Saya berpengalaman lebih dari <strong>4 tahun</strong> membangun solusi web, mobile, serta integrasi sistem terdistribusi. Fokus utama saya adalah pengiriman fitur secara cepat dan terencana, pengoptimalan performa server, keamanan data, dan dampak bisnis nyata.
               </p>
             </div>

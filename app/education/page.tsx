@@ -177,7 +177,7 @@ export default function Education() {
   return (
     <div
       id="education"
-      className="page relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24"
+      className="page relative overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-24"
     >
       {/* soft bg blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-60">
@@ -199,7 +199,7 @@ export default function Education() {
           <h2 className="mt-4 text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
             Academic Background
           </h2>
-          <p className="mt-4 text-lg text-slate-655 leading-relaxed">
+          <p className="mt-4 text-lg text-slate-600 leading-relaxed">
             Fondasi akademik di rekayasa perangkat lunak dan sistem informasi untuk mendukung praktik profesional.
           </p>
         </header>
@@ -261,7 +261,7 @@ export default function Education() {
                         </h3>
                         <p
                           className={`${
-                            isLeft ? "text-blue-650" : "text-purple-650"
+                            isLeft ? "text-blue-600" : "text-purple-600"
                           } font-semibold`}
                         >
                           {t.org}
@@ -335,7 +335,7 @@ export default function Education() {
                         <p className="mb-3 text-sm text-slate-400 font-medium">{t.status}</p>
                         <div className="mt-2 inline-block">
                           <div className={`rounded-2xl border border-slate-200/60 bg-white/70 backdrop-blur-md p-5 shadow-sm text-left ${t.glowClass}`}>
-                            <div className="text-slate-655 leading-relaxed text-sm sm:text-base">{t.text}</div>
+                            <div className="text-slate-600 leading-relaxed text-sm sm:text-base">{t.text}</div>
                           </div>
                         </div>
                         <div className="mt-3 flex flex-wrap gap-3 justify-end lg:justify-start">

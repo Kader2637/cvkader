@@ -46,8 +46,8 @@ export default function Navbar() {
         className={cx(
           "w-full rounded-2xl border transition-all duration-500 px-6 py-2 flex flex-col md:flex-row md:items-center justify-between",
           scrolled
-            ? "bg-white/85 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-white/60"
-            : "bg-white/50 backdrop-blur-md border-white/20 shadow-sm"
+            ? "bg-white/85 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] border-white/60"
+            : "bg-transparent border-transparent shadow-none"
         )}
       >
         <div className="h-12 flex items-center justify-between w-full md:w-auto">

@@ -150,7 +150,7 @@ export async function GET() {
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-655 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Full Stack Developer berpengalaman lebih dari 4 tahun membangun solusi web, mobile, serta integrasi sistem. Berfokus pada rilis cepat, keamanan sistem, dan dampak bisnis. Saat ini menjabat sebagai Founder AETHER NUSANTARA.
               </p>
 
@@ -352,7 +352,7 @@ export async function GET() {
               <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Hasil Nyata Berdasarkan Data &amp; Kualitas
               </h2>
-              <p className="text-slate-650 text-sm leading-relaxed">
+              <p className="text-slate-600 text-sm leading-relaxed">
                 Setiap baris kode dirancang untuk memberikan kinerja optimal bagi pengguna sekaligus efisiensi pemeliharaan infrastruktur.
               </p>
 
@@ -614,7 +614,7 @@ export async function GET() {
                 <div className="p-6 bg-slate-50/80 border-t border-slate-200 text-xs sm:text-sm leading-relaxed text-slate-600 space-y-3 font-mono">
                   <div className="font-bold text-slate-800 uppercase tracking-wider text-[10px] text-blue-600"># Penjelasan Alur Kode</div>
                   {courseTab === "laravel" && (
-                    <p>Alur Request: User mengakses rute homepage `/` → Server memanggil `HelloController@index` → Controller meneruskan data array `['name' =&gt; 'Abdul']` ke file template Blade `hello.blade.php` → View me-render tulisan di halaman browser user.</p>
+                    <p>Alur Request: User mengakses rute homepage `/` → Server memanggil `HelloController@index` → Controller meneruskan data array `{"['name' => 'Abdul']"}` ke file template Blade `hello.blade.php` → View me-render tulisan di halaman browser user.</p>
                   )}
                   {courseTab === "react" && (
                     <p>Fungsi reaktif: Hook `useState(0)` mendefinisikan state awal `count = 0`. Ketika elemen button diklik, event trigger memicu handler `setCount(count + 1)` yang memperbarui state secara instan dan memicu render ulang DOM.</p>
@@ -638,7 +638,7 @@ export async function GET() {
           <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
             Mari Wujudkan Proyek <br />Digital Impian Anda
           </h2>
-          <p className="text-slate-650 text-base max-w-xl mx-auto">
+          <p className="text-slate-600 text-base max-w-xl mx-auto">
             Hubungi saya untuk mendiskusikan implementasi teknologi modern, skalabilitas server, dan optimalisasi performa aplikasi Anda.
           </p>
 
