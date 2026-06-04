@@ -26,7 +26,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -40,81 +40,32 @@ export default function Navbar() {
   return (
     <nav
       id="navbar"
-      className={cx(
-        "fixed top-0 inset-x-0 z-50 border-b transition-all duration-300",
-        scrolled
-          ? "bg-white/95 backdrop-blur shadow-sm border-gray-200"
-          : "bg-transparent border-transparent"
-      )}
+      className="fixed top-4 inset-x-0 z-50 transition-all duration-500 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-16 flex items-center justify-between">
+      <div
+        className={cx(
+          "w-full rounded-2xl border transition-all duration-500 px-6 py-2 flex flex-col md:flex-row md:items-center justify-between",
+          scrolled
+            ? "bg-white/85 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-white/60"
+            : "bg-white/50 backdrop-blur-md border-white/20 shadow-sm"
+        )}
+      >
+        <div className="h-12 flex items-center justify-between w-full md:w-auto">
           {/* LOGO */}
-          <Link href="/" className="flex items-center gap-3" aria-label="AK Home">
+          <Link href="/" className="flex items-center gap-3 hover:scale-105 transition-transform" aria-label="AK Home">
             <Image
               src="/assets/foto/logo.png"
               alt="Abdul Kader Logo"
-              width={120}
-              height={40}
+              width={105}
+              height={34}
               className="object-contain"
               priority
             />
           </Link>
 
-          {/* MENU DESKTOP */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cx(
-                  "relative px-3 py-2 text-sm font-medium transition-colors",
-                  "text-gray-700 hover:text-gray-900",
-                  isActive(item.href) && "text-gray-900"
-                )}
-              >
-                {item.label}
-                <span
-                  className={cx(
-                    "absolute left-2 right-2 -bottom-[2px] h-[2px] rounded-full transition-all",
-                    isActive(item.href)
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600 opacity-100"
-                      : "opacity-0"
-                  )}
-                />
-              </Link>
-            ))}
-
-            <div className="flex items-center gap-2 ml-4">
-              {/* 🔥 TOMBOL BLOG YANG DIPERBAGUS */}
-              <a
-                href="https://catatan-kader.web.id"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 border-2 border-blue-500/20 rounded-lg overflow-hidden transition-all hover:border-blue-500/0 hover:text-white"
-              >
-                <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-600 to-blue-400 transition-all duration-300 ease-out group-hover:w-full"></span>
-                <span className="relative flex items-center gap-2">
-                  <i className="fas fa-rss text-xs" />
-                  Blog
-                  <i className="fas fa-external-link-alt text-[10px] opacity-50 group-hover:opacity-100" />
-                </span>
-              </a>
-
-              {/* Tombol Contact */}
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transform hover:scale-[1.03] shadow-md hover:shadow-lg transition-all"
-              >
-                <i className="fas fa-paper-plane" />
-                Contact
-              </Link>
-            </div>
-          </div>
-
           {/* TOGGLE MOBILE */}
           <button
-            className="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 transition"
+            className="md:hidden p-2 rounded-xl text-gray-700 hover:bg-white/40 transition active:scale-95"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -122,54 +73,100 @@ export default function Navbar() {
             <i className={`fas ${open ? "fa-xmark" : "fa-bars"} text-xl`} />
           </button>
         </div>
-      </div>
 
-      {/* MENU MOBILE */}
-      <div
-        className={cx(
-          "md:hidden overflow-hidden border-t transition-all duration-300",
-          open ? "max-h-[550px] border-gray-200" : "max-h-0 border-transparent"
-        )}
-      >
-        <div className="px-4 py-4 bg-white space-y-3">
-          <div className="grid gap-1">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cx(
-                  "block px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                  isActive(item.href)
-                    ? "text-gray-900 bg-gray-100"
-                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
+        {/* MENU DESKTOP */}
+        <div className="hidden md:flex items-center gap-1">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cx(
+                "relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-white/50",
+                isActive(item.href)
+                  ? "text-blue-600 bg-white/70 font-semibold"
+                  : "text-gray-600 hover:text-gray-900"
+              )}
+            >
+              {item.label}
+              {isActive(item.href) && (
+                <span className="absolute left-3 right-3 -bottom-[2px] h-[3px] rounded-full bg-gradient-to-r from-blue-500 to-purple-600 animate-pulse-slow" />
+              )}
+            </Link>
+          ))}
 
-          <hr className="border-gray-100" />
-
-          {/* Tombol Aksi di Mobile */}
-          <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2 ml-4">
+            {/* BLOG BUTTON */}
             <a
               href="https://catatan-kader.web.id"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-blue-600 border border-blue-100 bg-blue-50 hover:bg-blue-100 transition-colors"
+              className="group relative inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 border border-blue-500/20 rounded-xl overflow-hidden transition-all hover:text-white"
             >
-              <i className="fas fa-rss" />
-              Kunjungi Blog
+              <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-600 to-blue-400 transition-all duration-300 ease-out group-hover:w-full"></span>
+              <span className="relative flex items-center gap-2">
+                <i className="fas fa-rss text-xs" />
+                Blog
+                <i className="fas fa-external-link-alt text-[10px] opacity-50 group-hover:opacity-100" />
+              </span>
             </a>
 
+            {/* CONTACT BUTTON */}
             <Link
               href="/contact"
-              className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 hover:shadow-[0_4px_15px_rgba(37,99,235,0.3)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
             >
               <i className="fas fa-paper-plane" />
-              Contact Me
+              Contact
             </Link>
+          </div>
+        </div>
+
+        {/* MENU MOBILE */}
+        <div
+          className={cx(
+            "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
+            open ? "max-h-[550px] opacity-100 mt-2 pb-4" : "max-h-0 opacity-0 pointer-events-none"
+          )}
+        >
+          <div className="space-y-3 pt-2">
+            <div className="grid gap-1">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cx(
+                    "block px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
+                    isActive(item.href)
+                      ? "text-blue-600 bg-white/80 font-semibold shadow-sm"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white/40"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            <hr className="border-white/10" />
+
+            <div className="flex flex-col gap-2">
+              <a
+                href="https://catatan-kader.web.id"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-blue-600 border border-blue-500/20 bg-white/60 hover:bg-white transition-all duration-200"
+              >
+                <i className="fas fa-rss" />
+                Kunjungi Blog
+              </a>
+
+              <Link
+                href="/contact"
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 shadow-md"
+              >
+                <i className="fas fa-paper-plane" />
+                Contact Me
+              </Link>
+            </div>
           </div>
         </div>
       </div>

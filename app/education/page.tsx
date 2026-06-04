@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import type React from "react";
+import Link from "next/link";
 
 type Certificate = {
   key: string;
@@ -94,63 +95,6 @@ export default function Education() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, showInfo, closeModal, closeInfo]);
 
-  // ====== REVEAL ON SCROLL ======
-  useEffect(() => {
-    const nodes: HTMLElement[] = Array.from(
-      document.querySelectorAll<HTMLElement>("#education [data-reveal]")
-    );
-    if (!nodes.length) return;
-
-    nodes.forEach((el: HTMLElement) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(24px)";
-      el.style.willChange = "opacity, transform";
-    });
-
-    const io = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
-          const delay = Number(el.dataset.delay || 0);
-          const reduced =
-            typeof window !== "undefined" &&
-            "matchMedia" in window &&
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-          if (reduced) {
-            el.style.opacity = "1";
-            el.style.transform = "none";
-          } else if ((el as any).animate && typeof (el as any).animate === "function") {
-            (el as any).animate(
-              [
-                { opacity: 0, transform: "translateY(24px)" },
-                { opacity: 1, transform: "translateY(0px)" },
-              ],
-              {
-                duration: 650,
-                easing: "cubic-bezier(.22,1,.36,1)",
-                delay,
-                fill: "forwards",
-              }
-            );
-          } else {
-            el.style.transition = "opacity .65s ease, transform .65s ease";
-            window.setTimeout(() => {
-              el.style.opacity = "1";
-              el.style.transform = "translateY(0)";
-            }, delay);
-          }
-          io.unobserve(el);
-        });
-      },
-      { threshold: 0.18 }
-    );
-
-    nodes.forEach((n: HTMLElement) => io.observe(n));
-    return () => io.disconnect();
-  }, []);
-
   // ==== DATA TIMELINE ====
   const timeline = [
     {
@@ -161,11 +105,11 @@ export default function Education() {
       text: (
         <>
           Fokus pada{" "}
-          <span className="font-medium text-gray-900">
+          <span className="font-semibold text-slate-900">
             analisis bisnis, arsitektur sistem, data & integrasi
           </span>
           .
-          <ul className="mt-3 list-none space-y-1 text-sm text-gray-600">
+          <ul className="mt-3 list-none space-y-1.5 text-xs text-slate-600">
             <li>• Business Process & System Analysis</li>
             <li>• Database Systems & Data Modelling</li>
             <li>• Web/App Development & Integrations</li>
@@ -174,7 +118,7 @@ export default function Education() {
             {["UML/BPMN", "SQL", "React/Next.js"].map((t) => (
               <span
                 key={t}
-                className="rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-800"
+                className="rounded-xl bg-slate-50 border border-slate-200/80 px-2.5 py-1 text-xs text-slate-600 font-semibold"
               >
                 {t}
               </span>
@@ -182,9 +126,10 @@ export default function Education() {
           </div>
         </>
       ),
-      badge: { text: "Ongoing", color: "bg-blue-50 text-blue-700 ring-blue-100" },
+      badge: { text: "Ongoing", color: "bg-blue-50/80 text-blue-700 border-blue-100/60" },
       image: { src: "/assets/foto/unmer.jpg", alt: "Universitas Merdeka Malang" },
       links: [{ href: "#", label: "Lihat kurikulum →" }],
+      glowClass: "glow-blue",
     },
     {
       side: "right" as const,
@@ -194,11 +139,11 @@ export default function Education() {
       text: (
         <>
           Fondasi kuat pada{" "}
-          <span className="font-medium text-gray-900">
+          <span className="font-semibold text-slate-900">
             pemrograman, OOP, web development, dan basis data
           </span>
           .
-          <ul className="mt-3 list-none space-y-1 text-sm text-gray-600">
+          <ul className="mt-3 list-none space-y-1.5 text-xs text-slate-600">
             <li>• Algoritma, Struktur Data, OOP</li>
             <li>• Web Programming (HTML/CSS/JS, PHP/Laravel dasar)</li>
             <li>• Database (MySQL) & Version Control (Git)</li>
@@ -207,7 +152,7 @@ export default function Education() {
             {["PHP/Laravel", "MySQL", "Git"].map((t) => (
               <span
                 key={t}
-                className="rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-800"
+                className="rounded-xl bg-slate-50 border border-slate-200/80 px-2.5 py-1 text-xs text-slate-600 font-semibold"
               >
                 {t}
               </span>
@@ -218,43 +163,44 @@ export default function Education() {
       badge: {
         text: (
           <>
-            <i className="fa-solid fa-trophy text-amber-500" /> Project-Based Learning
+            <i className="fa-solid fa-trophy text-amber-500 mr-1" /> Project-Based Learning
           </>
         ),
-        color: "bg-gray-100 text-gray-800",
+        color: "bg-slate-50/80 text-slate-800 border-slate-200/60",
       },
       image: { src: "/assets/foto/smkn1.jpg", alt: "SMKN 1 Kraksaan RPL" },
       links: [{ href: "https://pkl.hummatech.com/", label: "Lihat project akhir →" }],
+      glowClass: "glow-purple",
     },
   ];
 
   return (
     <div
       id="education"
-      className="page relative overflow-hidden bg-white py-16 sm:py-20"
+      className="page relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24"
     >
       {/* soft bg blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-60">
-        <div className="absolute -top-24 -left-16 h-72 w-72 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-3xl" />
-        <div className="absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-gradient-to-tr from-cyan-200 to-indigo-200 blur-3xl" />
+        <div className="absolute -top-24 -left-16 h-72 w-72 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-3xl animate-pulse-slow" />
+        <div className="absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-gradient-to-tr from-cyan-200 to-indigo-200 blur-3xl animate-pulse-slow" style={{ animationDelay: "-3s" }} />
       </div>
 
       <section className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        
         {/* Header */}
         <header
-          className="mx-auto mb-14 max-w-3xl text-center"
+          className="mx-auto mb-16 max-w-3xl text-center"
           data-reveal
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/80 px-3 py-1 text-xs font-medium text-blue-700 backdrop-blur-sm shadow-sm shadow-blue-100/60">
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/80 px-3.5 py-1.5 text-xs font-semibold text-blue-700 backdrop-blur-sm shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />{" "}
             Pendidikan
           </span>
-          <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
-            Riwayat Akademik
+          <h2 className="mt-4 text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+            Academic Background
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            Fondasi akademik di rekayasa perangkat lunak dan sistem informasi untuk
-            mendukung praktik profesional.
+          <p className="mt-4 text-lg text-slate-655 leading-relaxed">
+            Fondasi akademik di rekayasa perangkat lunak dan sistem informasi untuk mendukung praktik profesional.
           </p>
         </header>
 
@@ -263,15 +209,15 @@ export default function Education() {
           {/* LINE: Mobile (kiri) */}
           <div
             aria-hidden="true"
-            className="absolute top-0 bottom-0 left-4 w-0.5 bg-gradient-to-b from-blue-500 via-purple-400 to-cyan-400 md:hidden"
+            className="absolute top-0 bottom-0 left-4 w-[2px] bg-slate-200 md:hidden"
           />
           {/* LINE: Desktop (tengah) */}
           <div
             aria-hidden="true"
-            className="absolute inset-y-0 left-1/2 hidden w-0.5 -translate-x-1/2 bg-gradient-to-b from-blue-500 via-purple-400 to-cyan-400 md:block"
+            className="absolute inset-y-0 left-1/2 hidden w-[2px] -translate-x-1/2 bg-slate-200 md:block"
           />
 
-          <div className="space-y-12 md:space-y-16">
+          <div className="space-y-16">
             {timeline.map((t, idx) => {
               const isLeft = t.side === "left";
               const isKurikulum = t.links?.some((l) =>
@@ -282,7 +228,7 @@ export default function Education() {
                   key={idx}
                   className="relative"
                   data-reveal
-                  data-delay={idx * 80}
+                  data-reveal-delay={`${idx * 150}ms`}
                 >
                   {/* NODE */}
                   <div
@@ -290,91 +236,81 @@ export default function Education() {
                       absolute
                       left-4 -translate-x-1/2
                       md:left-1/2 md:-translate-x-1/2
-                      top-2 z-10
+                      top-2.5 z-10
                     "
                   >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-slate-300">
-                      <i className="fa-solid fa-graduation-cap" />
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white border border-slate-200/80 text-slate-500 shadow-sm z-10">
+                      <i className="fa-solid fa-graduation-cap text-xs" />
                     </div>
                   </div>
 
                   {/* GRID CARD */}
-                  <div className="md:grid md:grid-cols-2 md:gap-16">
+                  <div className="md:grid md:grid-cols-2 md:gap-12 items-center">
                     {/* Kolom teks */}
                     <div
                       className={`${
                         isLeft
-                          ? "md:order-1 md:pr-24 xl:pr-28"
-                          : "md:order-2 md:pl-24 xl:pl-28"
+                          ? "md:order-1 md:pr-12 xl:pr-16"
+                          : "md:order-2 md:pl-12 xl:pl-16"
                       }`}
                     >
                       {/* Mobile card */}
                       <div className="ml-12 md:hidden">
-                        <h3 className="text-2xl font-bold text-gray-900">
+                        <h3 className="text-2xl font-bold text-slate-900 leading-tight">
                           {t.title}
                         </h3>
                         <p
                           className={`${
-                            isLeft ? "text-blue-600" : "text-purple-600"
+                            isLeft ? "text-blue-650" : "text-purple-650"
                           } font-semibold`}
                         >
                           {t.org}
                         </p>
-                        <p className="mt-1 text-sm text-gray-500">{t.status}</p>
+                        <p className="mt-1 text-sm text-slate-400 font-medium">{t.status}</p>
 
                         <div className="mt-4 inline-block text-left">
-                          <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-5 shadow-sm backdrop-blur-xl">
-                            <div className="text-gray-700">{t.text}</div>
+                          <div className={`rounded-2xl border border-slate-200/60 bg-white/70 backdrop-blur-md p-5 shadow-sm ${t.glowClass}`}>
+                            <div className="text-slate-700 leading-relaxed text-sm">{t.text}</div>
                           </div>
                         </div>
 
                         <div className="mt-4">
-                          <div className="rounded-2xl bg-gradient-to-tr from-blue-500/40 via-purple-500/40 to-cyan-500/40 p-[1.5px]">
-                            <div className="rounded-2xl bg-white/90 p-5 shadow-lg backdrop-blur-xl">
-                              <img
-                                src={t.image.src}
-                                className="h-52 w-full rounded-xl object-cover"
-                                alt={t.image.alt}
-                                loading="lazy"
-                              />
-                              <div className="mt-4 flex flex-wrap items-center gap-3">
-                                <span
-                                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs ring-1 ${t.badge.color}`}
-                                >
-                                  <i className="fa-solid fa-award" /> {t.badge.text}
-                                </span>
-                                {t.links.map((l) =>
-                                  isKurikulum ? (
-                                    <a
-                                      key={l.label}
-                                      href={l.href}
-                                      data-popup="info"
-                                      onClick={onKurikulumClick}
-                                      className={`text-sm font-medium ${
-                                        isLeft
-                                          ? "text-blue-600 hover:text-blue-800"
-                                          : "text-purple-600 hover:text-purple-800"
-                                      }`}
-                                    >
-                                      {l.label}
-                                    </a>
-                                  ) : (
-                                    <a
-                                      key={l.label}
-                                      href={l.href}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className={`text-sm font-medium ${
-                                        isLeft
-                                          ? "text-blue-600 hover:text-blue-800"
-                                          : "text-purple-600 hover:text-purple-800"
-                                      }`}
-                                    >
-                                      {l.label}
-                                    </a>
-                                  )
-                                )}
-                              </div>
+                          <div className="rounded-2xl bg-white/70 border border-slate-200/60 p-4 shadow-sm">
+                            <img
+                              src={t.image.src}
+                              className="h-52 w-full rounded-xl object-cover"
+                              alt={t.image.alt}
+                              loading="lazy"
+                            />
+                            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3">
+                              <span
+                                className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1 text-xs border border-slate-200/60 bg-white font-semibold text-slate-700 shadow-sm`}
+                              >
+                                {t.badge.text}
+                              </span>
+                              {t.links.map((l) =>
+                                isKurikulum ? (
+                                  <a
+                                    key={l.label}
+                                    href={l.href}
+                                    data-popup="info"
+                                    onClick={onKurikulumClick}
+                                    className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+                                  >
+                                    {l.label}
+                                  </a>
+                                ) : (
+                                  <a
+                                    key={l.label}
+                                    href={l.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+                                  >
+                                    {l.label}
+                                  </a>
+                                )
+                              )}
                             </div>
                           </div>
                         </div>
@@ -386,7 +322,7 @@ export default function Education() {
                           isLeft ? "text-right" : "text-left"
                         }`}
                       >
-                        <h3 className="text-2xl font-bold text-gray-900">
+                        <h3 className="text-2xl font-bold text-slate-900 leading-tight">
                           {t.title}
                         </h3>
                         <p
@@ -396,13 +332,13 @@ export default function Education() {
                         >
                           {t.org}
                         </p>
-                        <p className="mb-3 text-sm text-gray-500">{t.status}</p>
+                        <p className="mb-3 text-sm text-slate-400 font-medium">{t.status}</p>
                         <div className="mt-2 inline-block">
-                          <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-5 shadow-sm backdrop-blur-xl">
-                            <div className="text-gray-700">{t.text}</div>
+                          <div className={`rounded-2xl border border-slate-200/60 bg-white/70 backdrop-blur-md p-5 shadow-sm text-left ${t.glowClass}`}>
+                            <div className="text-slate-655 leading-relaxed text-sm sm:text-base">{t.text}</div>
                           </div>
                         </div>
-                        <div className="mt-3 flex flex-wrap gap-3">
+                        <div className="mt-3 flex flex-wrap gap-3 justify-end lg:justify-start">
                           {t.links.map((l) =>
                             isKurikulum ? (
                               <a
@@ -410,11 +346,7 @@ export default function Education() {
                                 href={l.href}
                                 data-popup="info"
                                 onClick={onKurikulumClick}
-                                className={`text-sm font-medium ${
-                                  isLeft
-                                    ? "text-blue-600 hover:text-blue-800"
-                                    : "text-purple-600 hover:text-purple-800"
-                                }`}
+                                className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
                               >
                                 {l.label}
                               </a>
@@ -424,11 +356,7 @@ export default function Education() {
                                 href={l.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`text-sm font-medium ${
-                                  isLeft
-                                    ? "text-blue-600 hover:text-blue-800"
-                                    : "text-purple-600 hover:text-purple-800"
-                                }`}
+                                className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
                               >
                                 {l.label}
                               </a>
@@ -441,55 +369,22 @@ export default function Education() {
                     {/* Kolom gambar (desktop) */}
                     <div
                       className={`hidden md:block ${
-                        isLeft ? "md:order-2 md:pl-6" : "md:order-1 md:pr-6"
+                        isLeft ? "md:order-2 md:pl-12 xl:pl-16" : "md:order-1 md:pr-12 xl:pr-16"
                       }`}
                     >
-                      <div className="rounded-2xl bg-gradient-to-tr from-blue-500/40 via-purple-500/40 to-cyan-500/40 p-[1.5px]">
-                        <div className="group rounded-2xl bg-white/90 p-5 shadow-lg backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-xl">
-                          <img
-                            src={t.image.src}
-                            className="h-52 w-full rounded-xl object-cover transition group-hover:scale-[1.02]"
-                            alt={t.image.alt}
-                            loading="lazy"
-                          />
-                          <div className="mt-4 flex flex-wrap items-center gap-3">
-                            <span
-                              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs ring-1 ${t.badge.color}`}
-                            >
-                              <i className="fa-solid fa-award" /> {t.badge.text}
-                            </span>
-                            {t.links.map((l) =>
-                              isKurikulum ? (
-                                <a
-                                  key={l.label}
-                                  href={l.href}
-                                  data-popup="info"
-                                  onClick={onKurikulumClick}
-                                  className={`text-sm font-medium ${
-                                    isLeft
-                                      ? "text-blue-600 hover:text-blue-800"
-                                      : "text-purple-600 hover:text-purple-800"
-                                  }`}
-                                >
-                                  {l.label}
-                                </a>
-                              ) : (
-                                <a
-                                  key={l.label}
-                                  href={l.href}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className={`text-sm font-medium ${
-                                    isLeft
-                                      ? "text-blue-600 hover:text-blue-800"
-                                      : "text-purple-600 hover:text-purple-800"
-                                  }`}
-                                >
-                                  {l.label}
-                                </a>
-                              )
-                            )}
-                          </div>
+                      <div className="rounded-2xl bg-white/70 border border-slate-200/60 p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                        <img
+                          src={t.image.src}
+                          className="h-56 w-full rounded-xl object-cover transition duration-700 group-hover:scale-105"
+                          alt={t.image.alt}
+                          loading="lazy"
+                        />
+                        <div className="mt-4 flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
+                          <span
+                            className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1 text-xs border border-slate-200/60 bg-white font-semibold text-slate-700 shadow-sm`}
+                          >
+                            {t.badge.text}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -500,162 +395,72 @@ export default function Education() {
           </div>
         </div>
 
-        {/* Sertifikasi */}
-        <div className="mt-6" data-reveal>
-          <div className="mb-6 flex items-center justify-between gap-4">
-            <h3 className="text-xl font-semibold text-gray-900">
+        {/* Certifications Section */}
+        <div className="mt-16" data-reveal data-reveal-delay="200ms">
+          <div className="mb-8 flex items-center justify-between gap-4">
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
               Sertifikasi Profesional
             </h3>
-            <a
-              href="#"
-              className="text-sm font-medium text-blue-600 hover:text-blue-800"
+            <Link
+              href="/certificates"
+              className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition"
             >
-              Lihat semua →
-            </a>
+              Lihat semua <i className="fa-solid fa-arrow-right text-[10px]" />
+            </Link>
           </div>
 
-          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
-            {/* HUMMA */}
-            <article className="group rounded-2xl border border-gray-200/70 bg-white/80 p-5 shadow-sm backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-lg">
-              <div className="flex items-start gap-4">
-                <img
-                  src="/assets/cert/programmer.jpg"
-                  alt="Programmer — PT Humma Teknologi Indonesia"
-                  className="h-12 w-12 rounded-lg bg-white object-contain ring-1 ring-gray-200"
-                  loading="lazy"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">
-                    Programmer (Junior Developer) — PT Humma Teknologi Indonesia
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    Track: Laravel &amp; Web Development
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {certificates.map((cert, idx) => (
+              <article
+                key={cert.key}
+                className="group rounded-2xl border border-slate-200/60 bg-white/70 backdrop-blur-md p-5 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-slate-300 transition-all duration-300 glow-blue"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      className="h-12 w-12 rounded-lg bg-white object-contain ring-1 ring-slate-100 shrink-0"
+                      loading="lazy"
+                    />
+                    <div className="min-w-0">
+                      <h4 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2">
+                        {cert.title}
+                      </h4>
+                      <p className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-wider">
+                        {cert.org}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-500 leading-relaxed line-clamp-3">
+                    {cert.description}
                   </p>
                 </div>
-              </div>
-              <p className="mt-3 text-sm text-gray-700">
-                Junior Developer fokus Laravel: modul CRUD, REST API,
-                autentikasi/otorisasi, kolaborasi fitur dasar.
-              </p>
-              <div className="mt-4 flex items-center justify-between gap-2">
-                <div className="flex flex-wrap gap-2">
-                  {["Laravel", "REST API", "MySQL", "Blade/Livewire", "Git"].map(
-                    (s) => (
+
+                <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap gap-1">
+                    {cert.skills?.slice(0, 3).map((s) => (
                       <span
                         key={s}
-                        className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-800"
+                        className="rounded bg-slate-50 px-1.5 py-0.5 text-[9px] font-semibold text-slate-500 border border-slate-200/80"
                       >
                         {s}
                       </span>
-                    )
-                  )}
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => openModal(cert)}
+                    className="text-[11px] font-bold text-blue-600 hover:text-blue-800 shrink-0"
+                  >
+                    Lihat sertifikat →
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => openModal(certificates[0])}
-                  className="text-sm font-medium text-blue-600 hover:text-blue-800"
-                >
-                  Lihat sertifikat →
-                </button>
-              </div>
-            </article>
-
-            {/* LKS */}
-            <article className="group rounded-2xl border border-gray-200/70 bg-white/80 p-5 shadow-sm backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-lg">
-              <div className="flex items-start gap-4">
-                <img
-                  src="/assets/cert/lks.png"
-                  alt="LKS Probolinggo — Juara 3 IT Software"
-                  className="h-12 w-12 rounded-lg bg-white object-contain ring-1 ring-gray-200"
-                  loading="lazy"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">
-                    LKS Kabupaten Probolinggo — Juara 3 (IT Software)
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    Stack: .NET (C#) &amp; SQL Server
-                  </p>
-                </div>
-              </div>
-              <p className="mt-3 text-sm text-gray-700">
-                Solusi perangkat lunak end-to-end dengan .NET (C#) &amp; SQL Server:
-                analisis kebutuhan, desain ERD, implementasi, presentasi.
-              </p>
-              <div className="mt-4 flex items-center justify-between gap-2">
-                <div className="flex flex-wrap gap-2">
-                  {[".NET (C#)", "SQL Server", "Entity Framework", "ERD/UML"].map(
-                    (s) => (
-                      <span
-                        key={s}
-                        className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-800"
-                      >
-                        {s}
-                      </span>
-                    )
-                  )}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => openModal(certificates[1])}
-                  className="text-sm font-medium text-blue-600 hover:text-blue-800"
-                >
-                  Lihat piagam →
-                </button>
-              </div>
-            </article>
-
-            {/* KODINGIN */}
-            <article className="group rounded-2xl border border-gray-200/70 bg-white/80 p-5 shadow-sm backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-lg">
-              <div className="flex items-start gap-4">
-                <img
-                  src="/assets/cert/senior.png"
-                  alt="Senior Developer — PT Kodingin Digital Nusantara"
-                  className="h-12 w-12 rounded-lg bg-white object-contain ring-1 ring-gray-200"
-                  loading="lazy"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">
-                    Senior Developer (Full-Stack) — PT Kodingin Digital Nusantara
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    Full-Stack Product Development
-                  </p>
-                </div>
-              </div>
-              <p className="mt-3 text-sm text-gray-700">
-                Pengembangan end-to-end, optimasi performa, standardisasi CI/CD,
-                serta code review lintas tim.
-              </p>
-              <div className="mt-4 flex items-center justify-between gap-2">
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "React/Next.js",
-                    "Node.js",
-                    "Laravel",
-                    "PostgreSQL",
-                    "Redis",
-                    "CI/CD",
-                  ].map((s) => (
-                    <span
-                      key={s}
-                      className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-800"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => openModal(certificates[2])}
-                  className="text-sm font-medium text-blue-600 hover:text-blue-800"
-                >
-                  Lihat sertifikat →
-                </button>
-              </div>
-            </article>
+              </article>
+            ))}
           </div>
         </div>
+
       </section>
 
       {/* ===== MODAL SERTIFIKAT ===== */}
@@ -664,30 +469,30 @@ export default function Education() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="cert-title"
-          className="fixed inset-0 z-[999] flex items-center justify-center px-4"
+          className="fixed inset-0 z-[999] flex items-center justify-center px-4 backdrop-fade"
           onClick={(e) => {
             if (e.target === e.currentTarget) closeModal();
           }}
         >
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/55 backdrop-blur-sm" />
 
-          <div className="relative z-10 w-full max-w-3xl">
-            <div className="rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 p-[2px] shadow-2xl">
-              <div className="rounded-2xl bg-white">
-                <div className="flex items-start gap-5 border-b border-gray-100 p-5">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-gray-50 ring-1 ring-gray-200">
-                    <i className="fa-solid fa-award text-blue-600" />
+          <div className="relative z-10 w-full max-w-3xl modal-pop">
+            <div className="rounded-3xl bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 p-[2px] shadow-2xl">
+              <div className="rounded-3xl bg-white">
+                <div className="flex items-start gap-5 border-b border-slate-100 p-5">
+                  <div className="grid h-12 w-12 place-items-center rounded-xl bg-slate-50 ring-1 ring-slate-150 shadow-sm shrink-0">
+                    <i className="fa-solid fa-award text-blue-600 text-lg" />
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <h3
                       id="cert-title"
-                      className="text-lg font-semibold text-gray-900"
+                      className="text-base font-bold text-slate-900 leading-snug truncate"
                     >
                       {activeCert.title}
                     </h3>
-                    <p className="text-sm text-gray-500">{activeCert.org}</p>
+                    <p className="text-xs text-slate-400 font-semibold mt-0.5">{activeCert.org}</p>
                     {activeCert.subtitle && (
-                      <p className="mt-0.5 text-xs text-gray-500">
+                      <p className="mt-0.5 text-[10px] text-slate-400 font-medium">
                         {activeCert.subtitle}
                       </p>
                     )}
@@ -695,64 +500,66 @@ export default function Education() {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg transition hover:bg-gray-100"
+                    className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:text-red-500 hover:bg-red-50 hover:border-red-100 flex items-center justify-center transition active:scale-90"
                     aria-label="Tutup"
                     title="Tutup"
                   >
-                    <i className="fa-solid fa-xmark text-gray-600" />
+                    <i className="fa-solid fa-xmark text-sm" />
                   </button>
                 </div>
 
                 <div className="grid gap-5 p-5 md:grid-cols-2">
-                  <div className="overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                  <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center aspect-[4/3] max-h-[45vh]">
                     <img
                       src={activeCert.image}
                       alt={activeCert.title}
-                      className="h-full w-full object-contain"
+                      className="h-full w-full object-contain shadow-inner"
                       loading="lazy"
                     />
                   </div>
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-900">
-                      Detail Sertifikat
-                    </h4>
-                    {activeCert.description && (
-                      <p className="mt-2 text-sm text-gray-700">
-                        {activeCert.description}
-                      </p>
-                    )}
-                    {activeCert.skills?.length ? (
-                      <>
-                        <h5 className="mt-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
-                          Skills / Scope
-                        </h5>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {activeCert.skills.map((s) => (
-                            <span
-                              key={s}
-                              className="rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-800"
-                            >
-                              {s}
-                            </span>
-                          ))}
-                        </div>
-                      </>
-                    ) : null}
-                    <div className="mt-6 flex flex-wrap gap-3">
+                  <div className="flex flex-col justify-between">
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900">
+                        Detail Sertifikat
+                      </h4>
+                      {activeCert.description && (
+                        <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                          {activeCert.description}
+                        </p>
+                      )}
+                      {activeCert.skills?.length ? (
+                        <>
+                          <h5 className="mt-4 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                            Skills / Scope
+                          </h5>
+                          <div className="mt-2 flex flex-wrap gap-1.5">
+                            {activeCert.skills.map((s) => (
+                              <span
+                                key={s}
+                                className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-slate-50 text-slate-500 border border-slate-200"
+                              >
+                                {s}
+                              </span>
+                            ))}
+                          </div>
+                        </>
+                      ) : null}
+                    </div>
+                    <div className="mt-6 flex justify-end">
                       <button
                         type="button"
                         onClick={closeModal}
-                        className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-800 transition hover:bg-gray-50"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs font-semibold hover:bg-slate-50 transition active:scale-95 shadow-sm"
                       >
-                        <i className="fa-solid fa-check" /> Tutup
+                        <i className="fa-solid fa-check text-xs" /> Selesai
                       </button>
                     </div>
                   </div>
                 </div>
 
-                <div className="px-5 pb-5">
-                  <p className="text-xs text-gray-500">
-                    Tekan <span className="font-semibold">Esc</span> untuk menutup.
+                <div className="px-5 pb-5 pt-2 border-t border-slate-100/50">
+                  <p className="text-[10px] text-slate-400 font-medium">
+                    * Tekan <span className="font-bold">Esc</span> atau klik di luar untuk menutup.
                   </p>
                 </div>
               </div>
@@ -767,27 +574,27 @@ export default function Education() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="info-title"
-          className="fixed inset-0 z-[1000] flex items-center justify-center px-4"
+          className="fixed inset-0 z-[1000] flex items-center justify-center px-4 backdrop-fade"
           onClick={(e) => {
             if (e.target === e.currentTarget) closeInfo();
           }}
         >
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-          <div className="relative z-10 w-full max-w-md">
+          <div className="absolute inset-0 bg-black/55 backdrop-blur-sm" />
+          <div className="relative z-10 w-full max-w-md modal-pop">
             <div className="rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 p-[2px] shadow-2xl">
               <div className="rounded-2xl bg-white">
-                <div className="flex items-start gap-4 border-b border-gray-100 p-5">
-                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-gray-50 ring-1 ring-gray-200">
-                    <i className="fa-solid fa-circle-info text-blue-600" />
+                <div className="flex items-start gap-4 border-b border-slate-100 p-5">
+                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-50 ring-1 ring-slate-200 shadow-sm shrink-0">
+                    <i className="fa-solid fa-circle-info text-blue-600 text-base" />
                   </div>
                   <div className="flex-1">
                     <h3
                       id="info-title"
-                      className="text-base font-semibold text-gray-900"
+                      className="text-base font-bold text-slate-900"
                     >
                       Data Belum Tersedia
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
                       Kurikulum sedang dalam proses penyusunan. Silakan cek kembali
                       nanti.
                     </p>
@@ -795,18 +602,18 @@ export default function Education() {
                   <button
                     type="button"
                     onClick={closeInfo}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg transition hover:bg-gray-100"
+                    className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:text-red-500 hover:bg-red-50 hover:border-red-100 flex items-center justify-center transition active:scale-90"
                     aria-label="Tutup"
                     title="Tutup"
                   >
-                    <i className="fa-solid fa-xmark text-gray-600" />
+                    <i className="fa-solid fa-xmark text-sm" />
                   </button>
                 </div>
                 <div className="p-5">
                   <button
                     type="button"
                     onClick={closeInfo}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-black active:scale-95 shadow-sm"
                   >
                     Mengerti
                   </button>
@@ -816,13 +623,6 @@ export default function Education() {
           </div>
         </div>
       )}
-
-      {/* pastikan blob di bawah modal */}
-      <style jsx>{`
-        :global(#education .pointer-events-none) {
-          z-index: 0;
-        }
-      `}</style>
     </div>
   );
 }

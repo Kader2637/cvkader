@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MainWrapper from "./components/MainWrapper";
+import UseRevealOnScroll from "./components/UseRevealOnScroll";
 
 export const metadata = {
   title: "Abdul Kader — Full Stack Developer & Digital Solutions Expert",
@@ -97,7 +98,15 @@ export default function RootLayout({
         />
       </head>
 
-      <body className="bg-gray-50 text-gray-900 overflow-x-hidden antialiased">
+      <body className="bg-[#fafbfc] text-[#1e293b] overflow-x-hidden antialiased bg-grid-pattern relative min-h-screen">
+        {/* Soft organic floating background blobs */}
+        <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-[10%] -left-[10%] w-[50vw] aspect-square rounded-full bg-gradient-to-tr from-blue-300/15 to-indigo-300/15 blur-[120px] animate-pulse-slow" />
+          <div className="absolute top-[35%] -right-[15%] w-[45vw] aspect-square rounded-full bg-gradient-to-br from-purple-300/15 to-pink-300/15 blur-[130px] animate-pulse-slow" style={{ animationDelay: "-3s" }} />
+          <div className="absolute -bottom-[10%] left-[10%] w-[40vw] aspect-square rounded-full bg-gradient-to-tr from-cyan-300/15 to-teal-300/15 blur-[110px] animate-pulse-slow" style={{ animationDelay: "-6s" }} />
+        </div>
+
+        <UseRevealOnScroll />
         <Navbar />
         <MainWrapper>{children}</MainWrapper>
         <Footer />

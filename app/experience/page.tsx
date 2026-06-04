@@ -14,38 +14,14 @@ type Item = {
   img: { src: string; alt: string };
   dotGradient: string;
   colorClass: string;
+  glowClass: string;
 };
 
 export default function Experience() {
-  // reveal animation on scroll (with small stagger)
-  useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>(
-      "#experience [data-reveal]"
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
-          el.classList.add("animate-fadeUp");
-          observer.unobserve(el);
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    elements.forEach((el, idx) => {
-      el.style.setProperty("--reveal-delay", `${idx * 80}ms`);
-      observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   const items: Item[] = [
     {
       side: "left",
-      role: "Co-Founder & CTO",
+      role: "Founder AETHER NUSANTARA",
       company: "PT Kodingin Digital Nusantara",
       location: "Malang",
       period: "2025 — Sekarang",
@@ -60,6 +36,7 @@ export default function Experience() {
       img: { src: "/assets/foto/kodinusco.jpg", alt: "Kodingin Digital Nusantara" },
       dotGradient: "from-blue-500 to-purple-600",
       colorClass: "text-blue-600",
+      glowClass: "glow-blue",
     },
     {
       side: "right",
@@ -81,6 +58,7 @@ export default function Experience() {
       },
       dotGradient: "from-purple-500 to-pink-500",
       colorClass: "text-purple-600",
+      glowClass: "glow-purple",
     },
     {
       side: "left",
@@ -102,6 +80,7 @@ export default function Experience() {
       },
       dotGradient: "from-emerald-500 to-teal-500",
       colorClass: "text-emerald-600",
+      glowClass: "glow-emerald",
     },
     {
       side: "right",
@@ -120,40 +99,35 @@ export default function Experience() {
       img: { src: "/assets/foto/hummatech.jpg", alt: "Humma Teknologi Indonesia" },
       dotGradient: "from-indigo-500 to-violet-600",
       colorClass: "text-indigo-600",
+      glowClass: "glow-cyan",
     },
   ];
 
   return (
     <div
       id="experience"
-      className="page relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50 py-16 sm:py-20"
+      className="page relative overflow-hidden py-16 sm:py-20"
     >
-      {/* soft gradient blobs */}
-      <div className="pointer-events-none absolute inset-0 opacity-70">
-        <div className="absolute -top-24 left-0 h-72 w-72 rounded-full bg-gradient-to-br from-blue-200 to-purple-200 blur-3xl" />
-        <div className="absolute -bottom-16 right-0 h-80 w-80 rounded-full bg-gradient-to-tr from-cyan-200 to-indigo-200 blur-3xl" />
-      </div>
-
       <section className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header
           className="mx-auto mb-16 max-w-3xl text-center"
           data-reveal
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/80 px-3 py-1 text-xs font-medium text-blue-700 backdrop-blur-sm shadow-sm shadow-blue-100/60">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(34,197,94,0.35)]" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/80 px-3 py-1.5 text-xs font-semibold text-blue-700 backdrop-blur-sm shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Experience
-            <span className="inline-flex items-center gap-1 rounded-full bg-white/80 px-2 py-0.5 text-[10px] text-slate-500">
-              <i className="fa-solid fa-route text-[9px]" />
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/80 px-2 py-0.5 text-[10px] text-slate-500 font-medium">
+              <i className="fa-solid fa-route text-[9px] text-blue-500" />
               Career timeline
             </span>
           </span>
-          <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-slate-900">
+          <h2 className="mt-4 text-4xl sm:text-5xl font-black tracking-tight text-slate-900">
             Professional Journey
           </h2>
-          <p className="mt-4 text-lg text-slate-600">
+          <p className="mt-4 text-lg text-slate-600 leading-relaxed">
             Jejak karier dalam membangun produk, tim, dan proses yang{" "}
-            <span className="font-medium text-slate-900">nyata terasa</span>{" "}
+            <span className="font-semibold text-slate-900">nyata terasa</span>{" "}
             bagi bisnis dan pengguna.
           </p>
         </header>
@@ -161,9 +135,9 @@ export default function Experience() {
         {/* Timeline wrapper */}
         <div className="relative">
           {/* Garis: Mobile (kiri) */}
-          <div className="absolute top-0 bottom-0 left-5 w-[2px] bg-gradient-to-b from-blue-500 via-purple-400 to-cyan-400 md:hidden" />
+          <div className="absolute top-0 bottom-0 left-5 w-[2px] bg-gradient-to-b from-blue-500/80 via-purple-500/80 to-cyan-500/80 md:hidden" />
           {/* Garis: Desktop (tengah) */}
-          <div className="absolute inset-y-0 left-1/2 hidden w-[2px] -translate-x-1/2 bg-gradient-to-b from-blue-500 via-purple-400 to-cyan-400 md:block" />
+          <div className="absolute inset-y-0 left-1/2 hidden w-[2px] -translate-x-1/2 bg-gradient-to-b from-blue-500/80 via-purple-500/80 to-cyan-500/80 md:block" />
 
           <div className="space-y-16">
             {items.map((it, idx) => {
@@ -173,6 +147,7 @@ export default function Experience() {
                   key={idx}
                   className="relative"
                   data-reveal
+                  data-reveal-delay={`${(idx % 4) * 100}ms`}
                 >
                   {/* Node */}
                   <div
@@ -184,9 +159,9 @@ export default function Experience() {
                     "
                   >
                     <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r ${it.dotGradient} text-white shadow-lg shadow-slate-300`}
+                      className={`flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r ${it.dotGradient} text-white shadow-[0_0_0_6px_rgba(99,102,241,0.15)]`}
                     >
-                      <i className="fa-solid fa-briefcase" />
+                      <i className="fa-solid fa-briefcase text-sm" />
                     </div>
                   </div>
 
@@ -201,42 +176,45 @@ export default function Experience() {
                       }`}
                     >
                       {/* Mobile (card satu kolom) */}
-                      <div className="ml-12 space-y-4 rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm shadow-slate-200/70 backdrop-blur transition hover:-translate-y-1 hover:shadow-lg md:hidden">
+                      <div className={`ml-12 space-y-4 rounded-2xl glass-card glass-card-hover p-5 border border-white/60 shadow-sm md:hidden ${it.glowClass}`}>
                         <div>
                           <h3 className="text-xl font-bold text-slate-900">
                             {it.role}
                           </h3>
-                          <p className={`${it.colorClass} font-semibold`}>
+                          <p className={`${it.colorClass} font-semibold text-sm`}>
                             {it.company} · {it.location}
                           </p>
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-slate-400 font-medium">
                             {it.period}
                           </p>
                         </div>
-                        <p className="text-sm text-slate-700 leading-relaxed">
+                        <p className="text-sm text-slate-600 leading-relaxed">
                           {it.desc}
                         </p>
-                        <ul className="mt-2 space-y-1 text-sm text-slate-600">
+                        <ul className="mt-2 space-y-1.5 text-sm text-slate-600 border-t border-slate-100 pt-3">
                           {it.bullets.map((b) => (
-                            <li key={b}>• {b}</li>
+                            <li key={b} className="flex items-start gap-2">
+                              <span className="text-blue-500 mt-1.5 shrink-0 size-1.5 rounded-full bg-blue-500" />
+                              <span>{b}</span>
+                            </li>
                           ))}
                         </ul>
                         <div className="mt-3 flex flex-wrap gap-2">
                           {it.tags.map((t) => (
                             <span
                               key={t}
-                              className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[11px] text-slate-700"
+                              className="inline-flex items-center rounded-xl bg-white border border-slate-200/80 px-2.5 py-1 text-[11px] text-slate-600 font-semibold shadow-sm"
                             >
                               {t}
                             </span>
                           ))}
                         </div>
                         <div className="mt-4">
-                          <div className="rounded-2xl bg-gradient-to-tr from-blue-500/40 via-purple-500/40 to-cyan-500/40 p-[1.5px]">
-                            <div className="group rounded-2xl bg-white/90 p-4 shadow-md transition hover:-translate-y-0.5 hover:shadow-lg">
+                          <div className="rounded-2xl bg-gradient-to-tr from-blue-500/10 via-purple-500/10 to-cyan-500/10 p-[1.5px]">
+                            <div className="group rounded-2xl bg-white/80 p-3 shadow-md border border-white/50">
                               <img
                                 src={it.img.src}
-                                className="h-48 w-full rounded-xl object-cover transition group-hover:scale-[1.02]"
+                                className="h-48 w-full rounded-xl object-cover transition duration-500 group-hover:scale-105"
                                 alt={it.img.alt}
                                 loading="lazy"
                               />
@@ -252,15 +230,15 @@ export default function Experience() {
                             isLeft ? "text-right" : "text-left"
                           }`}
                         >
-                          <h3 className="text-2xl font-bold text-slate-900">
+                          <h3 className="text-2xl font-bold text-slate-900 leading-tight">
                             {it.role}
                           </h3>
                           <p
-                            className={`${it.colorClass} mt-0.5 text-sm font-semibold`}
+                            className={`${it.colorClass} mt-1 text-sm font-semibold`}
                           >
                             {it.company} · {it.location}
                           </p>
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-slate-400 font-medium">
                             {it.period}
                           </p>
                         </div>
@@ -269,24 +247,27 @@ export default function Experience() {
                             isLeft ? "text-right" : "text-left"
                           }`}
                         >
-                          <div className="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm shadow-slate-200/60 backdrop-blur transition hover:-translate-y-1 hover:shadow-lg">
-                            <p className="text-sm text-slate-700 leading-relaxed">
+                          <div className={`rounded-2xl glass-card glass-card-hover p-6 border border-white/60 shadow-sm ${it.glowClass}`}>
+                            <p className="text-sm text-slate-600 leading-relaxed">
                               {it.desc}
                             </p>
-                            <ul className="mt-3 space-y-1 text-sm text-slate-600">
+                            <ul className="mt-4 space-y-2 text-sm text-slate-600 border-t border-slate-100 pt-4">
                               {it.bullets.map((b) => (
-                                <li key={b}>• {b}</li>
+                                <li key={b} className={`flex items-start gap-2 ${isLeft ? "flex-row-reverse" : "flex-row"}`}>
+                                  <span className="text-blue-500 mt-1.5 shrink-0 size-1.5 rounded-full bg-blue-500" />
+                                  <span className={isLeft ? "text-right" : "text-left"}>{b}</span>
+                                </li>
                               ))}
                             </ul>
                             <div
-                              className={`mt-3 flex flex-wrap gap-2 ${
+                              className={`mt-4 flex flex-wrap gap-2 ${
                                 isLeft ? "justify-end" : "justify-start"
                               }`}
                             >
                               {it.tags.map((t) => (
                                 <span
                                   key={t}
-                                  className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[11px] text-slate-700 ring-1 ring-slate-200"
+                                  className="inline-flex items-center rounded-xl bg-white border border-slate-200/80 px-2.5 py-1 text-[11px] text-slate-600 font-semibold shadow-sm"
                                 >
                                   {t}
                                 </span>
@@ -303,11 +284,11 @@ export default function Experience() {
                         isLeft ? "md:order-2 md:pl-6" : "md:order-1 md:pr-6"
                       }`}
                     >
-                      <div className="rounded-2xl bg-gradient-to-tr from-blue-500/40 via-purple-500/40 to-cyan-500/40 p-[1.5px]">
-                        <div className="group rounded-2xl bg-white/90 p-4 shadow-md shadow-slate-200/80 backdrop-blur transition hover:-translate-y-1 hover:shadow-xl">
+                      <div className="rounded-2xl bg-gradient-to-tr from-blue-500/10 via-purple-500/10 to-cyan-500/10 p-[1.5px] shadow-sm">
+                        <div className="group rounded-2xl bg-white/70 backdrop-blur-md p-4 shadow-md border border-white/50 transition duration-500 hover:shadow-lg">
                           <img
                             src={it.img.src}
-                            className="h-56 w-full rounded-xl object-cover transition group-hover:scale-[1.03]"
+                            className="h-56 w-full rounded-xl object-cover transition duration-700 group-hover:scale-105"
                             alt={it.img.alt}
                             loading="lazy"
                           />
@@ -321,24 +302,6 @@ export default function Experience() {
           </div>
         </div>
       </section>
-
-      {/* keyframes fadeUp */}
-      <style jsx>{`
-        @keyframes fadeUp {
-          0% {
-            opacity: 0;
-            transform: translateY(26px) scale(0.98);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-        .animate-fadeUp {
-          animation: fadeUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-          animation-delay: var(--reveal-delay, 0ms);
-        }
-      `}</style>
     </div>
   );
 }

@@ -20,6 +20,7 @@ type Skill = {
   sub: string;
   chips?: string[];
   grad?: string;
+  glow: string;
 };
 
 export default function Skills() {
@@ -27,7 +28,7 @@ export default function Skills() {
   const [page, setPage] = useState<number>(1);
   const pageSize = 12;
 
-  // ====== DATA (ditambah Next.js, Bootstrap, HTML/CSS, Go, Dart, Flutter, Arduino) ======
+  // ====== DATA ======
   const SKILLS: Skill[] = [
     // Backend
     {
@@ -36,7 +37,8 @@ export default function Skills() {
       title: "Laravel",
       sub: "REST • Auth • Queues",
       chips: ["Get Media", "Mischoll", "SIPJAKI", "Tracer Study"],
-      grad: "from-red-500/40 via-rose-500/40 to-orange-500/40",
+      grad: "from-red-500/20 to-orange-500/20",
+      glow: "glow-red",
     },
     {
       cat: "backend",
@@ -44,7 +46,8 @@ export default function Skills() {
       title: "PHP 8+",
       sub: "Modern PHP • Clean Code",
       chips: ["Policy/ACL", "Service/Repo"],
-      grad: "from-amber-500/30 via-fuchsia-500/30 to-blue-500/30",
+      grad: "from-blue-500/10 to-indigo-500/10",
+      glow: "glow-red",
     },
     {
       cat: "backend",
@@ -52,7 +55,8 @@ export default function Skills() {
       title: ".NET (C#)",
       sub: "MVC • EF • API",
       chips: ["LKS Juara 3", "SQL Server"],
-      grad: "from-amber-500/30 via-fuchsia-500/30 to-blue-500/30",
+      grad: "from-purple-500/10 to-indigo-500/10",
+      glow: "glow-purple",
     },
     {
       cat: "backend",
@@ -60,7 +64,8 @@ export default function Skills() {
       title: "Go",
       sub: "HTTP • Concurrency • CLI",
       chips: ["Service kecil & tooling"],
-      grad: "from-amber-500/30 via-fuchsia-500/30 to-blue-500/30",
+      grad: "from-cyan-500/10 to-teal-500/10",
+      glow: "glow-cyan",
     },
 
     // Frontend
@@ -70,15 +75,17 @@ export default function Skills() {
       title: "React",
       sub: "SPA • Realtime • Hooks",
       chips: ["Chat Real-Time", "MindMasters"],
-      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+      grad: "from-blue-500/20 to-cyan-500/20",
+      glow: "glow-blue",
     },
     {
       cat: "frontend",
-      icon: <i className="devicon-nextjs-plain text-4xl" />, // Next.js (ikon default hitam/monokrom)
+      icon: <i className="devicon-nextjs-plain text-4xl text-slate-800" />,
       title: "Next.js",
       sub: "SSR • ISR • App Router",
-      chips: ["My Website" , "Api"],
-      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+      chips: ["My Website", "Api"],
+      grad: "from-slate-500/10 to-slate-800/10",
+      glow: "glow-slate",
     },
     {
       cat: "frontend",
@@ -86,7 +93,8 @@ export default function Skills() {
       title: "Vue / Nuxt",
       sub: "SPA • SSR",
       chips: ["NewLearning Era"],
-      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+      grad: "from-emerald-500/15 to-teal-500/15",
+      glow: "glow-emerald",
     },
     {
       cat: "frontend",
@@ -94,7 +102,8 @@ export default function Skills() {
       title: "Bootstrap",
       sub: "Rapid UI • Utility",
       chips: ["Company Profile", "Dashboard CRUD"],
-      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+      grad: "from-purple-500/15 to-indigo-500/15",
+      glow: "glow-purple",
     },
     {
       cat: "frontend",
@@ -102,7 +111,8 @@ export default function Skills() {
       title: "HTML5",
       sub: "Semantic • A11y",
       chips: ["Landing", "CMS Pages"],
-      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+      grad: "from-orange-500/15 to-red-500/15",
+      glow: "glow-orange",
     },
     {
       cat: "frontend",
@@ -110,7 +120,8 @@ export default function Skills() {
       title: "CSS3",
       sub: "Responsive • Flex/Grid",
       chips: ["Marketing Site", "Microsite"],
-      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+      grad: "from-blue-500/15 to-indigo-500/15",
+      glow: "glow-blue",
     },
     {
       cat: "frontend",
@@ -118,7 +129,8 @@ export default function Skills() {
       title: "Tailwind CSS",
       sub: "Design System • Responsive",
       chips: ["Landing Nolima", "LQS Question"],
-      grad: "from-blue-500/30 via-purple-500/30 to-cyan-500/30",
+      grad: "from-cyan-500/15 to-blue-500/15",
+      glow: "glow-cyan",
     },
 
     // Mobile
@@ -128,7 +140,8 @@ export default function Skills() {
       title: "React Native",
       sub: "iOS • Android",
       chips: ["KR_Money", "Smart Pump App"],
-      grad: "from-pink-500/30 via-purple-500/30 to-indigo-500/30",
+      grad: "from-blue-500/15 to-purple-500/15",
+      glow: "glow-blue",
     },
     {
       cat: "mobile",
@@ -136,7 +149,8 @@ export default function Skills() {
       title: "Dart",
       sub: "Async • Isolates",
       chips: ["Flutter base"],
-      grad: "from-pink-500/30 via-purple-500/30 to-indigo-500/30",
+      grad: "from-blue-500/15 to-cyan-500/15",
+      glow: "glow-blue",
     },
     {
       cat: "mobile",
@@ -144,17 +158,19 @@ export default function Skills() {
       title: "Flutter",
       sub: "Widget • State • REST",
       chips: ["Prototype Mobile"],
-      grad: "from-pink-500/30 via-purple-500/30 to-indigo-500/30",
+      grad: "from-blue-400/15 to-indigo-500/15",
+      glow: "glow-purple",
     },
 
     // IoT / Vision
     {
       cat: "iot",
-      icon: <i className="fa-solid fa-microchip text-emerald-600 text-3xl" />,
+      icon: <i className="fa-solid fa-microchip text-emerald-600 text-3xl animate-pulse" />,
       title: "IoT • MQTT",
       sub: "ESP32/8266 • Telemetry",
       chips: ["GreenGuard", "Smart Pump"],
-      grad: "from-emerald-500/30 via-lime-500/30 to-teal-500/30",
+      grad: "from-emerald-500/15 to-teal-500/15",
+      glow: "glow-emerald",
     },
     {
       cat: "iot",
@@ -162,15 +178,17 @@ export default function Skills() {
       title: "Arduino",
       sub: "Sensors • Serial • PWM",
       chips: ["Smart Pump", "Prototyping"],
-      grad: "from-emerald-500/30 via-lime-500/30 to-teal-500/30",
+      grad: "from-teal-500/15 to-emerald-500/15",
+      glow: "glow-emerald",
     },
     {
       cat: "iot",
-      icon: <i className="fa-solid fa-brain text-teal-600 text-3xl" />,
+      icon: <i className="fa-solid fa-brain text-teal-600 text-3xl animate-float-gentle" />,
       title: "Computer Vision",
       sub: "OpenCV • Face Recognition",
       chips: ["PKL HummaTech"],
-      grad: "from-emerald-500/30 via-lime-500/30 to-teal-500/30",
+      grad: "from-cyan-500/15 to-teal-500/15",
+      glow: "glow-cyan",
     },
 
     // Cloud/DevOps
@@ -180,7 +198,8 @@ export default function Skills() {
       title: "Docker / Kubernetes",
       sub: "Images • Orchestration",
       chips: ["CI/CD", "Scaling"],
-      grad: "from-emerald-500/30 via-teal-500/30 to-cyan-500/30",
+      grad: "from-blue-500/15 to-cyan-500/15",
+      glow: "glow-cyan",
     },
     {
       cat: "cloud",
@@ -188,7 +207,8 @@ export default function Skills() {
       title: "AWS",
       sub: "ECS/EKS • VPC • IAM",
       chips: ["S3", "CloudFront"],
-      grad: "from-emerald-500/30 via-teal-500/30 to-cyan-500/30",
+      grad: "from-orange-500/15 to-yellow-500/15",
+      glow: "glow-orange",
     },
     {
       cat: "cloud",
@@ -196,7 +216,8 @@ export default function Skills() {
       title: "Google Cloud",
       sub: "GKE • Cloud Run • Pub/Sub",
       chips: ["Logs", "Tracing"],
-      grad: "from-emerald-500/30 via-teal-500/30 to-cyan-500/30",
+      grad: "from-blue-500/15 to-red-500/15",
+      glow: "glow-blue",
     },
 
     // Data
@@ -206,7 +227,8 @@ export default function Skills() {
       title: "MySQL",
       sub: "Index • Query Plan",
       chips: ["Mayoritas Laravel"],
-      grad: "from-indigo-500/30 via-sky-500/30 to-cyan-500/30",
+      grad: "from-blue-500/15 to-orange-500/15",
+      glow: "glow-blue",
     },
     {
       cat: "data",
@@ -214,7 +236,8 @@ export default function Skills() {
       title: "PostgreSQL",
       sub: "Schema • TX",
       chips: ["Tracer Study", "Analytics"],
-      grad: "from-indigo-500/30 via-sky-500/30 to-cyan-500/30",
+      grad: "from-blue-500/15 to-indigo-500/15",
+      glow: "glow-purple",
     },
     {
       cat: "data",
@@ -222,7 +245,8 @@ export default function Skills() {
       title: "Redis",
       sub: "Cache • Queue • Rate-limit",
       chips: ["SIPJAKI", "Chat RT"],
-      grad: "from-indigo-500/30 via-sky-500/30 to-cyan-500/30",
+      grad: "from-red-500/15 to-rose-500/15",
+      glow: "glow-red",
     },
     {
       cat: "data",
@@ -230,7 +254,8 @@ export default function Skills() {
       title: "SQL Server",
       sub: "T-SQL • Index",
       chips: ["LKS IT Software"],
-      grad: "from-indigo-500/30 via-sky-500/30 to-cyan-500/30",
+      grad: "from-red-500/15 to-slate-500/15",
+      glow: "glow-red",
     },
 
     // Tools
@@ -240,7 +265,8 @@ export default function Skills() {
       title: "Git (GitHub/GitLab)",
       sub: "Flow • PR • Release",
       chips: ["Code Review", "Release"],
-      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+      grad: "from-orange-500/15 to-slate-700/15",
+      glow: "glow-orange",
     },
     {
       cat: "tools",
@@ -248,7 +274,8 @@ export default function Skills() {
       title: "CI/CD",
       sub: "GitHub Actions • Jenkins",
       chips: ["Tests", "Auto Deploy"],
-      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+      grad: "from-blue-500/15 to-slate-600/15",
+      glow: "glow-blue",
     },
     {
       cat: "tools",
@@ -256,7 +283,8 @@ export default function Skills() {
       title: "Visual Studio",
       sub: ".NET Dev",
       chips: ["C#", "EF Core"],
-      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+      grad: "from-purple-500/15 to-slate-600/15",
+      glow: "glow-purple",
     },
     {
       cat: "tools",
@@ -264,7 +292,8 @@ export default function Skills() {
       title: "VS Code",
       sub: "Daily Driver • Ext",
       chips: ["Laravel", "React"],
-      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+      grad: "from-blue-500/15 to-slate-700/15",
+      glow: "glow-blue",
     },
     {
       cat: "tools",
@@ -272,7 +301,8 @@ export default function Skills() {
       title: "Arduino IDE",
       sub: "ESP32/8266 • Serial",
       chips: ["IoT Smart Pump"],
-      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+      grad: "from-teal-500/15 to-slate-600/15",
+      glow: "glow-emerald",
     },
     {
       cat: "tools",
@@ -280,27 +310,30 @@ export default function Skills() {
       title: "Android Studio",
       sub: "RN Modules • Debug",
       chips: ["KR_Money"],
-      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+      grad: "from-green-500/15 to-slate-700/15",
+      glow: "glow-emerald",
     },
     {
       cat: "tools",
-      icon: <i className="fa-solid fa-vial text-purple-600 text-3xl" />,
+      icon: <i className="fa-solid fa-vial text-orange-600 text-3xl" />,
       title: "Postman",
       sub: "API Testing • Mock",
       chips: ["Collections", "Envs"],
-      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+      grad: "from-orange-500/15 to-slate-600/15",
+      glow: "glow-orange",
     },
     {
       cat: "tools",
       icon: <i className="devicon-figma-plain colored text-4xl" />,
       title: "Figma",
       sub: "Wireframe • Handoff",
-      chips: ["Nolima", "GreenGuard","All"],
-      grad: "from-slate-500/30 via-gray-500/30 to-zinc-500/30",
+      chips: ["Nolima", "GreenGuard", "All"],
+      grad: "from-purple-500/15 to-pink-500/15",
+      glow: "glow-pink",
     },
   ];
 
-  // ====== DERIVED (filter + pagination) ======
+  // ====== DERIVED ======
   const filtered = useMemo(
     () => SKILLS.filter((s) => filter === "all" || s.cat === filter),
     [filter]
@@ -313,85 +346,6 @@ export default function Skills() {
 
   useEffect(() => setPage(1), [filter]);
 
-  // ====== REVEAL ANIMATION (dipertahankan) ======
-  useEffect(() => {
-    const revealNodes = new Set<HTMLElement>();
-    document
-      .querySelectorAll<HTMLElement>(
-        "#skills [data-reveal], #skills header, #skills .filters-wrap"
-      )
-      .forEach((el) => revealNodes.add(el));
-
-    document
-      .querySelectorAll<HTMLElement>("#skills .skill-card")
-      .forEach((el, idx) => {
-        el.dataset.delay = String(70 * (idx % 8));
-        revealNodes.add(el);
-      });
-
-    revealNodes.forEach((el: HTMLElement) => {
-      const node = el as HTMLElement;
-      node.style.opacity = "0";
-      node.style.transform = "translateY(26px) scale(.98)";
-      node.style.filter = "blur(6px)";
-      node.style.willChange = "opacity, transform, filter";
-    });
-
-    const ioReveal = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
-          const reduced =
-            window.matchMedia &&
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-          const delay = Number(el.dataset.delay || 0);
-          if (reduced) {
-            el.style.opacity = "1";
-            el.style.transform = "none";
-            el.style.filter = "none";
-          } else if ("animate" in el) {
-            el.animate(
-              [
-                {
-                  opacity: 0,
-                  transform: "translateY(26px) scale(.98)",
-                  filter: "blur(6px)",
-                },
-                {
-                  opacity: 1,
-                  transform: "translateY(0) scale(1)",
-                  filter: "blur(0)",
-                },
-              ],
-              {
-                duration: 680,
-                easing: "cubic-bezier(.22,1,.36,1)",
-                delay,
-                fill: "forwards",
-              }
-            );
-          } else {
-            const node = el as HTMLElement;
-            node.style.transition =
-              "opacity .68s ease, transform .68s ease, filter .68s ease";
-            window.setTimeout(() => {
-              node.style.opacity = "1";
-              node.style.transform = "translateY(0) scale(1)";
-              node.style.filter = "blur(0)";
-            }, delay);
-          }
-          ioReveal.unobserve(el);
-        });
-      },
-      { threshold: 0.18 }
-    );
-
-    revealNodes.forEach((n) => ioReveal.observe(n));
-    return () => ioReveal.disconnect();
-  }, [filter, clampedPage]);
-
-  // ====== UI ======
   const filters: Cat[] = [
     "all",
     "frontend",
@@ -408,10 +362,10 @@ export default function Skills() {
       <button
         key={`p-${p}`}
         onClick={() => setPage(p)}
-        className={`min-w-9 h-9 px-3 rounded-lg text-sm font-medium ${
+        className={`min-w-9 h-9 px-3 rounded-lg text-sm font-semibold transition ${
           p === clampedPage
-            ? "bg-gray-900 text-white"
-            : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+            ? "bg-slate-900 text-white shadow-sm"
+            : "bg-slate-100/80 text-slate-800 hover:bg-slate-200/80"
         }`}
         aria-current={p === clampedPage ? "page" : undefined}
       >
@@ -445,22 +399,19 @@ export default function Skills() {
   };
 
   return (
-    <div id="skills" className="page relative overflow-hidden bg-white py-10">
-      <div className="pointer-events-none absolute inset-0 opacity-60">
-        <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-3xl"></div>
-        <div className="absolute -bottom-28 -right-20 w-80 h-80 rounded-full bg-gradient-to-tr from-cyan-200 to-indigo-200 blur-3xl"></div>
-      </div>
-
+    <div id="skills" className="page relative overflow-hidden py-10">
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
         <header className="text-center max-w-3xl mx-auto mb-12" data-reveal>
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 ring-1 ring-blue-100">
             <span className="size-2 rounded-full bg-blue-500 animate-pulse"></span>{" "}
             Skills
           </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900">
+          <h2 className="mt-4 text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
             Stack Utama, Tools & Platform
           </h2>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-4 text-slate-600 leading-relaxed text-sm sm:text-base">
             Disarikan dari proyek: Get Media, PKL HummaTech (Face Recognition),
             Company Profile (HummaTech & Cakra Parama), Tracer Study Balikpapan,
             SIPJAKI Pasuruan, Mischoll, Travel, Brand Nolima, GreenGuard (IoT),
@@ -471,19 +422,19 @@ export default function Skills() {
 
         {/* Filter */}
         <div
-          className="filters-wrap flex flex-wrap justify-center gap-3 mb-8"
+          className="filters-wrap flex flex-wrap justify-center gap-2.5 mb-10"
           data-reveal
+          data-reveal-delay="50ms"
         >
-          {["all","frontend","backend","mobile","iot","cloud","data","tools"].map((f, i) => (
+          {filters.map((f, i) => (
             <button
               key={f}
               onClick={() => setFilter(f as Cat)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
                 filter === f
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                  ? "bg-slate-950 text-white shadow-md scale-105"
+                  : "bg-white/60 hover:bg-white text-slate-700 border border-slate-200/80 shadow-sm"
               }`}
-              data-delay={String(i * 45)}
             >
               {f === "all" ? "All" : f[0].toUpperCase() + f.slice(1)}
             </button>
@@ -492,22 +443,23 @@ export default function Skills() {
 
         {/* Info jumlah */}
         <div
-          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6 text-sm text-gray-600"
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6 text-sm text-slate-500 font-medium"
           data-reveal
+          data-reveal-delay="100ms"
         >
           <div>
             Showing{" "}
-            <span className="font-medium text-gray-900">
+            <span className="font-bold text-slate-900">
               {filtered.length ? startIdx + 1 : 0}
             </span>
-            –<span className="font-medium text-gray-900">{endIdx}</span> of{" "}
-            <span className="font-medium text-gray-900">{filtered.length}</span>{" "}
+            –<span className="font-bold text-slate-900">{endIdx}</span> of{" "}
+            <span className="font-bold text-slate-900">{filtered.length}</span>{" "}
             skills
           </div>
           <div>
             Page{" "}
-            <span className="font-medium text-gray-900">{clampedPage}</span> /{" "}
-            <span className="font-medium text-gray-900">{totalPages}</span>
+            <span className="font-bold text-slate-900">{clampedPage}</span> /{" "}
+            <span className="font-bold text-slate-900">{totalPages}</span>
           </div>
         </div>
 
@@ -516,26 +468,29 @@ export default function Skills() {
           {pageItems.map((s, idx) => (
             <div
               key={`${s.title}-${idx}`}
-              className={`skill-card group p-[1.5px] rounded-2xl bg-gradient-to-tr ${
-                s.grad || "from-slate-500/30 via-gray-500/30 to-zinc-500/30"
-              }`}
+              className={`skill-card group p-[1px] rounded-2xl bg-gradient-to-tr ${
+                s.grad || "from-slate-200 to-slate-100"
+              } shadow-sm border border-slate-200/60 transition-all duration-300 ${s.glow}`}
               data-cat={s.cat}
               data-reveal
+              data-reveal-delay={`${(idx % 12) * 40}ms`}
             >
-              <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 shadow-sm hover:shadow-lg transition hover:-translate-y-1">
+              <div className="rounded-2xl bg-white/70 backdrop-blur-md p-5 border border-white/40 shadow-inner">
                 <div className="flex items-center gap-4">
-                  {s.icon}
+                  <div className="size-12 rounded-xl bg-white flex items-center justify-center shadow-sm border border-slate-100 transition duration-300 group-hover:scale-110 group-hover:rotate-2">
+                    {s.icon}
+                  </div>
                   <div>
-                    <div className="font-semibold text-gray-900">{s.title}</div>
-                    <div className="text-xs text-gray-500">{s.sub}</div>
+                    <div className="font-bold text-slate-950 text-sm leading-snug">{s.title}</div>
+                    <div className="text-[11px] text-slate-400 font-medium mt-0.5">{s.sub}</div>
                   </div>
                 </div>
                 {!!s.chips?.length && (
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-wrap gap-1.5 border-t border-slate-100/60 pt-3">
                     {s.chips!.map((t) => (
                       <span
                         key={t}
-                        className="px-2 py-0.5 rounded text-[11px] bg-gray-100 text-gray-700 ring-1 ring-gray-200"
+                        className="px-2 py-0.5 rounded-lg text-[10px] bg-slate-50 text-slate-500 font-semibold ring-1 ring-slate-200/80"
                       >
                         {t}
                       </span>
@@ -550,16 +505,17 @@ export default function Skills() {
         {/* Pagination */}
         {totalPages > 1 && (
           <div
-            className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4"
+            className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4"
             data-reveal
+            data-reveal-delay="100ms"
           >
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={clampedPage === 1}
-              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold ${
                 clampedPage === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
+                  ? "bg-slate-100/80 text-slate-400 cursor-not-allowed"
+                  : "bg-white text-slate-800 border border-slate-200/80 hover:bg-slate-50 shadow-sm"
               }`}
             >
               <i className="fa-solid fa-chevron-left" /> Prev
@@ -571,10 +527,10 @@ export default function Skills() {
                     <button
                       key={`p-${p}`}
                       onClick={() => setPage(p)}
-                      className={`min-w-9 h-9 px-3 rounded-lg text-sm font-medium ${
+                      className={`min-w-9 h-9 px-3 rounded-lg text-sm font-semibold ${
                         p === clampedPage
-                          ? "bg-gray-900 text-white"
-                          : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                          ? "bg-slate-900 text-white shadow-md"
+                          : "bg-slate-100/80 text-slate-800 hover:bg-slate-200/80"
                       }`}
                       aria-current={p === clampedPage ? "page" : undefined}
                     >
@@ -587,10 +543,10 @@ export default function Skills() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={clampedPage === totalPages}
-              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold ${
                 clampedPage === totalPages
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
+                  ? "bg-slate-100/80 text-slate-400 cursor-not-allowed"
+                  : "bg-white text-slate-800 border border-slate-200/80 hover:bg-slate-50 shadow-sm"
               }`}
             >
               Next <i className="fa-solid fa-chevron-right" />

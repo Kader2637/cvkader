@@ -21,26 +21,29 @@ const pdfThumbParams =
 const pdfModalParams = "#toolbar=1&navpanes=0&scrollbar=1&zoom=page-fit";
 
 export default function Certificates() {
-  // ====== MODAL (gaya sama seperti Education) ======
+  // ====== MODAL ======
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<CertItem | null>(null);
+  
   const openModal = useCallback((it: CertItem) => {
     setActive(it);
     setOpen(true);
     document.documentElement.style.overflow = "hidden";
   }, []);
+  
   const closeModal = useCallback(() => {
     setOpen(false);
     setActive(null);
     document.documentElement.style.overflow = "";
   }, []);
+  
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeModal();
     if (open) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, closeModal]);
 
-  // ====== DATA (judul rapi + ada deskripsi) ======
+  // ====== DATA ======
   const items: CertItem[] = [
     // 2023
     {
@@ -193,7 +196,6 @@ export default function Certificates() {
     },
 
     // 2025
-
     {
       key: "huawei-dev-apac-2025",
       year: 2025,
@@ -323,6 +325,8 @@ export default function Certificates() {
       kind: "image",
       desc: "Dampak gaya hidup digital pada produktivitas & kesehatan.",
     },
+
+    // 2026
     {
       key: "juara-1-3cc-uiux-2026",
       year: 2026,
@@ -390,62 +394,24 @@ export default function Certificates() {
 
   const [page, setPage] = useState(1);
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
-  useEffect(() => setPage(1), [yearFilter, q]); // reset halaman saat filter/search berubah
+  
+  useEffect(() => setPage(1), [yearFilter, q]);
 
   const clampedPage = Math.min(page, totalPages);
   const startIdx = (clampedPage - 1) * pageSize;
   const endIdx = Math.min(startIdx + pageSize, filtered.length);
   const pageItems = filtered.slice(startIdx, endIdx);
-  // (di dekat state lain)
-  const [loading, setLoading] = useState(true);
 
-  // skeleton saat pertama kali masuk halaman
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 420);
-    return () => clearTimeout(t);
-  }, []);
-
-  // skeleton saat filter/search/pagination berubah
-  useEffect(() => {
-    setLoading(true);
-    const t = setTimeout(() => setLoading(false), 320);
-    return () => clearTimeout(t);
-  }, [yearFilter, q, clampedPage]);
-
-  // ====== Reveal ringan tiap halaman berubah ======
-  useEffect(() => {
-    const cards = document.querySelectorAll<HTMLElement>(
-      "#cert-page [data-reveal]"
-    );
-    cards.forEach((el, idx) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(22px)";
-      el.style.willChange = "opacity, transform";
-      (el as any).animate?.(
-        [
-          { opacity: 0, transform: "translateY(22px)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ],
-        {
-          duration: 560,
-          delay: (idx % 6) * 60,
-          easing: "cubic-bezier(.22,1,.36,1)",
-          fill: "forwards",
-        }
-      );
-    });
-  }, [yearFilter, q, clampedPage]);
-
-  // ====== Render tombol halaman ======
   const renderPages = () => {
     const Btn = (p: number) => (
       <button
         key={`p-${p}`}
         onClick={() => setPage(p)}
-        className={`min-w-9 h-9 px-3 rounded-lg text-sm font-medium ${p === clampedPage
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-          }`}
+        className={`min-w-9 h-9 px-3 rounded-lg text-sm font-semibold transition ${
+          p === clampedPage
+            ? "bg-slate-900 text-white shadow-sm"
+            : "bg-slate-100/80 text-slate-800 hover:bg-slate-200/80"
+        }`}
         aria-current={p === clampedPage ? "page" : undefined}
       >
         {p}
@@ -479,25 +445,20 @@ export default function Certificates() {
   return (
     <div
       id="cert-page"
-      className="page relative overflow-hidden bg-white py-10"
+      className="page relative overflow-hidden py-10"
     >
-      {/* soft bg blobs */}
-      <div className="pointer-events-none absolute inset-0 opacity-60 -z-10">
-        <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-3xl" />
-        <div className="absolute -bottom-28 -right-20 w-80 h-80 rounded-full bg-gradient-to-tr from-cyan-200 to-indigo-200 blur-3xl" />
-      </div>
-
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
         {/* Header */}
-        <header className="text-center max-w-3xl mx-auto mb-8" data-reveal>
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+        <header className="text-center max-w-3xl mx-auto mb-10" data-reveal>
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 ring-1 ring-blue-100">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />{" "}
             Sertifikat
           </span>
-          <h1 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
+          <h1 className="mt-4 text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
             Certificates & Achievements
           </h1>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="mt-4 text-lg text-slate-600 leading-relaxed">
             Koleksi sertifikat dan penghargaan yang mencerminkan perjalanan
             profesional saya— mulai dari pengembangan web hingga teknologi AI
             dan IoT, semuanya dapat dilihat langsung dalam tampilan interaktif.
@@ -506,85 +467,89 @@ export default function Certificates() {
 
         {/* Controls */}
         <div
-          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6"
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8"
           data-reveal
+          data-reveal-delay="50ms"
         >
-          <div className="flex flex-wrap gap-2">
-            {(["all", 2026, 2025, 2024, 2023] as const).map((y) => (
+          <div className="flex flex-wrap gap-2.5">
+            {([ "all", 2026, 2025, 2024, 2023] as const).map((y) => (
               <button
                 key={String(y)}
                 onClick={() => setYearFilter(y)}
-                className={`px-4 py-2 rounded-full text-sm font-medium ${yearFilter === y
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-                  }`}
+                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                  yearFilter === y
+                    ? "bg-slate-950 text-white shadow-md scale-105"
+                    : "bg-white/60 hover:bg-white text-slate-700 border border-slate-200/80 shadow-sm"
+                }`}
               >
                 {y === "all" ? "Semua" : y}
               </button>
             ))}
           </div>
           <div className="relative w-full sm:w-72">
-            <i className="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400" />
+            <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Cari judul / deskripsi / tag…"
-              className="pl-9 pr-3 py-2 w-full rounded-lg bg-white ring-1 ring-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+              className="pl-10 pr-4 py-2.5 w-full rounded-xl bg-white/60 focus:bg-white border border-slate-200/85 focus:ring-2 focus:ring-blue-500 outline-none text-sm shadow-sm transition-all"
             />
           </div>
         </div>
 
         {/* Info jumlah */}
         <div
-          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4 text-sm text-gray-600"
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6 text-sm text-slate-500 font-medium"
           data-reveal
+          data-reveal-delay="100ms"
         >
           <div>
             Menampilkan{" "}
-            <span className="font-medium text-gray-900">
+            <span className="font-bold text-slate-900">
               {filtered.length ? startIdx + 1 : 0}–{endIdx}
             </span>{" "}
             dari{" "}
-            <span className="font-medium text-gray-900">{filtered.length}</span>{" "}
+            <span className="font-bold text-slate-900">{filtered.length}</span>{" "}
             sertifikat
           </div>
           <div>
             Halaman{" "}
-            <span className="font-medium text-gray-900">{clampedPage}</span> /{" "}
-            <span className="font-medium text-gray-900">{totalPages}</span>
+            <span className="font-bold text-slate-900">{clampedPage}</span> /{" "}
+            <span className="font-bold text-slate-900">{totalPages}</span>
           </div>
         </div>
 
         {/* Grid */}
         <div className="grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {pageItems.map((c) => {
+          {pageItems.map((c, idx) => {
             const src = enc(c.file);
             return (
               <article
                 key={c.key}
                 data-reveal
-                className="group rounded-2xl border border-gray-200/70 bg-white/80 backdrop-blur-xl p-4 shadow-sm hover:-translate-y-1 hover:shadow-lg transition"
+                data-reveal-delay={`${(idx % 12) * 40}ms`}
+                className="group rounded-2xl glass-card glass-card-hover border border-white/60 p-4 shadow-sm hover:shadow-md glow-blue"
               >
                 {/* THUMB */}
-                <div className="relative rounded-xl overflow-hidden ring-1 ring-gray-200">
+                <div className="relative rounded-xl overflow-hidden ring-1 ring-slate-100 bg-slate-50 aspect-[4/3]">
                   {c.kind === "image" ? (
                     <img
                       src={src}
                       alt={c.title}
                       loading="lazy"
-                      className="w-full h-48 object-cover"
+                      className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
                     />
                   ) : (
                     <object
                       data={src + pdfThumbParams}
                       type="application/pdf"
-                      className="w-full h-48 bg-white"
+                      className="w-full h-full bg-white pointer-events-none"
                     >
                       <iframe
                         src={src + pdfThumbParams}
-                        className="w-full h-48"
+                        className="w-full h-full"
                       />
-                      <div className="w-full h-48 grid place-items-center bg-rose-50 text-rose-600">
+                      <div className="w-full h-full grid place-items-center bg-rose-50 text-rose-600">
                         <i className="fa-regular fa-file-pdf text-2xl" />
                         <span className="text-xs mt-1">Open PDF</span>
                       </div>
@@ -592,42 +557,41 @@ export default function Certificates() {
                   )}
 
                   {/* badges */}
-                  <div className="absolute top-2 left-2 flex gap-2">
-                    <span className="px-2 py-0.5 rounded text-[10px] bg-white/90 text-gray-800 ring-1 ring-gray-200">
-                      {c.kind.toUpperCase()}
+                  <div className="absolute top-2 left-2 flex gap-1.5 z-10">
+                    <span className="px-2 py-0.5 rounded-lg text-[9px] font-bold bg-white/95 text-slate-800 shadow-sm border border-slate-100 uppercase">
+                      {c.kind}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] bg-white/90 text-gray-800 ring-1 ring-gray-200">
+                    <span className="px-2 py-0.5 rounded-lg text-[9px] font-bold bg-white/95 text-slate-800 shadow-sm border border-slate-100">
                       {c.year}
                     </span>
                   </div>
 
                   {/* hover actions */}
-                  <div className="absolute bottom-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition">
+                  <div className="absolute bottom-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition z-10 duration-300">
                     <button
                       type="button"
                       onClick={() => openModal(c)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white/90 text-gray-800 text-xs font-medium hover:bg-white"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/95 text-slate-800 text-xs font-semibold hover:bg-white active:scale-95 shadow-sm"
                     >
-                      <i className="fa-solid fa-eye" /> Preview
+                      <i className="fa-solid fa-eye text-xs" /> Preview
                     </button>
-                    {/* download optional */}
                   </div>
                 </div>
 
                 {/* TEXT */}
-                <div className="mt-3">
-                  <h4 className="font-semibold text-gray-900 text-sm line-clamp-2">
+                <div className="mt-4">
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2">
                     {c.title}
                   </h4>
-                  <p className="mt-1 text-xs text-gray-600 line-clamp-2">
+                  <p className="mt-1.5 text-xs text-slate-500 leading-relaxed line-clamp-2">
                     {c.desc}
                   </p>
                   {c.tags?.length ? (
-                    <div className="mt-2 flex flex-wrap gap-1">
+                    <div className="mt-3 flex flex-wrap gap-1.5 pt-3 border-t border-slate-100/60">
                       {c.tags.map((t) => (
                         <span
                           key={t}
-                          className="px-2 py-0.5 rounded text-[10px] bg-gray-100 text-gray-700 ring-1 ring-gray-200"
+                          className="px-2 py-0.5 rounded-lg text-[9px] bg-slate-50 text-slate-500 font-semibold ring-1 ring-slate-200/80"
                         >
                           {t}
                         </span>
@@ -642,14 +606,15 @@ export default function Certificates() {
 
         {/* Pagination */}
         {filtered.length > pageSize && (
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4" data-reveal data-reveal-delay="100ms">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={clampedPage === 1}
-              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${clampedPage === 1
-                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
-                }`}
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold ${
+                clampedPage === 1
+                  ? "bg-slate-100/80 text-slate-400 cursor-not-allowed"
+                  : "bg-white text-slate-800 border border-slate-200/80 hover:bg-slate-50 shadow-sm"
+              }`}
             >
               <i className="fa-solid fa-chevron-left" /> Prev
             </button>
@@ -661,10 +626,11 @@ export default function Certificates() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={clampedPage === totalPages}
-              className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${clampedPage === totalPages
-                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "bg-white text-gray-800 ring-1 ring-gray-200 hover:bg-gray-50"
-                }`}
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold ${
+                clampedPage === totalPages
+                  ? "bg-slate-100/80 text-slate-400 cursor-not-allowed"
+                  : "bg-white text-slate-800 border border-slate-200/80 hover:bg-slate-50 shadow-sm"
+              }`}
             >
               Next <i className="fa-solid fa-chevron-right" />
             </button>
@@ -678,106 +644,107 @@ export default function Certificates() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="cert-title"
-          className="fixed inset-0 z-[999] flex items-center justify-center px-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center px-4 backdrop-fade"
           onClick={(e) => {
             if (e.target === e.currentTarget) closeModal();
           }}
         >
-          {/* backdrop pakai kelas aman */}
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm backdrop-fade" />
+          {/* backdrop */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
           <div className="relative z-10 w-full max-w-4xl modal-pop">
-            <div className="p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 shadow-2xl">
-              <div className="rounded-2xl bg-white">
+            <div className="p-[2px] rounded-3xl bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 shadow-2xl">
+              <div className="rounded-3xl bg-white">
                 {/* header */}
-                <div className="flex items-start gap-5 p-5 border-b border-gray-100">
-                  <div className="w-12 h-12 rounded-lg bg-gray-50 grid place-items-center ring-1 ring-gray-200">
-                    <i className="fa-solid fa-award text-blue-600" />
+                <div className="flex items-start gap-4 p-5 border-b border-slate-100">
+                  <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 grid place-items-center shadow-sm shrink-0">
+                    <i className="fa-solid fa-award text-blue-600 text-xl" />
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <h3
                       id="cert-title"
-                      className="text-lg font-semibold text-gray-900"
+                      className="text-base font-bold text-slate-900 leading-snug truncate"
                     >
                       {active.title}
                     </h3>
-                    <p className="text-xs text-gray-500 mt-1">{active.year}</p>
+                    <p className="text-xs text-slate-400 font-semibold mt-0.5">{active.year}</p>
                   </div>
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:bg-gray-100 transition"
+                    className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:text-red-500 hover:bg-red-50 hover:border-red-100 flex items-center justify-center transition active:scale-90"
                     aria-label="Tutup"
                     title="Tutup"
                   >
-                    <i className="fa-solid fa-xmark text-gray-600" />
+                    <i className="fa-solid fa-xmark text-sm" />
                   </button>
                 </div>
 
                 {/* body */}
                 <div className="p-5 grid md:grid-cols-2 gap-5">
-                  <div className="rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                  <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center">
                     {active.kind === "image" ? (
                       <img
                         src={enc(active.file)}
                         alt={active.title}
-                        className="w-full h-full object-contain"
+                        className="w-full max-h-[58vh] object-contain shadow-inner"
                         loading="lazy"
                       />
                     ) : (
                       <object
                         data={enc(active.file) + pdfModalParams}
                         type="application/pdf"
-                        className="w-full h-[70vh]"
+                        className="w-full h-[58vh] bg-white"
                       >
                         <iframe
                           src={enc(active.file) + pdfModalParams}
-                          className="w-full h-[70vh]"
+                          className="w-full h-[58vh]"
                         />
                       </object>
                     )}
                   </div>
 
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-900">
-                      Deskripsi
-                    </h4>
-                    <p className="mt-2 text-sm text-gray-700">{active.desc}</p>
+                  <div className="flex flex-col justify-between">
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900">
+                        Deskripsi Sertifikat
+                      </h4>
+                      <p className="mt-2.5 text-sm text-slate-650 leading-relaxed">{active.desc}</p>
 
-                    {active.tags?.length ? (
-                      <>
-                        <h5 className="mt-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                          Tags
-                        </h5>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {active.tags.map((s) => (
-                            <span
-                              key={s}
-                              className="px-2.5 py-1 rounded-full text-xs bg-gray-100 text-gray-800"
-                            >
-                              {s}
-                            </span>
-                          ))}
-                        </div>
-                      </>
-                    ) : null}
+                      {active.tags?.length ? (
+                        <>
+                          <h5 className="mt-6 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                            Tags / Bidang
+                          </h5>
+                          <div className="mt-2.5 flex flex-wrap gap-2">
+                            {active.tags.map((s) => (
+                              <span
+                                key={s}
+                                className="px-3 py-1 rounded-xl text-xs bg-slate-100 text-slate-600 border border-slate-200/50 font-semibold shadow-sm"
+                              >
+                                {s}
+                              </span>
+                            ))}
+                          </div>
+                        </>
+                      ) : null}
+                    </div>
 
-                    <div className="mt-6 flex flex-wrap gap-3">
+                    <div className="mt-8 pt-4 border-t border-slate-100/50 flex justify-end">
                       <button
                         type="button"
                         onClick={closeModal}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-800 text-sm hover:bg-gray-50 transition"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs font-semibold hover:bg-slate-50 transition active:scale-95 shadow-sm"
                       >
-                        <i className="fa-solid fa-check" /> Tutup
+                        <i className="fa-solid fa-check text-xs" /> Selesai
                       </button>
                     </div>
                   </div>
                 </div>
 
-                <div className="px-5 pb-5">
-                  <p className="text-xs text-gray-500">
-                    PDF dapat di-zoom/scroll langsung di sini. Tekan{" "}
-                    <span className="font-semibold">Esc</span> untuk menutup.
+                <div className="px-5 pb-5 pt-2 border-t border-slate-100/50">
+                  <p className="text-[10px] text-slate-400 font-medium">
+                    * Untuk PDF, Anda dapat menggunakan kontrol bawaan browser untuk zoom atau print. Tekan <span className="font-bold">Esc</span> untuk menutup.
                   </p>
                 </div>
               </div>
@@ -785,39 +752,6 @@ export default function Certificates() {
           </div>
         </div>
       )}
-
-      {/* pastikan blob di bawah modal + animasi aman build */}
-      <style jsx>{`
-        :global(#cert-page .pointer-events-none) {
-          z-index: 0;
-        }
-
-        @keyframes backdropFade {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        .backdrop-fade {
-          animation: backdropFade 0.22s ease-out both;
-        }
-
-        @keyframes modalPop {
-          0% {
-            opacity: 0;
-            transform: translateY(14px) scale(0.98);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-        .modal-pop {
-          animation: modalPop 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
-        }
-      `}</style>
     </div>
   );
 }
