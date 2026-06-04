@@ -614,7 +614,7 @@ export async function GET() {
                 <div className="p-6 bg-slate-50/80 border-t border-slate-200 text-xs sm:text-sm leading-relaxed text-slate-600 space-y-3 font-mono">
                   <div className="font-bold text-slate-800 uppercase tracking-wider text-[10px] text-blue-600"># Penjelasan Alur Kode</div>
                   {courseTab === "laravel" && (
-                    <p>Alur Request: User mengakses rute homepage `/` → Server memanggil `HelloController@index` → Controller meneruskan data array `['name' => 'Abdul']` ke file template Blade `hello.blade.php` → View me-render tulisan di halaman browser user.</p>
+                    <p>Alur Request: User mengakses rute homepage `/` → Server memanggil `HelloController@index` → Controller meneruskan data array `['name' =&gt; 'Abdul']` ke file template Blade `hello.blade.php` → View me-render tulisan di halaman browser user.</p>
                   )}
                   {courseTab === "react" && (
                     <p>Fungsi reaktif: Hook `useState(0)` mendefinisikan state awal `count = 0`. Ketika elemen button diklik, event trigger memicu handler `setCount(count + 1)` yang memperbarui state secara instan dan memicu render ulang DOM.</p>
