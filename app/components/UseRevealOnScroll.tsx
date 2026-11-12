@@ -11,17 +11,6 @@ export default function UseRevealOnScroll() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReduced) {
-      document
-        .querySelectorAll<HTMLElement>("[data-reveal], .reveal")
-        .forEach((el) => el.classList.add("revealed"));
-      return;
-    }
-
     let rafId: number | null = null;
 
     const updateScrollZoom = () => {

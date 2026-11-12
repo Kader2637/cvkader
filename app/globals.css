@@ -170,11 +170,4 @@
   .modal-pop {
     animation: none;
   }
-  [data-reveal],
-  .reveal {
-    opacity: 1;
-    transform: none;
-    filter: none;
-    transition: none;
-  }
 }

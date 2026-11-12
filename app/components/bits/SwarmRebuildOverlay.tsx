@@ -218,18 +218,6 @@ export default function SwarmRebuildOverlay() {
   );
 
   useEffect(() => {
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReduced) {
-      document
-        .querySelectorAll<HTMLElement>("[data-reveal], .reveal")
-        .forEach(materializeElement);
-      setActive(false);
-      return;
-    }
-
     runIdRef.current += 1;
     runningRef.current = false;
     queueRef.current = [];
