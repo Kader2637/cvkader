@@ -3,85 +3,62 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+/**
+ * Handles smooth scroll-driven zoom-in / zoom-out (--scroll-scale)
+ * on cards & sections across all routes, plus reduced-motion fallback.
+ */
 export default function UseRevealOnScroll() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const observedElements = new Set<HTMLElement>();
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const setupElement = (el: HTMLElement) => {
-      if (observedElements.has(el)) return;
-      observedElements.add(el);
+    if (prefersReduced) {
+      document
+        .querySelectorAll<HTMLElement>("[data-reveal], .reveal")
+        .forEach((el) => el.classList.add("revealed"));
+      return;
+    }
 
-      if (!el.classList.contains("revealed")) {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(24px) scale(0.985)";
-        el.style.filter = "blur(4px)";
-      }
-      el.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
-      io.observe(el);
+    let rafId: number | null = null;
+
+    const updateScrollZoom = () => {
+      rafId = null;
+      const vh = window.innerHeight || 800;
+      const center = vh * 0.5;
+      const targets = document.querySelectorAll<HTMLElement>(
+        "[data-scroll-zoom], .bento-card"
+      );
+
+      targets.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < -60 || rect.top > vh + 60) {
+          el.style.setProperty("--scroll-scale", "0.94");
+          return;
+        }
+        const elCenter = rect.top + rect.height * 0.5;
+        const dist = Math.min(1, Math.abs(elCenter - center) / (vh * 0.7));
+        // Zoom in (1.0) near viewport center, gently zoom out (0.945) near edges
+        const scale = 1 - dist * 0.055;
+        el.style.setProperty("--scroll-scale", scale.toFixed(4));
+      });
     };
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const el = entry.target as HTMLElement;
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(updateScrollZoom);
+    };
 
-          if (entry.isIntersecting) {
-            const delay = el.getAttribute("data-reveal-delay") || "0ms";
-            el.style.transitionDelay = delay;
-            requestAnimationFrame(() => {
-              el.style.opacity = "1";
-              el.style.transform = "translateY(0) scale(1)";
-              el.style.filter = "blur(0)";
-              el.classList.add("revealed");
-            });
-          } else {
-            // Scroll exit animation
-            el.style.transitionDelay = "0ms";
-            requestAnimationFrame(() => {
-              el.style.opacity = "0";
-              el.style.transform = "translateY(24px) scale(0.985)";
-              el.style.filter = "blur(4px)";
-              el.classList.remove("revealed");
-            });
-          }
-        });
-      },
-      {
-        threshold: 0.05,
-        rootMargin: "0px 0px -5% 0px",
-      }
-    );
-
-    // Initial setup for existing elements
-    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal], .reveal"));
-    els.forEach(setupElement);
-
-    // MutationObserver to catch dynamically added elements (like after filters/pagination)
-    const mutationObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            const el = node as HTMLElement;
-            if (el.matches("[data-reveal], .reveal")) {
-              setupElement(el);
-            }
-            const children = Array.from(el.querySelectorAll<HTMLElement>("[data-reveal], .reveal"));
-            children.forEach(setupElement);
-          }
-        });
-      });
-    });
-
-    mutationObserver.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
+    updateScrollZoom();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
 
     return () => {
-      io.disconnect();
-      mutationObserver.disconnect();
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [pathname]);
 

@@ -1,195 +1,191 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
+import BackToTop from "../components/BackToTop";
+import SpotlightCard from "../components/bits/SpotlightCard";
+import TiltedCard from "../components/bits/TiltedCard";
+import DecryptedText from "../components/bits/DecryptedText";
+import MagneticButton from "../components/bits/MagneticButton";
 
 export default function About() {
-  // ========= COUNTER =========
-  useEffect(() => {
-    const about = document.getElementById("about");
-    if (!about) return;
-
-    const counters = about.querySelectorAll<HTMLElement>(".counter");
-    let started = false;
-
-    const run = () => {
-      if (started) return;
-      started = true;
-      counters.forEach((el) => {
-        const target = parseInt(el.dataset.target || "0", 10) || 0;
-        const duration = 1100;
-        const startTime = performance.now();
-        const showPlus = (el.dataset.plus || "").toLowerCase() === "true";
-
-        const step = (now: number) => {
-          const p = Math.min((now - startTime) / duration, 1);
-          const ease = 1 - Math.pow(1 - p, 3); // easeOutCubic
-          const val = Math.floor(ease * target);
-          el.textContent = String(val) + (p === 1 && showPlus ? "+" : "");
-          if (p < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-      });
-    };
-
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && run()),
-      { threshold: 0.2 }
-    );
-    io.observe(about);
-    return () => io.disconnect();
-  }, []);
-
   return (
-    <div
-      id="about"
-      className="page relative overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-24"
-    >
-      <section className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
-        {/* ================= TWO-COLUMN EDITORIAL LAYOUT ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
-          {/* Left Column: Portrait & Details (4 cols) */}
-          <aside className="lg:col-span-4 space-y-8 lg:sticky lg:top-28">
-            
-            {/* Portrait Container */}
-            <div className="relative rounded-3xl bg-white/70 backdrop-blur-md p-4 shadow-xl border border-slate-200/60 overflow-hidden" data-reveal>
-              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-slate-50 border border-slate-100">
-                {/* Profile Photo */}
+    <div id="about" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 pb-8">
+      {/* Header */}
+      <header className="space-y-3 border-b border-slate-200/80 dark:border-white/[0.08] pb-6">
+        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+          01 / About Me
+        </span>
+        <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <DecryptedText text="Abdul Kader" speed={30} />
+        </h1>
+        <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-2xl">
+          Full Stack Developer · Systems Architect · Founder AETHER NUSANTARA
+        </p>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
+        {/* Left Sidebar */}
+        <aside className="lg:col-span-4 space-y-5 lg:sticky lg:top-24">
+          <TiltedCard maxTilt={10}>
+            <SpotlightCard className="p-3">
+              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-zinc-950 border border-slate-200 dark:border-white/10">
                 <img
                   src="/assets/foto/i'm1.png"
-                  className="relative h-full w-full object-cover z-0"
                   alt="Abdul Kader"
-                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
-                
-                {/* Online Tag */}
-                <span className="absolute right-4 bottom-4 flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[9px] font-bold text-slate-800 shadow-sm border border-slate-100">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-full bg-zinc-950/80 backdrop-blur px-2.5 py-1 text-[10px] font-mono text-white border border-white/10">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   Remote &amp; On-site
                 </span>
               </div>
-            </div>
+            </SpotlightCard>
+          </TiltedCard>
 
-            {/* Profile Info Cards */}
-            <div className="rounded-3xl bg-white/70 backdrop-blur-md p-6 border border-slate-200/65 shadow-sm space-y-4" data-reveal data-reveal-delay="100ms">
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">Contact &amp; Info</h3>
-              <ul className="space-y-3.5 text-xs text-slate-600 font-semibold">
-                <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-location-dot w-5 text-center text-blue-500 text-sm" />
-                  Malang, Indonesia
-                </li>
-                <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-briefcase w-5 text-center text-purple-500 text-sm" />
-                  Founder AETHER NUSANTARA
-                </li>
-                <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-envelope w-5 text-center text-cyan-500 text-sm" />
-                  <a
-                    href="mailto:abdulkader0126@gmail.com"
-                    className="hover:text-blue-600 transition-colors"
-                  >
-                    abdulkader0126@gmail.com
-                  </a>
-                </li>
-                <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-phone w-5 text-center text-emerald-500 text-sm" />
-                  <a href="tel:+62895428183064" className="hover:text-blue-600 transition-colors">
-                    0895-4281-83064
-                  </a>
-                </li>
-              </ul>
-
-              {/* Social Channels */}
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Follow Me</span>
-                <div className="flex gap-2">
-                  {[
-                    { icon: "linkedin", href: "https://www.linkedin.com/in/abdul-kader-53b22930a" },
-                    { icon: "github", href: "https://github.com/Kader2637" },
-                    { icon: "instagram", href: "https://instagram.com/abdulkader2637" },
-                  ].map((s) => (
-                    <a
-                      key={s.icon}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200/80 bg-white text-slate-500 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50 hover:text-slate-800"
-                      aria-label={s.icon}
-                    >
-                      <i className={`fa-brands fa-${s.icon} text-xs`} />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-          </aside>
-
-          {/* Right Column: Narrative & Timeline (8 cols) */}
-          <main className="lg:col-span-8 space-y-12">
-            
-            {/* Header / Intro */}
-            <div className="space-y-4" data-reveal data-reveal-delay="50ms">
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/80 px-3.5 py-1.5 text-xs font-semibold text-blue-700 backdrop-blur-sm shadow-sm">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(34,197,94,0.35)]" />
-                <span>Founder AETHER NUSANTARA</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                Abdul Kader
+          <SpotlightCard className="p-5">
+            <div className="space-y-4">
+              <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-bold">
+                Contact &amp; Info
               </h2>
-              <p className="text-sm font-semibold text-blue-600">
-                Full Stack Developer · Founder AETHER NUSANTARA
-              </p>
-              
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed pt-2">
-                Saya berpengalaman lebih dari <strong>4 tahun</strong> membangun solusi web, mobile, serta integrasi sistem terdistribusi. Fokus utama saya adalah pengiriman fitur secara cepat dan terencana, pengoptimalan performa server, keamanan data, dan dampak bisnis nyata.
-              </p>
-            </div>
+            <ul className="space-y-3 text-xs text-slate-700 dark:text-zinc-300 font-medium">
+              <li className="flex items-center gap-3">
+                <i className="fa-solid fa-location-dot w-4 text-center text-indigo-500" />
+                Malang, Indonesia
+              </li>
+              <li className="flex items-center gap-3">
+                <i className="fa-solid fa-briefcase w-4 text-center text-indigo-500" />
+                Founder AETHER NUSANTARA
+              </li>
+              <li className="flex items-center gap-3">
+                <i className="fa-solid fa-envelope w-4 text-center text-indigo-500" />
+                <a
+                  href="mailto:abdulkader0126@gmail.com"
+                  className="hover:text-indigo-500 transition-colors"
+                >
+                  abdulkader0126@gmail.com
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <i className="fa-solid fa-phone w-4 text-center text-emerald-500" />
+                <a
+                  href="tel:+62895428183064"
+                  className="hover:text-indigo-500 transition-colors"
+                >
+                  0895-4281-83064
+                </a>
+              </li>
+            </ul>
 
-            {/* Stats Row */}
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-100" data-reveal data-reveal-delay="100ms">
-              {[
-                { val: "4+", label: "Years Exp" },
-                { val: "25+", label: "Projects" },
-                { val: "10+", label: "Clients" },
-              ].map((s) => (
-                <div key={s.label} className="rounded-2xl bg-white/70 border border-slate-200/80 p-5 shadow-sm flex flex-col justify-between h-full">
-                  <div className="text-2xl sm:text-3xl font-black text-slate-900 leading-none">
-                    <span className="counter" data-target={s.val.replace("+", "")} data-plus="true">0</span>
-                  </div>
-                  <div className="text-[10px] text-slate-500 mt-2 font-bold uppercase tracking-wider leading-tight">{s.label}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* Core Values Cards */}
-            <div className="space-y-4 pt-6 border-t border-slate-100" data-reveal data-reveal-delay="150ms">
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">Prinsip &amp; Siklus Kerja</h3>
-              <div className="grid sm:grid-cols-2 gap-4">
+            <div className="pt-4 border-t border-slate-200/70 dark:border-white/[0.08] flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+                Socials
+              </span>
+              <div className="flex gap-2">
                 {[
                   {
-                    title: "Rilis Cepat &amp; Terkendali",
-                    desc: "Menyediakan delivery fitur yang cepat dengan pipeline CI/CD yang terintegrasi pengujian otomatis."
+                    icon: "linkedin-in",
+                    href: "https://www.linkedin.com/in/abdul-kader-53b22930a",
+                    label: "LinkedIn",
                   },
                   {
-                    title: "Performa di Level Produk",
-                    desc: "Mendesain skema database teroptimasi untuk response time server minimal dan efisiensi query."
-                  }
-                ].map((item) => (
-                  <div key={item.title} className="rounded-2xl bg-white/70 border border-slate-200/60 p-5 shadow-sm space-y-2">
-                    <h4 className="text-xs font-bold text-slate-900" dangerouslySetInnerHTML={{ __html: item.title }} />
-                    <p className="text-xs text-slate-500 leading-relaxed">{item.desc}</p>
+                    icon: "github",
+                    href: "https://github.com/Kader2637",
+                    label: "GitHub",
+                  },
+                  {
+                    icon: "instagram",
+                    href: "https://instagram.com/abdulkader2637",
+                    label: "Instagram",
+                  },
+                ].map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-zinc-950/60 text-slate-600 dark:text-zinc-400 hover:text-indigo-500 dark:hover:text-indigo-400 flex items-center justify-center text-xs transition"
+                  >
+                    <i className={`fa-brands fa-${s.icon}`} />
+                  </a>
+                ))}
+              </div>
+            </div>
+            </div>
+          </SpotlightCard>
+        </aside>
+
+        {/* Right Content */}
+        <main className="lg:col-span-8 space-y-6">
+          <SpotlightCard className="p-6 sm:p-8">
+            <div className="space-y-5">
+              <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                Summary
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 leading-relaxed">
+                Saya berpengalaman lebih dari <strong>4 tahun</strong> membangun solusi web, mobile, serta integrasi sistem terdistribusi. Fokus utama saya adalah pengiriman fitur secara cepat dan terencana, pengoptimalan performa server, keamanan data, dan dampak bisnis nyata.
+              </p>
+
+              <div className="grid grid-cols-3 gap-2.5 sm:gap-4 pt-4 border-t border-slate-200/70 dark:border-white/[0.08]">
+                {[
+                  { val: "4+", label: "Years Exp" },
+                  { val: "25+", label: "Projects" },
+                  { val: "10+", label: "Clients" },
+                ].map((s) => (
+                  <div
+                    key={s.label}
+                    className="p-3 sm:p-4 rounded-xl bg-slate-50 dark:bg-zinc-950/50 border border-slate-200/70 dark:border-white/[0.06]"
+                  >
+                    <div className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                      {s.val}
+                    </div>
+                    <div className="text-[10px] font-mono text-slate-500 dark:text-zinc-400 uppercase mt-1">
+                      {s.label}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
+          </SpotlightCard>
 
-            {/* Tech Stack Radar */}
-            <div className="space-y-4 pt-6 border-t border-slate-100" data-reveal data-reveal-delay="200ms">
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">Primary Stack</h3>
-              <div className="flex flex-wrap gap-2.5">
+          <SpotlightCard className="p-6">
+            <div className="space-y-4">
+              <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                Prinsip &amp; Siklus Kerja
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    title: "Rilis Cepat & Terkendali",
+                    desc: "Menyediakan delivery fitur yang cepat dengan pipeline CI/CD yang terintegrasi pengujian otomatis.",
+                  },
+                  {
+                    title: "Performa di Level Produk",
+                    desc: "Mendesain skema database teroptimasi untuk response time server minimal dan efisiensi query.",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="h-full p-4 rounded-xl bg-slate-50 dark:bg-zinc-950/50 border border-slate-200/70 dark:border-white/[0.06] space-y-1.5"
+                  >
+                    <h3 className="text-xs font-bold text-slate-900 dark:text-white">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </SpotlightCard>
+
+          <SpotlightCard className="p-6">
+            <div className="space-y-4">
+              <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                Primary Stack
+              </h2>
+              <div className="flex flex-wrap gap-2">
                 {[
                   { label: "Laravel · PHP 8 · MySQL", icon: "fa-brands fa-laravel" },
                   { label: "React · Next.js · TS", icon: "fa-brands fa-react" },
@@ -200,84 +196,77 @@ export default function About() {
                 ].map((item) => (
                   <span
                     key={item.label}
-                    className="inline-flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-3.5 py-1.5 text-xs text-slate-700 font-semibold shadow-sm"
+                    className="inline-flex items-center gap-2 rounded-xl bg-slate-50 dark:bg-zinc-950/60 border border-slate-200 dark:border-white/10 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-zinc-200"
                   >
-                    <i className={`${item.icon} text-slate-500`} />
+                    <i className={`${item.icon} text-indigo-500`} />
                     {item.label}
                   </span>
                 ))}
               </div>
             </div>
+          </SpotlightCard>
 
-            {/* Career Timeline */}
-            <div className="space-y-6 pt-6 border-t border-slate-100" data-reveal data-reveal-delay="250ms">
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">Experience Highlights</h3>
-              <div className="relative pl-6 border-l border-slate-200 space-y-8">
-                {[
-                  {
-                    role: "Founder — AETHER NUSANTARA",
-                    time: "2025 — Sekarang",
-                    text: "Memimpin arah produk & teknologi end-to-end; orkestrasi roadmap sistem, arsitektur backend, dan kualitas performa perilisan."
-                  },
-                  {
-                    role: "Senior Developer — PT Elshad Teknologi Indonesia",
-                    time: "2025",
-                    text: "Pengembangan fitur inti berskala besar dan melakukan optimasi backend; kolaborasi intensif dengan tim produk."
-                  },
-                  {
-                    role: "HRD — PT Kodingin Digital Nusantara",
-                    time: "2025",
-                    text: "Mendukung proses rekrutmen engineer, technical interview teknis talenta baru, serta pengawasan mutu tim."
-                  },
-                  {
-                    role: "Junior Developer & Mentor — PT Humma Teknologi Indonesia",
-                    time: "2023 — 2024",
-                    text: "Pengembangan aplikasi klien sekaligus mementor peserta magang; membentuk dasar praktik coding standar industri."
-                  },
-                ].map((t) => (
-                  <div className="relative" key={t.role}>
-                    {/* Timeline Node dot */}
-                    <span className="absolute -left-[30px] top-1 h-3.5 w-3.5 rounded-full bg-blue-500 border-2 border-white shadow-sm" />
-                    <div>
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                        <h4 className="text-xs font-bold text-slate-900">{t.role}</h4>
-                        <span className="text-[10px] font-bold text-slate-400 shrink-0">{t.time}</span>
-                      </div>
-                      <p className="mt-1 text-xs text-slate-500 leading-relaxed">{t.text}</p>
-                    </div>
+          <SpotlightCard className="p-6">
+            <div className="space-y-5">
+              <div className="flex items-center justify-between">
+              <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                Experience Highlights
+              </h2>
+              <MagneticButton>
+                <Link
+                  href="/experience"
+                  className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+                >
+                  Detail Timeline →
+                </Link>
+              </MagneticButton>
+            </div>
+
+            <div className="space-y-4 border-l border-slate-200 dark:border-white/10 pl-5">
+              {[
+                {
+                  role: "Founder — AETHER NUSANTARA",
+                  time: "2025 — Sekarang",
+                  text: "Memimpin arah produk & teknologi end-to-end; orkestrasi roadmap sistem, arsitektur backend, dan kualitas performa perilisan.",
+                },
+                {
+                  role: "Senior Developer — PT Elshad Teknologi Indonesia",
+                  time: "2025",
+                  text: "Pengembangan fitur inti berskala besar dan optimasi backend; kolaborasi intensif dengan tim produk.",
+                },
+                {
+                  role: "HRD — PT Kodingin Digital Nusantara",
+                  time: "2025",
+                  text: "Mendukung proses rekrutmen engineer, technical interview teknis talenta baru, serta pengawasan mutu tim.",
+                },
+                {
+                  role: "Junior Developer & Mentor — PT Humma Teknologi Indonesia",
+                  time: "2023 — 2024",
+                  text: "Pengembangan aplikasi klien sekaligus mementor peserta magang; membentuk dasar praktik coding standar industri.",
+                },
+              ].map((t) => (
+                <div key={t.role} className="relative">
+                  <span className="absolute -left-[25px] top-1.5 w-2.5 h-2.5 rounded-full bg-indigo-500 ring-4 ring-white dark:ring-zinc-900" />
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <h3 className="text-xs font-bold text-slate-900 dark:text-white">
+                      {t.role}
+                    </h3>
+                    <span className="text-[11px] font-mono text-slate-400 dark:text-zinc-500">
+                      {t.time}
+                    </span>
                   </div>
-                ))}
-              </div>
+                  <p className="mt-1 text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
+                    {t.text}
+                  </p>
+                </div>
+              ))}
             </div>
-
-            {/* CTA Actions */}
-            <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3" data-reveal data-reveal-delay="300ms">
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-xs font-bold text-white shadow-sm hover:bg-black transition active:scale-95"
-              >
-                <i className="fa-solid fa-briefcase text-xs" /> Lihat Portfolio
-              </Link>
-              <a
-                href="mailto:abdulkader0126@gmail.com?subject=Project%20Inquiry%252520via%252520Portfolio"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-3 text-xs font-bold text-white shadow-md hover:from-blue-700 hover:to-indigo-700 transition active:scale-95"
-              >
-                <i className="fa-solid fa-paper-plane text-xs" /> Hubungi Saya
-              </a>
-              <a
-                href="/assets/cv/AbdulKader_CV.pdf"
-                download
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-xs font-bold text-slate-800 shadow-sm hover:bg-slate-50 transition active:scale-95"
-              >
-                <i className="fa-solid fa-file-arrow-down text-xs text-slate-500" /> Unduh CV
-              </a>
             </div>
+          </SpotlightCard>
+        </main>
+      </div>
 
-          </main>
-
-        </div>
-
-      </section>
+      <BackToTop />
     </div>
   );
 }

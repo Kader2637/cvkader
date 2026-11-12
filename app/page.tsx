@@ -1,665 +1,617 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import BackToTop from "./components/BackToTop";
 import Link from "next/link";
+import BackToTop from "./components/BackToTop";
+import Scene3D from "./components/bits/Scene3D";
+import TiltedCard from "./components/bits/TiltedCard";
+import SpotlightCard from "./components/bits/SpotlightCard";
+import DecryptedText from "./components/bits/DecryptedText";
+import MagneticButton from "./components/bits/MagneticButton";
+
+const MARQUEE_TECH = [
+  { name: "Laravel", icon: "devicon-laravel-plain colored" },
+  { name: "Next.js", icon: "devicon-nextjs-plain" },
+  { name: "React", icon: "devicon-react-original colored" },
+  { name: "TypeScript", icon: "devicon-typescript-plain colored" },
+  { name: "Node.js", icon: "devicon-nodejs-plain colored" },
+  { name: "Go", icon: "devicon-go-plain colored" },
+  { name: ".NET C#", icon: "devicon-dotnetcore-plain colored" },
+  { name: "PostgreSQL", icon: "devicon-postgresql-plain colored" },
+  { name: "Redis", icon: "devicon-redis-plain colored" },
+  { name: "Docker", icon: "devicon-docker-plain colored" },
+  { name: "AWS", icon: "devicon-amazonwebservices-plain-wordmark colored" },
+  { name: "Figma", icon: "devicon-figma-plain colored" },
+];
+
+type FeaturedProject = {
+  title: string;
+  category: string;
+  img: string;
+  desc: string;
+  tags: string[];
+  url?: string;
+};
+
+const FEATURED_PROJECTS: FeaturedProject[] = [
+  {
+    title: "e-Mawaris — Pembagian Hak Waris (HKI)",
+    category: "LegalTech · HKI",
+    img: "/assets/portfolio/e-mawarist.png",
+    desc: "Website pembagian hak waris berbasis 3 hukum (Islam, Perdata, Adat Jawa) lengkap dengan konversi harta. Proyek penelitian dosen bersertifikat HKI dengan saya sebagai salah satu penciptanya.",
+    tags: ["3 Hukum Waris", "Konversi Harta", "Terdaftar HKI", "Web App"],
+    url: "https://www.mawarist.web.id",
+  },
+  {
+    title: "Smart Desa — E-Government & UMKM",
+    category: "E-Government",
+    img: "/assets/portfolio/smart-desa.png",
+    desc: "Platform e-government desa dengan layanan administrasi desa digital, katalog UMKM lokal, serta sistem laporan desa yang transparan.",
+    tags: ["Layanan Digital", "UMKM Desa", "Laporan Transparan", "Web App"],
+  },
+  {
+    title: "SIPJAKI — Pasuruan (Konstruksi)",
+    category: "GovTech",
+    img: "/assets/portfolio/sipjaki.png",
+    desc: "Sistem informasi jasa konstruksi Kabupaten Pasuruan: pengelolaan perizinan, daftar penyedia jasa, dan pelaporan proyek terintegrasi.",
+    tags: ["Laravel", "REST API", "MySQL"],
+  },
+  {
+    title: "KR_Money — Catatan Keuangan",
+    category: "Mobile App",
+    img: "/assets/portfolio/krmoney.jpg",
+    desc: "Aplikasi mobile pencatatan pengeluaran dan anggaran keuangan pribadi lengkap dengan grafik analitik serta pengingat otomatis.",
+    tags: ["React Native", "SQLite", "Redux"],
+  },
+];
 
 export default function Page() {
-  const [index, setIndex] = useState(0);
-  const [text, setText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [courseTab, setCourseTab] = useState<"laravel" | "react" | "next">("laravel");
-  const [copied, setCopied] = useState(false);
-  const [showExplain, setShowExplain] = useState(false);
-
-  const roles = ["Programmer", "Fullstack Developer", "Project Manager"];
-
-  const marqueeSkills = [
-    { name: "Laravel", icon: <i className="devicon-laravel-plain colored text-2xl sm:text-3xl" /> },
-    { name: "React", icon: <i className="devicon-react-original colored text-2xl sm:text-3xl" /> },
-    { name: "Next.js", icon: <i className="devicon-nextjs-plain text-2xl sm:text-3xl text-slate-800" /> },
-    { name: "Node.js", icon: <i className="devicon-nodejs-plain colored text-2xl sm:text-3xl" /> },
-    { name: "Go", icon: <i className="devicon-go-plain colored text-2xl sm:text-3xl" /> },
-    { name: "PHP 8", icon: <i className="devicon-php-plain colored text-2xl sm:text-3xl" /> },
-    { name: "C# .NET", icon: <i className="devicon-dotnetcore-plain colored text-2xl sm:text-3xl" /> },
-    { name: "MySQL", icon: <i className="devicon-mysql-plain colored text-2xl sm:text-3xl" /> },
-    { name: "PostgreSQL", icon: <i className="devicon-postgresql-plain colored text-2xl sm:text-3xl" /> },
-    { name: "Redis", icon: <i className="devicon-redis-plain colored text-2xl sm:text-3xl" /> },
-    { name: "Docker", icon: <i className="devicon-docker-plain colored text-2xl sm:text-3xl" /> },
-    { name: "AWS", icon: <i className="devicon-amazonwebservices-plain colored text-2xl sm:text-3xl" /> },
-    { name: "Git", icon: <i className="devicon-git-plain colored text-2xl sm:text-3xl" /> },
-    { name: "Figma", icon: <i className="devicon-figma-plain colored text-2xl sm:text-3xl" /> },
-    { name: "IoT / MQTT", icon: <i className="fa-solid fa-microchip text-emerald-600 text-2xl sm:text-3xl" /> },
-  ];
-
-  const doubleSkills = [...marqueeSkills, ...marqueeSkills, ...marqueeSkills];
+  const [previewProj, setPreviewProj] = useState<FeaturedProject | null>(null);
+  const doubleMarquee = [...MARQUEE_TECH, ...MARQUEE_TECH];
 
   useEffect(() => {
-    const current = roles[index % roles.length];
-    const speed = isDeleting ? 40 : 90;
-
-    const typing = setTimeout(() => {
-      setText((prev) =>
-        isDeleting
-          ? current.substring(0, prev.length - 1)
-          : current.substring(0, prev.length + 1)
-      );
-
-      if (!isDeleting && text === current) {
-        setTimeout(() => setIsDeleting(true), 1500);
-      } else if (isDeleting && text === "") {
-        setIsDeleting(false);
-        setIndex((prev) => prev + 1);
-      }
-    }, speed);
-
-    return () => clearTimeout(typing);
-  }, [text, isDeleting, index]);
-
-  const snippets = {
-    laravel: `// routes/web.php
-use Illuminate\\Support\\Facades\\Route;
-use App\\Http\\Controllers\\HelloController;
-
-Route::get('/', [HelloController::class, 'index']);
-
-// app/Http/Controllers/HelloController.php
-namespace App\\Http\\Controllers;
-class HelloController extends Controller {
-  public function index() {
-    return view('hello', ['name' => 'Abdul']);
-  }
-}
-
-// resources/views/hello.blade.php
-<!DOCTYPE html>
-<html>
-  <body>
-    <h1>Hello, {{ $name }} 👋</h1>
-  </body>
-</html>`,
-    react: `// src/App.jsx
-import { useState } from 'react';
-
-export default function App() {
-  const [count, setCount] = useState(0);
-  return (
-    <main style={{ fontFamily: 'Inter, system-ui', padding: 24 }}>
-      <h1>Halo, Abdul 🚀</h1>
-      <p>Counter sederhana pakai React Hooks.</p>
-      <button onClick={() => setCount(count + 1)}>
-        Klik saya: {count}
-      </button>
-    </main>
-  );
-}`,
-    next: `// app/page.tsx
-export default function Page() {
-  return (
-    <main style={{ padding: 24 }}>
-      <h1>Welcome, Abdul 👋</h1>
-      <p>Starter Next.js dengan App Router.</p>
-    </main>
-  );
-}
-
-// app/api/hello/route.ts
-export async function GET() {
-  return Response.json({ ok: true, message: 'Hello from Next.js!' });
-}`
-  };
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(snippets[courseTab]);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch (err) {
-      console.error("Failed to copy text", err);
-    }
-  };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreviewProj(null);
+    };
+    if (previewProj) window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [previewProj]);
 
   return (
-    <>
-      {/* ================= HERO SECTION ================= */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 lg:py-32">
-        {/* Ambient background glows */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-gradient-to-tr from-blue-300/15 to-indigo-300/10 rounded-full blur-3xl animate-float-slow" />
-          <div
-            className="absolute bottom-[10%] right-[5%] w-[450px] h-[450px] bg-gradient-to-br from-purple-300/15 to-pink-300/10 rounded-full blur-3xl animate-float-medium"
-            style={{ animationDelay: "3s" }}
-          />
+    <div className="space-y-20 sm:space-y-24 pb-16 sm:pb-20">
+      {/* ================= HERO SECTION FULL SCREEN + 3D ORBITAL + BOTTOM CAROUSEL ================= */}
+      <section className="relative -mt-24 pt-24 min-h-screen flex flex-col justify-between overflow-x-clip">
+        {/* Full-Screen 3D Depth Particle Background + Ambient Radial Aura */}
+        <div className="pointer-events-none absolute inset-0 opacity-80 dark:opacity-95 z-0">
+          <Scene3D variant="hero-bg" />
         </div>
+        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_20%_25%,rgba(99,102,241,0.14),transparent_50%),radial-gradient(ellipse_at_80%_65%,rgba(6,182,212,0.12),transparent_50%)]" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
-            {/* Left Column: Hero Text */}
-            <div className="lg:col-span-7 space-y-8 text-center lg:text-left hero-animate">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-blue-50/90 text-blue-700 border border-blue-100 shadow-sm backdrop-blur-md">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_0_4px_rgba(34,197,94,0.35)]" />{" "}
-                Available for Projects
-              </div>
-              
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 leading-none tracking-tight">
-                Hi, I&apos;m Abdul Kader <br />
-                <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent animate-bg-move font-black block mt-3">
-                  {text || "\u00A0"}
-                  <span className="border-r-2 border-indigo-600 animate-pulse ml-1" />
+        <div className="relative z-10 flex-1 flex items-center w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center w-full">
+            {/* Left: Editorial Hero Typography & Magnetic CTAs */}
+            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-md text-emerald-600 dark:text-emerald-400 text-[11px] font-mono font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Available for Projects
                 </span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Full Stack Developer berpengalaman lebih dari 4 tahun membangun solusi web, mobile, serta integrasi sistem. Berfokus pada rilis cepat, keamanan sistem, dan dampak bisnis. Saat ini menjabat sebagai Founder AETHER NUSANTARA.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
-                <Link
-                  href="/portfolio"
-                  className="group inline-flex items-center justify-center gap-2.5 px-7 py-4 bg-slate-950 text-white font-bold rounded-2xl shadow-lg hover:bg-black transition-all hover:-translate-y-0.5 active:translate-y-0 text-sm"
-                >
-                  <i className="fas fa-briefcase text-xs transition-transform group-hover:translate-x-1" /> Lihat Portfolio
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center gap-2.5 px-7 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-2xl shadow-lg hover:from-blue-700 hover:to-indigo-750 transition-all hover:-translate-y-0.5 active:translate-y-0 text-sm"
-                >
-                  <i className="fa-solid fa-paper-plane text-xs" /> Hubungi Saya
-                </Link>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md text-slate-600 dark:text-zinc-400 text-[11px] font-mono">
+                  <i className="fa-solid fa-code text-indigo-500 text-[10px]" />
+                  FULL STACK · AI &amp; IOT
+                </span>
               </div>
 
-              {/* Stats Row */}
-              <div className="flex items-center justify-center lg:justify-start gap-8 pt-8 border-t border-slate-100 max-w-md mx-auto lg:mx-0">
-                <div>
-                  <span className="block text-3xl font-black text-slate-900 leading-none">4+</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 block">Years Exp</span>
+              <div className="space-y-3">
+                <div className="text-xs font-mono uppercase tracking-[0.22em] text-indigo-600 dark:text-indigo-400 font-semibold">
+                  Software Engineer &amp; Product Builder
                 </div>
-                <div className="h-8 w-[1px] bg-slate-250/50" />
-                <div>
-                  <span className="block text-3xl font-black text-slate-900 leading-none">25+</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 block">Projects</span>
-                </div>
-                <div className="h-8 w-[1px] bg-slate-250/50" />
-                <div>
-                  <span className="block text-3xl font-black text-slate-900 leading-none">10+</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 block">Clients</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Profile Photo in Elegant Asymmetrical Floating Frame */}
-            <div className="lg:col-span-5 relative flex justify-center items-center">
-              <div className="relative w-80 h-80 lg:w-[400px] lg:h-[400px] animate-float-medium">
-                {/* Background glowing gradients */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-[2rem_4rem_2rem_4rem] rotate-6 opacity-40 blur-md" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-cyan-400/20 to-indigo-500/20 rounded-[2rem_4rem_2rem_4rem] -rotate-3 opacity-40 blur-md" />
-                
-                {/* Photo glass panel */}
-                <div className="relative w-full h-full bg-white/70 backdrop-blur-xl rounded-[2rem_4rem_2rem_4rem] p-4 shadow-xl border border-white/80">
-                  <div className="relative w-full h-full rounded-[1.5rem_3.5rem_1.5rem_3.5rem] overflow-hidden bg-slate-50 border border-slate-100">
-                    <img
-                      src="/assets/foto/im.png"
-                      alt="Abdul Kader"
-                      className="w-full h-full object-cover rounded-[1.5rem_3.5rem_1.5rem_3.5rem] transition duration-700 hover:scale-105"
-                    />
-                    {/* Active Status Badge */}
-                    <span className="absolute right-4 bottom-4 flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-[9px] font-bold text-slate-800 shadow-sm border border-slate-100">
-                      <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                      Online
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ================= INFINITE MARQUEE TECH TICKER ================= */}
-      <div className="w-full overflow-hidden bg-white/40 backdrop-blur-md border-y border-slate-250/50 py-6 relative z-10" data-reveal>
-        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#fafbfc] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#fafbfc] to-transparent z-10 pointer-events-none" />
-        
-        <div className="w-full flex overflow-hidden">
-          <div className="animate-infinite-marquee flex gap-16 items-center">
-            {doubleSkills.map((tech, idx) => (
-              <div key={idx} className="flex items-center gap-3.5 text-slate-700 font-bold text-xs sm:text-sm tracking-wider uppercase shrink-0">
-                {tech.icon}
-                <span>{tech.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <style dangerouslySetInnerHTML={{__html: `
-          @keyframes marquee {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-33.3333%, 0, 0); }
-          }
-          .animate-infinite-marquee {
-            display: flex;
-            width: max-content;
-            animation: marquee 30s linear infinite;
-          }
-        `}} />
-      </div>
-
-      {/* ================= SERVICES SECTION ================= */}
-      <section id="services" className="py-24 relative overflow-hidden bg-slate-50/40 border-y border-slate-100" data-reveal>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-block px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-bold border border-blue-100 shadow-sm">
-              Layanan &amp; Keahlian
-            </span>
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mt-4 tracking-tight">
-              Apa yang Saya Lakukan
-            </h2>
-            <p className="text-slate-500 text-sm mt-2">
-              Solusi digital berkualitas tinggi untuk menunjang performa dan pertumbuhan bisnis Anda.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: "fa-code",
-                title: "Web Development",
-                desc: "Pengembangan web interaktif, cepat, dan SEO-friendly menggunakan Next.js, React, dan Laravel.",
-                glow: "glow-blue",
-                color: "text-blue-500",
-                bg: "bg-blue-50 border-blue-100/60"
-              },
-              {
-                icon: "fa-mobile-screen-button",
-                title: "Mobile Development",
-                desc: "Aplikasi mobile cross-platform berskala produksi yang responsif menggunakan React Native atau Flutter.",
-                glow: "glow-purple",
-                color: "text-purple-500",
-                bg: "bg-purple-50 border-purple-100/60"
-              },
-              {
-                icon: "fa-cloud-arrow-up",
-                title: "Cloud & DevOps",
-                desc: "Arsitektur server scalable di AWS/GCP, otomatisasi CI/CD pipelines, dan containerisasi (Docker/K8s).",
-                glow: "glow-emerald",
-                color: "text-emerald-500",
-                bg: "bg-emerald-50 border-emerald-100/60"
-              },
-              {
-                icon: "fa-compass-drafting",
-                title: "UI/UX & System Design",
-                desc: "Desain antarmuka modern di Figma dengan penekanan pada fungsionalitas dan kenyamanan navigasi.",
-                glow: "glow-orange",
-                color: "text-orange-500",
-                bg: "bg-orange-50 border-orange-100/60"
-              },
-            ].map((c) => (
-              <div
-                key={c.title}
-                className={`group p-6 rounded-3xl bg-white/70 backdrop-blur-md border border-slate-250 shadow-sm hover:shadow-md transition duration-300 ${c.glow}`}
-              >
-                <div className={`w-11 h-11 rounded-2xl ${c.bg} border ${c.color} flex items-center justify-center mb-5 group-hover:scale-105 transition`}>
-                  <i className={`fas ${c.icon} text-lg`} />
-                </div>
-                <h3 className="text-base font-bold text-slate-900 mb-2">
-                  {c.title}
-                </h3>
-                <p className="text-slate-500 text-xs leading-relaxed">{c.desc}</p>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* ================= WHY CHOOSE ME SECTION ================= */}
-      <section className="py-24 relative overflow-hidden" data-reveal>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
-            {/* Left Column: Interactive Stats Cards */}
-            <div className="lg:col-span-5 order-last lg:order-first">
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { percent: "90%", title: "Fast Response", desc: "Komunikasi aktif", color: "text-blue-600" },
-                  { percent: "98%", title: "On Time", desc: "Siklus rilis teratur", color: "text-purple-600" },
-                  { percent: "95%", title: "DX Satisfaction", desc: "Dokumentasi & kode rapi", color: "text-emerald-600" },
-                  { percent: "24/7", title: "Active Support", desc: "Garansi SLA stabil", color: "text-orange-600" },
-                ].map((item, idx) => (
-                  <div
-                    key={item.title}
-                    className={`rounded-3xl bg-white/60 border border-slate-100 p-5 shadow-sm hover:shadow-md transition duration-350 ${idx % 2 === 1 ? 'mt-4' : ''}`}
-                  >
-                    <div className={`text-3xl font-black ${item.color} tracking-tight`}>
-                      {item.percent}
-                    </div>
-                    <h4 className="text-xs font-bold text-slate-800 mt-2">{item.title}</h4>
-                    <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Column: Values & Text */}
-            <div className="lg:col-span-7 space-y-6">
-              <span className="inline-block px-3 py-1.5 bg-purple-50 text-purple-700 rounded-full text-xs font-bold border border-purple-100 shadow-sm">
-                Mengapa Memilih Saya
-              </span>
-              <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Hasil Nyata Berdasarkan Data &amp; Kualitas
-              </h2>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Setiap baris kode dirancang untuk memberikan kinerja optimal bagi pengguna sekaligus efisiensi pemeliharaan infrastruktur.
-              </p>
-
-              <div className="space-y-4 pt-4 border-t border-slate-100">
-                {[
-                  { icon: "fa-gauge-high", title: "Performa di Level Produk", text: "Mengoptimasi Web Vitals untuk loading instan, SEO ramah, dan retensi pengguna maksimal.", color: "text-blue-500", bg: "bg-blue-50 border-blue-100" },
-                  { icon: "fa-shield-halved", title: "Keamanan Terintegrasi", text: "Implementasi standar keamanan OWASP, penanganan celah otentikasi, dan perlindungan SQL Injection.", color: "text-purple-500", bg: "bg-purple-50 border-purple-100" },
-                ].map((item) => (
-                  <div key={item.title} className="flex gap-4">
-                    <div className={`w-10 h-10 rounded-xl ${item.bg} border ${item.color} flex items-center justify-center shrink-0`}>
-                      <i className={`fas ${item.icon} text-base`} />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-slate-900 mb-1">{item.title}</h4>
-                      <p className="text-xs text-slate-500 leading-relaxed">{item.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ================= RECENT WORK (PORTFOLIO HIGHLIGHTS) ================= */}
-      <section className="py-24 relative overflow-hidden bg-slate-50/40 border-t border-slate-100" data-reveal>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="inline-block px-3 py-1.5 bg-cyan-50 text-cyan-700 rounded-full text-xs font-bold border border-cyan-100 shadow-sm">
-              Highlight Proyek
-            </span>
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mt-4 tracking-tight">
-              Karya Pilihan Terbaik
-            </h2>
-            <p className="text-slate-500 text-sm mt-2">
-              Proyek unggulan pilihan yang menampilkan performa stabil dan kualitas rekayasa sistem.
-            </p>
-          </div>
-
-          {/* Staggered Portfolio Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            
-            {/* Item 1: Wide Layout */}
-            <div className="md:col-span-2 group rounded-3xl bg-white border border-slate-150 overflow-hidden shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between">
-              <div className="aspect-[16/9] w-full overflow-hidden bg-slate-100 relative">
-                <img
-                  src="/assets/foto/travel.png"
-                  alt="Travel Booking Landing"
-                  className="w-full h-full object-cover group-hover:scale-102 transition duration-500"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="px-2.5 py-1 rounded-lg text-[9px] font-bold bg-white/95 text-slate-800 shadow-sm border border-slate-100 uppercase tracking-wide">
-                    Travel / Landing Page
+                <h1 className="font-display text-4xl sm:text-5xl lg:text-[4.25rem] xl:text-[4.6rem] font-bold tracking-tight leading-[1.05] text-slate-900 dark:text-white">
+                  Hi, I&apos;m{" "}
+                  <span className="bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-500 dark:from-indigo-400 dark:via-cyan-300 dark:to-emerald-300 bg-clip-text text-transparent">
+                    <DecryptedText text="Abdul Kader" speed={35} />
                   </span>
-                </div>
-              </div>
-              
-              <div className="p-6 lg:p-8 space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                  Travel Booking Landing Page
-                </h3>
-                <p className="text-slate-550 text-xs sm:text-sm leading-relaxed">
-                  Landing page pemesanan perjalanan interaktif dengan visual premium. Berfokus pada perolehan CTA konversi tinggi serta performa loading instan untuk mendukung SEO.
+                </h1>
+                <p className="font-display text-lg sm:text-2xl font-medium text-slate-600 dark:text-zinc-300 leading-snug flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                  <span>Founder at</span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-300 font-semibold text-base sm:text-lg">
+                    AETHER NUSANTARA
+                  </span>
                 </p>
-                <div className="flex flex-wrap gap-1.5 border-t border-slate-100 pt-4">
-                  {["Next.js", "Tailwind CSS", "Node.js"].map((t) => (
-                    <span key={t} className="px-2 py-0.5 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="pt-2">
+              </div>
+
+              <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                Merancang aplikasi web, mobile, arsitektur cloud, hingga integrasi{" "}
+                <span className="text-slate-900 dark:text-zinc-200 font-medium">IoT &amp; AI</span>{" "}
+                selama <strong>4+ tahun</strong> dengan fokus pada kecepatan rilis, keamanan, dan UI interaktif.
+              </p>
+
+              {/* Magnetic Action Buttons */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+                <MagneticButton>
+                  <Link
+                    href="/portfolio"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-indigo-500/25 transition"
+                  >
+                    <i className="fa-solid fa-layer-group text-xs" />
+                    Lihat Portfolio
+                  </Link>
+                </MagneticButton>
+
+                <MagneticButton>
                   <a
-                    href="https://mytravel2637.netlify.app/paket"
+                    href="/assets/cv/AbdulKader_CV.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800"
+                    className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border border-slate-200 dark:border-white/15 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md text-slate-800 dark:text-zinc-100 text-xs sm:text-sm font-semibold hover:border-indigo-500/40 transition"
                   >
-                    Kunjungi Website <i className="fa-solid fa-arrow-right text-[10px]" />
+                    <i className="fa-solid fa-file-pdf text-rose-500 text-xs" />
+                    Download CV
                   </a>
+                </MagneticButton>
+
+                <MagneticButton>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm text-slate-700 dark:text-zinc-300 text-xs sm:text-sm font-semibold hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-500/30 transition"
+                  >
+                    Hubungi Saya
+                    <i className="fa-solid fa-arrow-right text-[11px]" />
+                  </Link>
+                </MagneticButton>
+              </div>
+
+              {/* Glass Metric Pills */}
+              <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto lg:mx-0 pt-2">
+                <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/65 dark:bg-zinc-900/55 backdrop-blur-md px-3.5 py-3 text-left">
+                  <div className="font-display text-xl sm:text-2xl font-bold tabular-nums text-slate-900 dark:text-white">
+                    4+
+                  </div>
+                  <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+                    Years Exp
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/65 dark:bg-zinc-900/55 backdrop-blur-md px-3.5 py-3 text-left">
+                  <div className="font-display text-xl sm:text-2xl font-bold tabular-nums text-slate-900 dark:text-white">
+                    25+
+                  </div>
+                  <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+                    Projects
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/65 dark:bg-zinc-900/55 backdrop-blur-md px-3.5 py-3 text-left">
+                  <div className="font-display text-xl sm:text-2xl font-bold tabular-nums text-indigo-600 dark:text-indigo-400">
+                    HKI
+                  </div>
+                  <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+                    Certified IP
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Item 2: Tall Portrait Layout */}
-            <div className="md:col-span-1 group rounded-3xl bg-white border border-slate-150 overflow-hidden shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between">
-              <div className="aspect-[4/3] w-full overflow-hidden bg-slate-100 relative shrink-0">
-                <img
-                  src="/assets/foto/game.png"
-                  alt="Edu Game"
-                  className="w-full h-full object-cover group-hover:scale-102 transition duration-500"
-                />
+            {/* Right: Floating Glass 3D Portrait with 3D Orbital Rings Encircling It */}
+            <div className="lg:col-span-5 flex justify-center items-center">
+              <div className="relative flex items-center justify-center w-full max-w-[460px] py-12 sm:py-16">
+                {/* 3D Space Orbital Rings & Satellites Encircling the Card */}
+                <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] sm:w-[760px] sm:h-[760px] lg:w-[920px] lg:h-[920px] z-0">
+                  <Scene3D variant="orbital" />
+                </div>
+
+                <TiltedCard maxTilt={11} className="relative z-10 w-[270px] sm:w-[300px] shrink-0">
+                  {/* Gradient Ring Portrait Frame */}
+                  <div className="p-[1.5px] rounded-[28px] bg-gradient-to-br from-indigo-500/60 via-cyan-400/40 to-violet-500/60 shadow-2xl shadow-indigo-500/20">
+                    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[26.5px] bg-slate-100 dark:bg-zinc-950">
+                      <img
+                        src="/assets/foto/im.png"
+                        alt="Abdul Kader"
+                        className="w-full h-full object-cover object-top"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/20 to-transparent" />
+
+                      {/* Sleek Glass HUD inside bottom of Portrait */}
+                      <div className="absolute bottom-3.5 inset-x-3.5 p-3 rounded-2xl bg-zinc-950/60 backdrop-blur-md border border-white/15 flex items-center justify-between gap-2 text-white">
+                        <div>
+                          <div className="text-[10px] font-mono uppercase tracking-wider text-cyan-300">
+                            Malang, Indonesia
+                          </div>
+                          <div className="font-display font-bold text-sm sm:text-base leading-tight">
+                            Abdul Kader
+                          </div>
+                        </div>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-[10px] font-mono text-emerald-300">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          Online
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </TiltedCard>
               </div>
-              <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
-                    Quiz: Kuis Edukatif Interaktif
+            </div>
+          </div>
+        </div>
+
+        {/* ================= BOTTOM HERO TECH CAROUSEL ================= */}
+        <div className="relative z-10 mt-auto border-y border-slate-200/80 dark:border-white/[0.08] bg-white/55 dark:bg-zinc-900/45 backdrop-blur-md py-4 sm:py-5 overflow-hidden">
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-24 bg-gradient-to-r from-slate-50 dark:from-zinc-950 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-24 bg-gradient-to-l from-slate-50 dark:from-zinc-950 to-transparent z-10" />
+
+          <div className="animate-marquee flex items-center gap-10 sm:gap-14">
+            {doubleMarquee.map((t, i) => (
+              <div
+                key={`${t.name}-${i}`}
+                className="flex items-center gap-3 text-xs sm:text-sm font-mono font-semibold text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition shrink-0"
+              >
+                <i className={`${t.icon} text-xl sm:text-2xl`} />
+                <span>{t.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CAPABILITIES (SPOTLIGHT CARDS) ================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-2">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+              01 / Capabilities
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+              Apa yang Saya Bangun
+            </h2>
+          </div>
+          <Link
+            href="/skills"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline shrink-0"
+          >
+            Eksplorasi 27+ Tech Stack →
+          </Link>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
+          {[
+            {
+              icon: "fa-solid fa-code",
+              title: "Web Engineering",
+              desc: "Aplikasi web modern yang cepat, scalable, dan SEO-friendly dengan Next.js, React, dan Laravel.",
+              color: "text-blue-500",
+            },
+            {
+              icon: "fa-solid fa-mobile-screen-button",
+              title: "Mobile Development",
+              desc: "Aplikasi mobile iOS & Android responsif skala produksi menggunakan React Native & Flutter.",
+              color: "text-indigo-500",
+            },
+            {
+              icon: "fa-solid fa-cloud-arrow-up",
+              title: "Cloud & DevOps",
+              desc: "Arsitektur server di AWS/GCP, containerisasi Docker/K8s, serta pipeline CI/CD otomatis.",
+              color: "text-emerald-500",
+            },
+            {
+              icon: "fa-solid fa-microchip",
+              title: "IoT & Edge AI",
+              desc: "Integrasi sensor ESP32/MQTT, dasbor GIS real-time, serta Computer Vision (OpenCV).",
+              color: "text-amber-500",
+            },
+          ].map((c) => (
+            <SpotlightCard key={c.title} className="p-6 h-full">
+              <div className="h-full flex flex-col space-y-4">
+                <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-zinc-950 border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0">
+                  <i className={`${c.icon} ${c.color} text-lg`} />
+                </div>
+                <div className="space-y-2 flex-1">
+                  <h3 className="font-display text-base font-bold text-slate-900 dark:text-white">
+                    {c.title}
                   </h3>
-                  <p className="text-slate-550 text-xs leading-relaxed">
-                    Game kuis bertema bahasa, budaya, dan lingkungan. Memiliki papan skor langsung secara real-time yang didukung sinkronisasi state server database.
+                  <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
+                    {c.desc}
                   </p>
                 </div>
-                
-                <div className="space-y-4 pt-4 border-t border-slate-100">
-                  <div className="flex flex-wrap gap-1.5">
-                    {["React", "Firebase", "Socket.IO"].map((t) => (
-                      <span key={t} className="px-2 py-0.5 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <div>
-                    <a
-                      href="https://drive.google.com/file/d/1Liuvh_yqmua69AvoL4VDpavwjRI9nm52/view?usp=sharing"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 hover:text-purple-800"
-                    >
-                      Lihat Demo Video <i className="fa-solid fa-arrow-right text-[10px]" />
-                    </a>
-                  </div>
-                </div>
               </div>
-            </div>
-
-            {/* Item 3: Full Width Banner Layout */}
-            <div className="md:col-span-3 group rounded-3xl bg-white border border-slate-150 overflow-hidden shadow-sm hover:shadow-md transition duration-300 p-6 lg:p-8 flex flex-col md:flex-row gap-6 items-center">
-              <div className="w-full md:w-1/3 aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100 relative shrink-0 border border-slate-200/40">
-                <img
-                  src="/assets/foto/greenguard.png"
-                  alt="GreenGuard"
-                  className="w-full h-full object-cover group-hover:scale-102 transition duration-500"
-                />
-              </div>
-
-              <div className="flex-1 space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">
-                  GreenGuard — Tree Hazard Monitoring &amp; Reporting
-                </h3>
-                <p className="text-slate-550 text-xs sm:text-sm leading-relaxed">
-                  Sistem monitoring kerawanan pohon tumbang berbasis Internet of Things (IoT) dan sensor akselerasi. Membantu dinas terkait melakukan mitigasi bencana secara responsif melalui dasbor pengawasan berbasis GIS.
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {["Vue.js", "Python", "MQTT/IoT", "PostgreSQL"].map((t) => (
-                    <span key={t} className="px-2 py-0.5 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="pt-2">
-                  <a
-                    href="https://green-guard-one.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-800"
-                  >
-                    Kunjungi Aplikasi <i className="fa-solid fa-arrow-right text-[10px]" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              href="/portfolio"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-slate-950 text-white font-bold rounded-xl shadow-sm hover:bg-black transition active:scale-95 text-xs"
-            >
-              <i className="fas fa-briefcase text-xs" /> Lihat Semua Proyek
-            </Link>
-          </div>
+            </SpotlightCard>
+          ))}
         </div>
       </section>
 
-      {/* ================= COURSE INTERACTIVE PLAYGROUND ================= */}
-      <section id="course" className="py-24 relative overflow-hidden" data-reveal>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="inline-block px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-bold border border-blue-100 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-              Sorotan Kursus / Snippet
+      {/* ================= SELECTED WORK (3D TILTED CARDS) ================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-2">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+              02 / Selected Work
             </span>
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mt-4 tracking-tight">
-              Playground &amp; Contoh Code
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+              Karya Pilihan Terbaik
             </h2>
-            <p className="text-slate-500 text-sm mt-2">
-               Starter-code ringkas untuk memahami alur dasar Laravel, React, dan Next.js secara terarah.
-            </p>
           </div>
+          <Link
+            href="/portfolio"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline shrink-0"
+          >
+            Lihat Semua 22 Proyek →
+          </Link>
+        </div>
 
-          {/* Clean Glassmorphic Editor Panel */}
-          <div className="max-w-4xl mx-auto rounded-3xl bg-white/70 border border-slate-200 shadow-xl backdrop-blur-md p-2">
-            <div className="rounded-2xl bg-white overflow-hidden border border-slate-150/60 shadow-inner">
-              
-              {/* Tab Header Bar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between px-5 py-3.5 bg-slate-50 border-b border-slate-200/80 gap-3">
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="w-3 h-3 rounded-full bg-slate-200 block" />
-                  <span className="w-3 h-3 rounded-full bg-slate-200 block" />
-                  <span className="w-3 h-3 rounded-full bg-slate-200 block" />
-                </div>
-                
-                {/* Clean Tab Options */}
-                <div className="flex items-center gap-1.5 bg-slate-100/60 p-1 rounded-2xl border border-slate-200/50">
-                  {[
-                    { id: "laravel", label: "Laravel Starter", icon: "fa-brands fa-laravel text-red-500" },
-                    { id: "react", label: "React Hooks", icon: "fa-brands fa-react text-blue-500" },
-                    { id: "next", label: "Next.js Router", icon: "fa-solid fa-code text-slate-600" },
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => {
-                        setCourseTab(tab.id as any);
-                        setShowExplain(false);
-                      }}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition font-mono ${
-                        courseTab === tab.id
-                          ? "bg-white text-slate-900 shadow-sm border border-slate-200"
-                          : "text-slate-500 hover:text-slate-800"
-                      }`}
-                    >
-                      <i className={tab.icon} />
-                      <span>{tab.label}</span>
-                    </button>
-                  ))}
-                </div>
+        <div className="grid md:grid-cols-2 gap-6 items-stretch">
+          {FEATURED_PROJECTS.map((proj) => (
+            <TiltedCard key={proj.title} maxTilt={6} className="h-full">
+              <SpotlightCard className="overflow-hidden h-full group">
+                <div className="h-full flex flex-col justify-between">
+                  <div className="flex-1 flex flex-col">
+                    <div className="relative aspect-[16/10] bg-slate-100 dark:bg-zinc-950 overflow-hidden shrink-0">
+                      <img
+                        src={proj.img}
+                        alt={proj.title}
+                        className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                      />
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-zinc-950/80 backdrop-blur border border-white/10 text-white text-[10px] font-mono uppercase tracking-wider">
+                        {proj.category}
+                      </span>
+                    </div>
 
-                <span className="hidden sm:block w-12" />
+                    <div className="p-5 sm:p-6 space-y-2.5 flex-1">
+                      <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug">
+                        {proj.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+                        {proj.desc}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="px-5 sm:px-6 pb-5 sm:pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-slate-200/70 dark:border-white/[0.06]">
+                    <div className="flex flex-wrap gap-1.5">
+                      {proj.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-950/70 border border-slate-200 dark:border-white/10 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => setPreviewProj(proj)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:border-indigo-500/40 transition"
+                      >
+                        <i className="fa-solid fa-magnifying-glass text-[10px]" />
+                        Preview
+                      </button>
+                      {proj.url && (
+                        <a
+                          href={proj.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition"
+                        >
+                          Kunjungi Web
+                          <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </SpotlightCard>
+            </TiltedCard>
+          ))}
+        </div>
+      </section>
+
+      {/* ================= EXPERIENCE & AWARDS SNAPSHOT ================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-6 items-stretch">
+        <SpotlightCard className="p-6 sm:p-8 h-full flex flex-col justify-between gap-6">
+          <div className="space-y-5">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                03 / Career Snapshot
+              </span>
+              <Link
+                href="/experience"
+                className="text-xs font-semibold text-slate-500 dark:text-zinc-400 hover:text-indigo-500 transition shrink-0"
+              >
+                Full Timeline →
+              </Link>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                {
+                  role: "Founder AETHER NUSANTARA",
+                  org: "PT Kodingin Digital Nusantara",
+                  period: "2025 — Now",
+                },
+                {
+                  role: "Senior Developer",
+                  org: "PT Elshad Teknologi Indonesia",
+                  period: "2025",
+                },
+                {
+                  role: "Junior Developer & Mentor",
+                  org: "PT Humma Teknologi Indonesia",
+                  period: "2023 — 2024",
+                },
+              ].map((exp) => (
+                <div
+                  key={exp.role}
+                  className="flex items-start sm:items-center justify-between gap-4 pb-3.5 border-b border-slate-200/70 dark:border-white/[0.06] last:border-0 last:pb-0"
+                >
+                  <div className="space-y-0.5">
+                    <div className="text-sm font-bold text-slate-900 dark:text-white">
+                      {exp.role}
+                    </div>
+                    <div className="text-xs text-slate-500 dark:text-zinc-400">
+                      {exp.org}
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-mono tabular-nums text-slate-400 dark:text-zinc-500 shrink-0 pt-0.5 sm:pt-0">
+                    {exp.period}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </SpotlightCard>
+
+        <SpotlightCard className="p-6 sm:p-8 h-full flex flex-col justify-between gap-6">
+          <div className="space-y-5">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                04 / Awards &amp; Credentials
+              </span>
+              <Link
+                href="/certificates"
+                className="text-xs font-semibold text-slate-500 dark:text-zinc-400 hover:text-indigo-500 transition shrink-0"
+              >
+                38+ Certificates →
+              </Link>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                {
+                  title: "Juara 1 — 3CC UI/UX Competition",
+                  org: "Creative Computer Club · 2026",
+                },
+                {
+                  title: "Huawei APAC Developer & AI Class",
+                  org: "Huawei Developer APAC · 2025",
+                },
+                {
+                  title: "Juara 3 — LKS IT Software Solutions",
+                  org: "Kab. Probolinggo (.NET & SQL Server) · 2023",
+                },
+              ].map((aw) => (
+                <div
+                  key={aw.title}
+                  className="flex items-center justify-between gap-4 pb-3.5 border-b border-slate-200/70 dark:border-white/[0.06] last:border-0 last:pb-0"
+                >
+                  <div className="space-y-0.5">
+                    <div className="text-sm font-bold text-slate-900 dark:text-white">
+                      {aw.title}
+                    </div>
+                    <div className="text-xs text-slate-500 dark:text-zinc-400">
+                      {aw.org}
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                    <i className="fa-solid fa-award text-indigo-500 text-xs" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </SpotlightCard>
+      </section>
+
+      {/* ================= CTA SECTION ================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SpotlightCard className="p-8 sm:p-12 lg:p-14 text-center">
+          <div className="max-w-2xl mx-auto space-y-5">
+            <span className="inline-block px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[11px] font-mono font-semibold uppercase tracking-wider">
+              Let&apos;s Collaborate
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
+              Siap Membangun Produk Digital Berikutnya?
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
+              Diskusikan kebutuhan web, mobile, cloud, atau sistem IoT Anda bersama saya.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <MagneticButton>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-transparent bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-indigo-500/25 transition"
+                >
+                  <i className="fa-solid fa-paper-plane text-xs" />
+                  Kirim Pesan
+                </Link>
+              </MagneticButton>
+              <MagneticButton>
+                <a
+                  href="/assets/cv/AbdulKader_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-100 text-xs sm:text-sm font-semibold hover:border-indigo-500/40 transition"
+                >
+                  <i className="fa-solid fa-file-pdf text-rose-500 text-xs" />
+                  Download CV PDF
+                </a>
+              </MagneticButton>
+            </div>
+          </div>
+        </SpotlightCard>
+      </section>
+
+      {/* Preview Modal */}
+      {previewProj && (
+        <div
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm grid place-items-center p-4 backdrop-fade"
+          onClick={() => setPreviewProj(null)}
+        >
+          <div
+            className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bento-card p-5 sm:p-6 space-y-4 modal-pop bg-white dark:bg-zinc-900"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                  {previewProj.category}
+                </span>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+                  {previewProj.title}
+                </h3>
               </div>
+              <button
+                onClick={() => setPreviewProj(null)}
+                aria-label="Close preview"
+                className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white"
+              >
+                <i className="fa-solid fa-xmark" />
+              </button>
+            </div>
 
-              {/* Code Panel Display */}
-              <div className="relative">
-                <pre className="p-6 text-xs sm:text-sm font-mono leading-relaxed text-slate-800 overflow-x-auto max-h-[380px] bg-slate-50/50">
-                  <code>{snippets[courseTab]}</code>
-                </pre>
+            <img
+              src={previewProj.img}
+              alt={previewProj.title}
+              className="w-full max-h-[55vh] object-contain rounded-xl bg-slate-100 dark:bg-zinc-950 border border-slate-200 dark:border-white/10"
+            />
 
-                {/* Floating copy actions */}
-                <div className="absolute top-4 right-4 flex items-center gap-2">
-                  <button
-                    onClick={() => setShowExplain(!showExplain)}
-                    className="h-8 px-3 rounded-lg text-[10px] font-bold font-mono bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition shadow-sm"
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
+              {previewProj.desc}
+            </p>
+
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70 dark:border-white/10">
+              <div className="flex flex-wrap gap-1.5">
+                {previewProj.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-950/70 border border-slate-200 dark:border-white/10 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
                   >
-                    {showExplain ? "Sembunyikan Info" : "Penjelasan"}
-                  </button>
-                  <button
-                    onClick={handleCopy}
-                    className="h-8 px-3.5 rounded-lg text-[10px] font-bold font-mono bg-blue-600 text-white border border-blue-500 hover:bg-blue-700 transition shadow-sm"
-                  >
-                    {copied ? "Tersalin!" : "Salin Kode"}
-                  </button>
-                </div>
+                    {t}
+                  </span>
+                ))}
               </div>
-
-              {/* Explanation Drawer */}
-              {showExplain && (
-                <div className="p-6 bg-slate-50/80 border-t border-slate-200 text-xs sm:text-sm leading-relaxed text-slate-600 space-y-3 font-mono">
-                  <div className="font-bold text-slate-800 uppercase tracking-wider text-[10px] text-blue-600"># Penjelasan Alur Kode</div>
-                  {courseTab === "laravel" && (
-                    <p>Alur Request: User mengakses rute homepage `/` → Server memanggil `HelloController@index` → Controller meneruskan data array `{"['name' => 'Abdul']"}` ke file template Blade `hello.blade.php` → View me-render tulisan di halaman browser user.</p>
-                  )}
-                  {courseTab === "react" && (
-                    <p>Fungsi reaktif: Hook `useState(0)` mendefinisikan state awal `count = 0`. Ketika elemen button diklik, event trigger memicu handler `setCount(count + 1)` yang memperbarui state secara instan dan memicu render ulang DOM.</p>
-                  )}
-                  {courseTab === "next" && (
-                    <p>App Router routing &amp; REST API: Halaman diakses secara statis via `app/page.tsx`. API Route handler di `app/api/hello/route.ts` merespon request GET dengan data JSON standar menggunakan Class Response bawaan Next.js 14.</p>
-                  )}
-                </div>
+              {previewProj.url && (
+                <a
+                  href={previewProj.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition"
+                >
+                  Kunjungi Website
+                  <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
+                </a>
               )}
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ================= CTA SECTION ================= */}
-      <section className="py-24 relative overflow-hidden" data-reveal>
-        <div className="max-w-4xl mx-auto text-center px-6 sm:px-8 relative z-10 space-y-6">
-          <span className="inline-block px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-bold border border-blue-100 shadow-sm">
-            Siap Bekerja Sama
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            Mari Wujudkan Proyek <br />Digital Impian Anda
-          </h2>
-          <p className="text-slate-600 text-base max-w-xl mx-auto">
-            Hubungi saya untuk mendiskusikan implementasi teknologi modern, skalabilitas server, dan optimalisasi performa aplikasi Anda.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <a
-              href="mailto:abdulkader0126@gmail.com?subject=Project%20Inquiry%20from%20Portfolio"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-blue-600 text-white font-bold rounded-xl shadow-md hover:bg-blue-750 transition active:scale-95 text-xs"
-            >
-              <i className="fas fa-calendar text-xs" /> Jadwalkan Diskusi
-            </a>
-            <Link
-              href="/portfolio"
-              className="inline-flex items-center gap-2 px-6 py-3.5 border border-slate-200 bg-white text-slate-800 font-bold rounded-xl shadow-sm hover:bg-slate-50 transition active:scale-95 text-xs"
-            >
-              <i className="fas fa-eye text-xs" /> Lihat Seluruh Karya
-            </Link>
-          </div>
-        </div>
-      </section>
+      )}
 
       <BackToTop />
-    </>
+    </div>
   );
 }

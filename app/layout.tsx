@@ -3,11 +3,14 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MainWrapper from "./components/MainWrapper";
 import UseRevealOnScroll from "./components/UseRevealOnScroll";
+import { ThemeProvider } from "./components/ThemeProvider";
+import CommandPalette from "./components/CommandPalette";
+import SwarmRebuildOverlay from "./components/bits/SwarmRebuildOverlay";
 
 export const metadata = {
   title: "Abdul Kader — Full Stack Developer & Digital Solutions Expert",
   description:
-    "Portfolio Abdul Kader, Full Stack Developer berfokus pada pengembangan web modern, integrasi API, DevOps, dan solusi digital berbasis Laravel, React, serta Node.js.",
+    "Portfolio & Interactive CV Abdul Kader, Full Stack Developer berfokus pada pengembangan web modern, integrasi API, DevOps, IoT, dan solusi digital berbasis Laravel, React, serta Next.js.",
   keywords: [
     "Abdul Kader",
     "Abdul Kader programmer jawa timur",
@@ -51,7 +54,6 @@ export const metadata = {
     shortcut: "/assets/foto/favicon.png",
     apple: "/assets/foto/favicon.png",
   },
-  // Update metadataBase ke domain utama
   metadataBase: new URL("https://abdkader.my.id"),
 };
 
@@ -63,20 +65,39 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Abdul Kader",
-    "url": "https://abdkader.my.id/",
-    "jobTitle": "Full Stack Developer",
-    "description": "Software Engineer berfokus pada Laravel, React, dan ekosistem Huawei.",
-    "alumniOf": {
+    name: "Abdul Kader",
+    url: "https://abdkader.my.id/",
+    jobTitle: "Full Stack Developer",
+    description:
+      "Software Engineer berfokus pada Laravel, React, Next.js, Cloud/DevOps, dan IoT.",
+    alumniOf: {
       "@type": "Organization",
-      "name": "Huawei Developer APAC"
+      name: "Huawei Developer APAC",
     },
-    "knowsAbout": ["Web Development", "Artificial Intelligence", "Next.js", "React", "Laravel", "DevOps"]
+    knowsAbout: [
+      "Web Development",
+      "Artificial Intelligence",
+      "Next.js",
+      "React",
+      "Laravel",
+      "DevOps",
+      "IoT",
+    ],
   };
 
   return (
-    <html lang="id" className="scroll-smooth">
+    <html
+      lang="id"
+      suppressHydrationWarning
+      className="dark"
+    >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+        />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -85,31 +106,32 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
-        <meta name="theme-color" content="#2563eb" />
+        <meta name="theme-color" content="#09090b" />
         <meta
           name="google-site-verification"
           content="8nY7z8e81_z2k1nAO5SbEz-x2dxSVgzHugUceJXd5GY"
         />
-
-        {/* Script JSON-LD Sekarang di posisi yang benar */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
 
-      <body className="bg-[#fafbfc] text-[#1e293b] overflow-x-hidden antialiased bg-grid-pattern relative min-h-screen">
-        {/* Soft organic floating background blobs */}
+      <body className="bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 antialiased relative min-h-screen transition-colors duration-300 selection:bg-indigo-500/30">
+        {/* Subtle Architectural Grid + Ambient Spotlight */}
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-grid-architect" />
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-          <div className="absolute -top-[10%] -left-[10%] w-[50vw] aspect-square rounded-full bg-gradient-to-tr from-blue-300/15 to-indigo-300/15 blur-[120px] animate-pulse-slow" />
-          <div className="absolute top-[35%] -right-[15%] w-[45vw] aspect-square rounded-full bg-gradient-to-br from-purple-300/15 to-pink-300/15 blur-[130px] animate-pulse-slow" style={{ animationDelay: "-3s" }} />
-          <div className="absolute -bottom-[10%] left-[10%] w-[40vw] aspect-square rounded-full bg-gradient-to-tr from-cyan-300/15 to-teal-300/15 blur-[110px] animate-pulse-slow" style={{ animationDelay: "-6s" }} />
+          <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-full bg-indigo-500/[0.08] dark:bg-indigo-500/[0.12] blur-[120px]" />
         </div>
 
-        <UseRevealOnScroll />
-        <Navbar />
-        <MainWrapper>{children}</MainWrapper>
-        <Footer />
+        <ThemeProvider>
+          <UseRevealOnScroll />
+          <SwarmRebuildOverlay />
+          <CommandPalette />
+          <Navbar />
+          <MainWrapper>{children}</MainWrapper>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,574 +1,275 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState } from "react";
+import BackToTop from "../components/BackToTop";
+import SpotlightCard from "../components/bits/SpotlightCard";
+import DecryptedText from "../components/bits/DecryptedText";
+import MagneticButton from "../components/bits/MagneticButton";
 
 export default function Contact() {
-  useEffect(() => {
-    // =============== COPY EMAIL + TOAST ===============
-    const btn = document.getElementById("copyEmail");
-    const text = document.getElementById("emailText");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [budget, setBudget] = useState("");
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
-    const showToast = (msg: string) => {
-      const toast = document.getElementById("toast")!;
-      const span = document.getElementById("toastMsg")!;
-      span.textContent = msg;
-      toast.classList.remove("hidden");
-      const box = toast.firstElementChild as HTMLElement;
-      box.classList.remove("toast-leave");
-      box.classList.add("toast-enter");
-      setTimeout(() => {
-        box.classList.remove("toast-enter");
-        box.classList.add("toast-leave");
-        setTimeout(() => toast.classList.add("hidden"), 250);
-      }, 2200);
-    };
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2600);
+  };
 
-    const onCopy = async () => {
-      try {
-        await navigator.clipboard.writeText((text?.textContent || "").trim());
-        showToast("Email copied to clipboard.");
-      } catch {
-        showToast("Failed to copy email.");
-      }
-    };
-    btn?.addEventListener("click", onCopy);
-
-    // =============== LIVE CHAR COUNT ===============
-    const msg = document.getElementById(
-      "message"
-    ) as HTMLTextAreaElement | null;
-    const cc = document.getElementById("charCount");
-    const onInput = () => {
-      if (cc && msg) cc.textContent = String(msg.value.length);
-    };
-    msg?.addEventListener("input", onInput);
-    onInput();
-
-    // =============== SUBMIT (DUMMY) ===============
-    const form = document.getElementById(
-      "contactForm"
-    ) as HTMLFormElement | null;
-    const onSubmit = async (e: Event) => {
-      e.preventDefault();
-      // honeypot
-      // @ts-ignore
-      if ((form as any).company && (form as any).company.value) return;
-
-      const name = (
-        form!.querySelector("#name") as HTMLInputElement
-      ).value.trim();
-      const email = (
-        form!.querySelector("#email") as HTMLInputElement
-      ).value.trim();
-      const subject = (form!.querySelector("#subject") as HTMLSelectElement)
-        .value;
-      const message = (
-        form!.querySelector("#message") as HTMLTextAreaElement
-      ).value.trim();
-
-      const invalid: string[] = [];
-      if (name.length < 2) invalid.push("name");
-      if (!/^\S+@\S+\.\S+$/.test(email)) invalid.push("email");
-      if (!subject) invalid.push("subject");
-      if (message.length < 20) invalid.push("message");
-
-      if (invalid.length) {
-        invalid.forEach((id) => {
-          const el = form!.querySelector("#" + id) as HTMLElement;
-          el.classList.add("shake", "ring-2", "ring-red-400");
-          setTimeout(
-            () => el.classList.remove("shake", "ring-2", "ring-red-400"),
-            500
-          );
-        });
-        showToast("Please complete the required fields.");
-        return;
-      }
-
-      const submitBtn = form!.querySelector(
-        'button[type="submit"]'
-      ) as HTMLButtonElement;
-      const originalHTML = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-      await new Promise((r) => setTimeout(r, 1200));
-
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalHTML;
-      form!.reset();
-      if (cc) cc.textContent = "0";
-      showToast("Thanks! Your message has been sent.");
-    };
-    form?.addEventListener("submit", onSubmit);
-
-    // =============== REVEAL ON SCROLL ===============
-    const reveal: HTMLElement[] = [];
-    const header = document.querySelector<HTMLElement>("#contact header");
-    const formBox = document.querySelector<HTMLElement>(
-      "#contact #contactForm"
-    );
-    const asideItems = Array.from(
-      document.querySelectorAll<HTMLElement>("#contact aside > *")
-    );
-
-    // set delay (ms) via data-delay
-    if (header) {
-      header.dataset.delay = "0";
-      reveal.push(header);
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("abdulkader0126@gmail.com");
+      setCopied(true);
+      showToast("Email copied to clipboard.");
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      showToast("Failed to copy email.");
     }
-    if (formBox) {
-      formBox.dataset.delay = "80";
-      reveal.push(formBox);
-    }
-    asideItems.forEach((el, i) => {
-      el.dataset.delay = String(140 + i * 90); // 140ms, 230ms, 320ms...
-      reveal.push(el);
-    });
+  };
 
-    // state awal
-    reveal.forEach((el) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(26px) scale(.985)";
-      el.style.filter = "blur(6px)";
-      el.style.willChange = "opacity, transform, filter";
-    });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (name.trim().length < 2) return showToast("Nama minimal 2 karakter.");
+    if (!/^\S+@\S+\.\S+$/.test(email.trim()))
+      return showToast("Masukkan email yang valid.");
+    if (!subject) return showToast("Pilih subject terlebih dahulu.");
+    if (message.trim().length < 20)
+      return showToast("Pesan minimal 20 karakter.");
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+    setSending(true);
+    await new Promise((r) => setTimeout(r, 900));
+    setSending(false);
 
-          const el = entry.target as HTMLElement; // <-- penting
-          const delay = Number(el.dataset.delay || 0);
-
-          // hormati prefers-reduced-motion
-          const reduced =
-            typeof window !== "undefined" &&
-            "matchMedia" in window &&
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-          if (reduced) {
-            el.style.opacity = "1";
-            el.style.transform = "none";
-            el.style.filter = "none";
-          } else if (
-            "animate" in el &&
-            typeof (el as any).animate === "function"
-          ) {
-            // Web Animations API
-            (el as any).animate(
-              [
-                {
-                  opacity: 0,
-                  transform: "translateY(26px) scale(.985)",
-                  filter: "blur(6px)",
-                },
-                {
-                  opacity: 1,
-                  transform: "translateY(0) scale(1)",
-                  filter: "blur(0)",
-                },
-              ],
-              {
-                duration: 720,
-                easing: "cubic-bezier(.22,1,.36,1)",
-                delay,
-                fill: "forwards",
-              }
-            );
-          } else {
-            // fallback CSS transition
-            el.style.transition =
-              "opacity .72s ease, transform .72s ease, filter .72s ease";
-            setTimeout(() => {
-              el.style.opacity = "1";
-              el.style.transform = "translateY(0) scale(1)";
-              el.style.filter = "blur(0)";
-            }, delay);
-          }
-
-          io.unobserve(el);
-        });
-      },
-      { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
-    );
-
-    reveal.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-
-    // =============== CLEANUP ===============
-    return () => {
-      btn?.removeEventListener("click", onCopy);
-      msg?.removeEventListener("input", onInput);
-      form?.removeEventListener("submit", onSubmit);
-      io.disconnect();
-    };
-  }, []);
+    // Also offer direct mailto fallback
+    setName("");
+    setEmail("");
+    setSubject("");
+    setBudget("");
+    setMessage("");
+    showToast("Terima kasih! Pesan kamu sudah tercatat.");
+  };
 
   return (
-    <div id="contact" className="page relative overflow-hidden pt-12 pb-10 sm:pt-16 sm:pb-16">
-      {/* Soft bg blobs */}
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-60">
-        <div className="absolute -top-24 -left-16 h-72 w-72 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-3xl animate-pulse-slow" />
-        <div className="absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-gradient-to-tr from-cyan-200 to-indigo-200 blur-3xl animate-pulse-slow" style={{ animationDelay: "-3s" }} />
-      </div>
+    <div id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-8">
+      <header className="space-y-3 border-b border-slate-200/80 dark:border-white/[0.08] pb-6">
+        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+          07 / Get In Touch
+        </span>
+        <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <DecryptedText text="Let's Build Something" speed={26} />
+        </h1>
+        <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-2xl">
+          Butuh bantuan proyek web, mobile, cloud, atau integrasi IoT? Kirim detailnya atau hubungi langsung via email/WhatsApp.
+        </p>
+      </header>
 
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <header className="text-center max-w-3xl mx-auto mb-16">
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></span>{" "}
-            Get In Touch
-          </span>
-          <h2 className="mt-4 text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-            Let’s Build Something Great
-          </h2>
-          <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-            Butuh bantuan proyek web, mobile, atau cloud? Kirim detailnya—aku balas cepat.
-          </p>
-        </header>
-
-        <div className="grid lg:grid-cols-5 gap-10 max-w-6xl mx-auto">
-          {/* Form */}
-          <form
-            id="contactForm"
-            className="lg:col-span-3 space-y-6 p-8 rounded-3xl bg-white/70 backdrop-blur-xl border border-slate-200/60 shadow-xl"
-          >
-            <input
-              type="text"
-              name="company"
-              className="hidden"
-              tabIndex={-1}
-              autoComplete="off"
-            />
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
-                >
-                  Full Name *
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 placeholder-slate-400 text-sm text-slate-800"
-                  placeholder="Nama lengkap kamu"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
-                >
-                  Email *
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 placeholder-slate-400 text-sm text-slate-800"
-                  placeholder="you@email.com"
-                />
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
-                >
-                  Subject *
-                </label>
-                <select
-                  id="subject"
-                  name="subject"
-                  required
-                  className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 text-sm text-slate-800"
-                >
-                  <option value="" disabled>
-                    {" "}
-                    Pilih subject…
-                  </option>
-                  <option value="project">Project Inquiry</option>
-                  <option value="collab">Collaboration</option>
-                  <option value="consult">Consultation</option>
-                  <option value="job">Job Opportunity</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div>
-                <label
-                  htmlFor="budget"
-                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
-                >
-                  Budget Range
-                </label>
-                <select
-                  id="budget"
-                  name="budget"
-                  className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 text-sm text-slate-800"
-                >
-                  <option value="" disabled>
-                    {" "}
-                    Pilih budget…
-                  </option>
-                  <option value="<10m">&lt; Rp 10 Juta</option>
-                  <option value="10_25m">Rp 10 – 25 Juta</option>
-                  <option value="25_50m">Rp 25 – 50 Juta</option>
-                  <option value="50_100m">Rp 50 – 100 Juta</option>
-                  <option value=">100m">&gt; Rp 100 Juta</option>
-                </select>
-              </div>
-            </div>
-
+      <div className="grid lg:grid-cols-12 gap-6 items-start">
+        {/* Form */}
+        <SpotlightCard className="lg:col-span-7 p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label
-                htmlFor="message"
-                className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
+                htmlFor="name"
+                className="block text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1.5 font-semibold"
               >
-                Message *
+                Full Name *
               </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={6}
-                required
-                className="w-full border border-slate-200/80 rounded-xl px-4 py-3 bg-white/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 placeholder-slate-400 text-sm text-slate-800"
-                placeholder="Ceritakan kebutuhanmu, timeline, dan target yang ingin dicapai…"
-              ></textarea>
-              <div className="flex justify-between text-xs text-slate-500 mt-1">
-                <span>Min 20 karakter</span>
-                <span id="charCount">0</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
               <input
-                id="nda"
-                name="nda"
-                type="checkbox"
-                className="w-4 h-4 text-blue-600 border-slate-350 rounded focus:ring-blue-500/20"
+                id="name"
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Nama lengkap kamu"
+                className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-zinc-950/60 px-3.5 py-2.5 text-sm text-slate-900 dark:text-zinc-100 outline-none focus:border-indigo-500 transition"
               />
-              <label htmlFor="nda" className="text-sm text-slate-700 font-semibold">
-                Butuh NDA (Non-Disclosure Agreement)
-              </label>
             </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1.5 font-semibold"
+              >
+                Email *
+              </label>
+              <input
+                id="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@email.com"
+                className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-zinc-950/60 px-3.5 py-2.5 text-sm text-slate-900 dark:text-zinc-100 outline-none focus:border-indigo-500 transition"
+              />
+            </div>
+          </div>
 
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="subject"
+                className="block text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1.5 font-semibold"
+              >
+                Subject *
+              </label>
+              <select
+                id="subject"
+                required
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-zinc-950/60 px-3.5 py-2.5 text-sm text-slate-900 dark:text-zinc-100 outline-none focus:border-indigo-500 transition"
+              >
+                <option value="">Pilih subject…</option>
+                <option value="project">Project Inquiry</option>
+                <option value="collab">Collaboration</option>
+                <option value="consult">Consultation</option>
+                <option value="job">Job Opportunity</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label
+                htmlFor="budget"
+                className="block text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1.5 font-semibold"
+              >
+                Budget Range
+              </label>
+              <select
+                id="budget"
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+                className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-zinc-950/60 px-3.5 py-2.5 text-sm text-slate-900 dark:text-zinc-100 outline-none focus:border-indigo-500 transition"
+              >
+                <option value="">Pilih budget…</option>
+                <option value="<10m">&lt; Rp 10 Juta</option>
+                <option value="10_25m">Rp 10 – 25 Juta</option>
+                <option value="25_50m">Rp 25 – 50 Juta</option>
+                <option value="50_100m">Rp 50 – 100 Juta</option>
+                <option value=">100m">&gt; Rp 100 Juta</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="message"
+              className="block text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1.5 font-semibold"
+            >
+              Message *
+            </label>
+            <textarea
+              id="message"
+              rows={5}
+              required
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Ceritakan kebutuhanmu, timeline, dan target yang ingin dicapai…"
+              className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-zinc-950/60 px-3.5 py-2.5 text-sm text-slate-900 dark:text-zinc-100 outline-none focus:border-indigo-500 transition"
+            />
+            <div className="flex justify-between text-[11px] font-mono text-slate-400 dark:text-zinc-500 mt-1">
+              <span>Min 20 karakter</span>
+              <span>{message.length}</span>
+            </div>
+          </div>
+
+          <MagneticButton>
             <button
               type="submit"
-              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-650 text-white py-4 rounded-xl font-bold hover:shadow-[0_8px_30px_rgba(37,99,235,0.3)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-sm"
+              disabled={sending}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-500/25 transition disabled:opacity-60"
             >
-              <i className="fa-solid fa-paper-plane"></i> Send Message
+              <i className={`fa-solid ${sending ? "fa-spinner fa-spin" : "fa-paper-plane"}`} />
+              {sending ? "Sending..." : "Send Message"}
             </button>
-
-            <p className="text-xs text-slate-500 text-center leading-relaxed">
-              Dengan mengirim form ini, kamu menyetujui untuk dihubungi kembali
-              via email/WhatsApp.
-            </p>
+          </MagneticButton>
           </form>
+        </SpotlightCard>
 
-          {/* Sidebar */}
-          <aside className="lg:col-span-2 space-y-6">
-            <div className="rounded-3xl border border-slate-200/60 bg-white/70 backdrop-blur-xl p-6 shadow-sm">
-              <h3 className="text-lg font-black text-slate-900 mb-4 tracking-tight">
-                Quick Actions
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <a
-                  href="mailto:abdulkader0126@gmail.com"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-250 bg-white px-4 py-3 text-xs font-bold text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-slate-50 hover:text-slate-950 transition-all duration-200"
-                >
-                  <i className="fa-solid fa-envelope text-blue-600"></i> Email
-                </a>
-                <a
-                  href="https://wa.me/62895428183064?text=Halo%20Abdul%2C%20saya%20ingin%20diskusi%20proyek."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-250 bg-white px-4 py-3 text-xs font-bold text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-slate-50 hover:text-slate-950 transition-all duration-200"
-                >
-                  <i className="fa-brands fa-whatsapp text-emerald-600"></i>{" "}
-                  WhatsApp
-                </a>
-                <a
-                  href="https://wa.me/62895428183064?text=Halo%20Abdul%2C%20saya%20ingin%20jadwalkan%20meeting%20diskusi%20proyek."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-250 bg-white px-4 py-3 text-xs font-bold text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-slate-50 hover:text-slate-950 transition-all duration-200"
-                >
-                  <i className="fa-solid fa-calendar-days text-purple-600"></i>{" "}
-                  Meeting
-                </a>
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-slate-200/60 bg-white/70 backdrop-blur-xl p-6 shadow-sm">
-              <h3 className="text-lg font-black text-slate-900 mb-4 tracking-tight">
-                Contact Information
-              </h3>
-              <div className="space-y-4 text-slate-700 text-sm">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <i className="fa-solid fa-envelope text-blue-600"></i>
-                    <span id="emailText" className="font-semibold text-slate-800">abdulkader0126@gmail.com</span>
+        {/* Direct Channels */}
+        <aside className="lg:col-span-5 space-y-5">
+          <SpotlightCard className="p-6">
+            <div className="space-y-4">
+              <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                Direct Channels
+              </h2>
+              <div className="space-y-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950/50 border border-slate-200/70 dark:border-white/[0.06] flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="text-slate-400 dark:text-zinc-500 font-mono text-[10px] uppercase">
+                      Email
+                    </div>
+                    <div className="font-semibold text-slate-900 dark:text-white mt-0.5 truncate">
+                      abdulkader0126@gmail.com
+                    </div>
                   </div>
                   <button
-                    id="copyEmail"
-                    className="text-xs font-bold text-blue-600 hover:text-blue-800 transition"
+                    onClick={handleCopyEmail}
+                    className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-[11px] font-semibold text-slate-700 dark:text-zinc-200 hover:border-indigo-500/40 shrink-0"
                   >
-                    Copy
+                    {copied ? "Copied" : "Copy"}
                   </button>
                 </div>
-                <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-phone text-purple-600"></i>
-                  <span className="font-semibold text-slate-800">+62 895 4281 8306 4</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-location-dot text-cyan-600"></i>
-                  <span className="font-semibold text-slate-800">Malang, Indonesia</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-clock text-amber-600"></i>
-                  <span className="font-semibold text-slate-800">Mon–Fri: 09.00–18.00 WIB</span>
-                </div>
-              </div>
 
-              <div className="mt-6 border-t border-slate-100 pt-4">
-                <h4 className="font-bold mb-3 text-slate-900 text-xs uppercase tracking-wider">Social Channels</h4>
-                <div className="flex gap-3">
-                  <a
-                    href="https://www.linkedin.com/in/abdul-kader-53b22930a"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-xl border border-slate-200 bg-white grid place-items-center hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-200"
-                    aria-label="LinkedIn"
-                  >
-                    <i className="fab fa-linkedin-in text-sm"></i>
-                  </a>
-                  <a
-                    href="https://github.com/Kader2637"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-xl border border-slate-200 bg-white grid place-items-center hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-200"
-                    aria-label="GitHub"
-                  >
-                    <i className="fab fa-github text-sm"></i>
-                  </a>
-                  <a
-                    href="https://instagram.com/abdulkader2637"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-xl border border-slate-200 bg-white grid place-items-center hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-200"
-                    aria-label="Instagram"
-                  >
-                    <i className="fab fa-instagram text-sm"></i>
-                  </a>
-                  <a
-                    href="https://wa.me/62895428183064"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-xl border border-slate-200 bg-white grid place-items-center hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-200"
-                    aria-label="WhatsApp"
-                  >
-                    <i className="fab fa-whatsapp text-sm"></i>
-                  </a>
+                <a
+                  href="tel:+62895428183064"
+                  className="block p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950/50 border border-slate-200/70 dark:border-white/[0.06] hover:border-indigo-500/40 transition"
+                >
+                  <div className="text-slate-400 dark:text-zinc-500 font-mono text-[10px] uppercase">
+                    Phone / WhatsApp
+                  </div>
+                  <div className="font-semibold text-slate-900 dark:text-white mt-0.5">
+                    +62 895-4281-83064
+                  </div>
+                </a>
+
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950/50 border border-slate-200/70 dark:border-white/[0.06]">
+                  <div className="text-slate-400 dark:text-zinc-500 font-mono text-[10px] uppercase">
+                    Location
+                  </div>
+                  <div className="font-semibold text-slate-900 dark:text-white mt-0.5">
+                    Malang, Jawa Timur, Indonesia (WIB / UTC+7)
+                  </div>
                 </div>
               </div>
             </div>
+          </SpotlightCard>
 
-            <div className="overflow-hidden rounded-3xl border border-slate-200/60 bg-white/70 backdrop-blur-xl shadow-sm hover:shadow-md transition-all duration-300">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63219.15529079024!2d112.59058342461867!3d-7.978558312256577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62822063dc2fb%3A0x78879446481a4da2!2sMalang%2C%20Kota%20Malang%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1761395821547!5m2!1sid!2sid"
-                width="600"
-                height="450"
-                className="w-full h-48 object-cover"
-                loading="lazy"
-                title="Location Map"
-              ></iframe>
-              <div className="p-5 bg-white/80 border-t border-slate-100">
-                <div className="font-bold text-slate-900 text-sm">
-                  Malang - Indonesia
-                </div>
-                <div className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">
-                  Central Malang • Abdul Kader
-                </div>
-              </div>
+          <SpotlightCard className="p-6">
+            <div className="space-y-3">
+              <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                Curriculum Vitae
+              </h2>
+              <p className="text-xs text-slate-600 dark:text-zinc-400">
+                Butuh versi PDF untuk keperluan HR atau arsip rekrutmen?
+              </p>
+              <MagneticButton>
+                <a
+                  href="/assets/cv/AbdulKader_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-semibold hover:opacity-90 transition"
+                >
+                  <i className="fa-solid fa-file-pdf text-rose-500" />
+                  Download AbdulKader_CV.pdf
+                </a>
+              </MagneticButton>
             </div>
-          </aside>
-        </div>
-      </section>
-
-      {/* Toast */}
-      <div
-        id="toast"
-        className="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
-      >
-        <div className="toast-enter flex items-center gap-3 bg-gray-900 text-white px-4 py-3 rounded-xl shadow-2xl">
-          <i className="fa-solid fa-circle-check"></i>
-          <span id="toastMsg">Message sent successfully.</span>
-        </div>
+          </SpotlightCard>
+        </aside>
       </div>
 
-      {/* animations */}
-      <style jsx>{`
-        @keyframes toastIn {
-          from {
-            transform: translate(-50%, 20px);
-            opacity: 0;
-          }
-          to {
-            transform: translate(-50%, 0);
-            opacity: 1;
-          }
-        }
-        @keyframes toastOut {
-          from {
-            transform: translate(-50%, 0);
-            opacity: 1;
-          }
-          to {
-            transform: translate(-50%, 20px);
-            opacity: 0;
-          }
-        }
-        .toast-enter {
-          animation: toastIn 0.25s ease-out forwards;
-        }
-        .toast-leave {
-          animation: toastOut 0.25s ease-in forwards;
-        }
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-semibold shadow-xl">
+          {toast}
+        </div>
+      )}
 
-        @keyframes shake {
-          0%,
-          100% {
-            transform: translateX(0);
-          }
-          20% {
-            transform: translateX(-6px);
-          }
-          40% {
-            transform: translateX(6px);
-          }
-          60% {
-            transform: translateX(-4px);
-          }
-          80% {
-            transform: translateX(4px);
-          }
-        }
-        .shake {
-          animation: shake 0.3s ease-in-out;
-        }
-
-        .size-2 {
-          width: 0.5rem;
-          height: 0.5rem;
-        }
-      `}</style>
+      <BackToTop />
     </div>
   );
 }
