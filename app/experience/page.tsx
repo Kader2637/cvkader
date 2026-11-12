@@ -20,8 +20,8 @@ type Item = {
 export default function Experience() {
   const items: Item[] = [
     {
-      role: "Founder AETHER NUSANTARA",
-      company: "PT Kodingin Digital Nusantara",
+      role: "Founder",
+      company: "AETHER NUSANTARA",
       location: "Malang",
       period: "2025 — Sekarang",
       active: true,
@@ -32,7 +32,24 @@ export default function Experience() {
         "Skala tim: coding guideline, code review, mentoring",
       ],
       tags: ["Laravel", "Node.js", "PHP 8", "MySQL/PostgreSQL", "Redis", "Docker/K8s"],
-      img: { src: "/assets/foto/kodinusco.jpg", alt: "Kodingin Digital Nusantara" },
+      img: {
+        src: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&h=600&fit=crop",
+        alt: "AETHER NUSANTARA",
+      },
+    },
+    {
+      role: "Senior Developer",
+      company: "PT Kodingin Digital Nusantara",
+      location: "Malang",
+      period: "2025",
+      desc: "Mengembangkan sistem & arsitektur aplikasi produksi, mentoring tim engineering, serta menjaga kualitas kode dan rilis di PT Kodingin Digital Nusantara.",
+      bullets: [
+        "Perancangan arsitektur backend & API berkinerja tinggi",
+        "Code review, standar engineering, dan mentoring developer",
+        "Optimasi database, caching, dan deployment pipeline",
+      ],
+      tags: ["Laravel", "Next.js", "PHP 8", "MySQL", "Docker"],
+      img: { src: "/assets/foto/kodinusco.jpg", alt: "PT Kodingin Digital Nusantara" },
     },
     {
       role: "Senior Developer",

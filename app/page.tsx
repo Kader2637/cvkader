@@ -420,9 +420,14 @@ export default function Page() {
             <div className="space-y-4">
               {[
                 {
-                  role: "Founder AETHER NUSANTARA",
+                  role: "Founder",
+                  org: "AETHER NUSANTARA",
+                  period: "2025 — Sekarang",
+                },
+                {
+                  role: "Senior Developer",
                   org: "PT Kodingin Digital Nusantara",
-                  period: "2025 — Now",
+                  period: "2025",
                 },
                 {
                   role: "Senior Developer",
@@ -436,7 +441,7 @@ export default function Page() {
                 },
               ].map((exp) => (
                 <div
-                  key={exp.role}
+                  key={`${exp.role}-${exp.org}`}
                   className="flex items-start sm:items-center justify-between gap-4 pb-3.5 border-b border-slate-200/70 dark:border-white/[0.06] last:border-0 last:pb-0"
                 >
                   <div className="space-y-0.5">
