@@ -24,7 +24,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme, setCmdOpen } = useTheme();
+  const { theme, toggleTheme, setCmdOpen, openCvModal } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -122,16 +122,16 @@ export default function Navbar() {
               />
             </button>
 
-            {/* Download CV */}
-            <a
-              href="/assets/cv/AbdulKader_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-zinc-800/80 text-xs font-semibold text-slate-800 dark:text-zinc-100 hover:border-indigo-500/40 transition"
+            {/* Preview CV PDF */}
+            <button
+              type="button"
+              onClick={openCvModal}
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-zinc-800/80 text-xs font-semibold text-slate-800 dark:text-zinc-100 hover:border-indigo-500/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              title="Preview CV PDF langsung di web"
             >
               <i className="fa-solid fa-file-pdf text-rose-500 text-xs" />
               <span>CV PDF</span>
-            </a>
+            </button>
 
             {/* Contact CTA */}
             <Link
@@ -184,15 +184,17 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="flex items-center gap-2 mt-2">
-            <a
-              href="/assets/cv/AbdulKader_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 text-center py-2 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-zinc-200"
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openCvModal();
+              }}
+              className="flex-1 text-center py-2 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400"
             >
               <i className="fa-solid fa-file-pdf text-rose-500 mr-1.5" />
-              Download CV
-            </a>
+              Preview CV PDF
+            </button>
             <a
               href="https://catatan-kader.web.id"
               target="_blank"

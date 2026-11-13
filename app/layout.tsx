@@ -6,6 +6,8 @@ import UseRevealOnScroll from "./components/UseRevealOnScroll";
 import { ThemeProvider } from "./components/ThemeProvider";
 import CommandPalette from "./components/CommandPalette";
 import SwarmRebuildOverlay from "./components/bits/SwarmRebuildOverlay";
+import CvPdfModal from "./components/CvPdfModal";
+import TopPageProgressBar from "./components/TopPageProgressBar";
 
 export const metadata = {
   title: "Abdul Kader — Full Stack Developer & Digital Solutions Expert",
@@ -125,9 +127,11 @@ export default function RootLayout({
         </div>
 
         <ThemeProvider>
+          <TopPageProgressBar />
           <UseRevealOnScroll />
           <SwarmRebuildOverlay />
           <CommandPalette />
+          <CvPdfModal />
           <Navbar />
           <MainWrapper>{children}</MainWrapper>
           <Footer />

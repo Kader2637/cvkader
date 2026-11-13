@@ -5,6 +5,7 @@ import BackToTop from "../components/BackToTop";
 import SpotlightCard from "../components/bits/SpotlightCard";
 import TiltedCard from "../components/bits/TiltedCard";
 import DecryptedText from "../components/bits/DecryptedText";
+import ClientPortal from "../components/ClientPortal";
 
 type Cat = "all" | "web" | "mobile" | "iot" | "game";
 
@@ -84,7 +85,7 @@ export default function Portfolio() {
     <div id="portfolio" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-8">
       <header className="space-y-3 border-b border-slate-200/80 dark:border-white/[0.08] pb-6">
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-          05 / Shipped Work
+          Shipped Work
         </span>
         <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
           <DecryptedText text="Featured Projects" speed={26} />
@@ -218,64 +219,66 @@ export default function Portfolio() {
 
       {/* Preview Modal */}
       {modalItem && (
-        <div
-          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm grid place-items-center p-4 backdrop-fade"
-          onClick={() => setModalItem(null)}
-        >
+        <ClientPortal>
           <div
-            className="w-full max-w-4xl bento-card p-5 sm:p-6 space-y-4 modal-pop bg-white dark:bg-zinc-900 max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] w-screen h-screen bg-black/80 backdrop-blur-xl grid place-items-center p-4 backdrop-fade"
+            onClick={() => setModalItem(null)}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                  {modalItem.cat}
-                </span>
-                <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">
-                  {modalItem.title}
-                </h3>
-              </div>
-              <button
-                onClick={() => setModalItem(null)}
-                aria-label="Close preview"
-                className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white"
-              >
-                <i className="fa-solid fa-xmark" />
-              </button>
-            </div>
-            <img
-              src={modalItem.full}
-              alt={modalItem.title}
-              className="w-full max-h-[60vh] object-contain rounded-xl bg-slate-100 dark:bg-zinc-950 border border-slate-200 dark:border-white/10"
-            />
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
-              {modalItem.desc}
-            </p>
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70 dark:border-white/10">
-              <div className="flex flex-wrap gap-1.5">
-                {modalItem.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-950/70 border border-slate-200 dark:border-white/10 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
-                  >
-                    {t}
+            <div
+              className="w-full max-w-4xl bento-card p-5 sm:p-6 space-y-4 modal-pop bg-white dark:bg-zinc-900 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
+                    {modalItem.cat}
                   </span>
-                ))}
-              </div>
-              {modalItem.url && (
-                <a
-                  href={modalItem.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition"
+                  <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">
+                    {modalItem.title}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setModalItem(null)}
+                  aria-label="Close preview"
+                  className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white"
                 >
-                  Kunjungi Web
-                  <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
-                </a>
-              )}
+                  <i className="fa-solid fa-xmark" />
+                </button>
+              </div>
+              <img
+                src={modalItem.full}
+                alt={modalItem.title}
+                className="w-full max-h-[60vh] object-contain rounded-xl bg-slate-100 dark:bg-zinc-950 border border-slate-200 dark:border-white/10"
+              />
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
+                {modalItem.desc}
+              </p>
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70 dark:border-white/10">
+                <div className="flex flex-wrap gap-1.5">
+                  {modalItem.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-950/70 border border-slate-200 dark:border-white/10 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                {modalItem.url && (
+                  <a
+                    href={modalItem.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition"
+                  >
+                    Kunjungi Web
+                    <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        </ClientPortal>
       )}
 
       <BackToTop />

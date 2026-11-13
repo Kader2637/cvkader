@@ -13,7 +13,7 @@ export default function About() {
       {/* Header */}
       <header className="space-y-3 border-b border-slate-200/80 dark:border-white/[0.08] pb-6">
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-          01 / About Me
+          About Me
         </span>
         <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
           <DecryptedText text="Abdul Kader" speed={30} />
@@ -120,7 +120,7 @@ export default function About() {
           <SpotlightCard className="p-6 sm:p-8">
             <div className="space-y-5">
               <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                Summary
+                <DecryptedText text="Summary" speed={30} />
               </h2>
               <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 leading-relaxed">
                 Saya berpengalaman lebih dari <strong>4 tahun</strong> membangun solusi web, mobile, serta integrasi sistem terdistribusi. Fokus utama saya adalah pengiriman fitur secara cepat dan terencana, pengoptimalan performa server, keamanan data, dan dampak bisnis nyata.
@@ -151,7 +151,7 @@ export default function About() {
           <SpotlightCard className="p-6">
             <div className="space-y-4">
               <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                Prinsip &amp; Siklus Kerja
+                <DecryptedText text="Prinsip & Siklus Kerja" speed={28} />
               </h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
@@ -183,7 +183,7 @@ export default function About() {
           <SpotlightCard className="p-6">
             <div className="space-y-4">
               <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                Primary Stack
+                <DecryptedText text="Primary Stack" speed={30} />
               </h2>
               <div className="flex flex-wrap gap-2">
                 {[
@@ -210,7 +210,7 @@ export default function About() {
             <div className="space-y-5">
               <div className="flex items-center justify-between">
               <h2 className="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                Experience Highlights
+                <DecryptedText text="Experience Highlights" speed={28} />
               </h2>
               <MagneticButton>
                 <Link
@@ -235,9 +235,9 @@ export default function About() {
                   text: "Pengembangan fitur inti berskala besar dan optimasi backend; kolaborasi intensif dengan tim produk.",
                 },
                 {
-                  role: "HRD — PT Kodingin Digital Nusantara",
+                  role: "Senior Developer — PT Kodingin Digital Nusantara",
                   time: "2025",
-                  text: "Mendukung proses rekrutmen engineer, technical interview teknis talenta baru, serta pengawasan mutu tim.",
+                  text: "Perancangan arsitektur backend & API produksi, code review, standar engineering, dan mentoring tim developer.",
                 },
                 {
                   role: "Junior Developer & Mentor — PT Humma Teknologi Indonesia",

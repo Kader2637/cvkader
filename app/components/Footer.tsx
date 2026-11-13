@@ -16,11 +16,6 @@ export default function Footer() {
       label: "LinkedIn",
     },
     {
-      icon: "fa-brands fa-instagram",
-      href: "https://instagram.com/abdulkader2637",
-      label: "Instagram",
-    },
-    {
       icon: "fa-solid fa-rss",
       href: "https://catatan-kader.web.id",
       label: "Blog",
@@ -50,7 +45,7 @@ export default function Footer() {
                 alt="Abdul Kader"
                 width={32}
                 height={32}
-                className="rounded-lg border border-slate-200 dark:border-white/10"
+                className="w-8 h-8 object-contain"
               />
               <div>
                 <div className="font-display font-bold text-sm text-slate-900 dark:text-zinc-100">

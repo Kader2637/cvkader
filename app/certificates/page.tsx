@@ -5,6 +5,7 @@ import BackToTop from "../components/BackToTop";
 import SpotlightCard from "../components/bits/SpotlightCard";
 import TiltedCard from "../components/bits/TiltedCard";
 import DecryptedText from "../components/bits/DecryptedText";
+import ClientPortal from "../components/ClientPortal";
 
 type Year = 2023 | 2024 | 2025 | 2026;
 type Kind = "image" | "pdf";
@@ -408,7 +409,7 @@ export default function Certificates() {
     <div id="cert-page" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-8">
       <header className="space-y-3 border-b border-slate-200/80 dark:border-white/[0.08] pb-6">
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-          06 / Credentials Archive
+          Credentials Archive
         </span>
         <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
           <DecryptedText text="Certificates & Awards" speed={26} />
@@ -547,61 +548,63 @@ export default function Certificates() {
 
       {/* Modal */}
       {open && active && (
-        <div
-          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm grid place-items-center p-4 backdrop-fade"
-          onClick={closeModal}
-        >
+        <ClientPortal>
           <div
-            className="w-full max-w-4xl bento-card p-5 space-y-4 modal-pop bg-white dark:bg-zinc-900 max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] w-screen h-screen bg-black/80 backdrop-blur-xl grid place-items-center p-4 backdrop-fade"
+            onClick={closeModal}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">
-                  {active.title}
-                </h3>
-                <p className="text-xs font-mono text-indigo-600 dark:text-indigo-400">
-                  {active.year} · {active.kind.toUpperCase()}
-                </p>
+            <div
+              className="w-full max-w-4xl bento-card p-5 space-y-4 modal-pop bg-white dark:bg-zinc-900 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">
+                    {active.title}
+                  </h3>
+                  <p className="text-xs font-mono text-indigo-600 dark:text-indigo-400">
+                    {active.year} · {active.kind.toUpperCase()}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={enc(active.file)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold"
+                  >
+                    Open File
+                  </a>
+                  <button
+                    onClick={closeModal}
+                    aria-label="Close modal"
+                    className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                  >
+                    <i className="fa-solid fa-xmark" />
+                  </button>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <a
-                  href={enc(active.file)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold"
-                >
-                  Open File
-                </a>
-                <button
-                  onClick={closeModal}
-                  aria-label="Close modal"
-                  className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white"
-                >
-                  <i className="fa-solid fa-xmark" />
-                </button>
-              </div>
+
+              {active.kind === "image" ? (
+                <img
+                  src={enc(active.file)}
+                  alt={active.title}
+                  className="w-full max-h-[65vh] object-contain rounded-xl bg-slate-100 dark:bg-zinc-950"
+                />
+              ) : (
+                <iframe
+                  src={`${enc(active.file)}${pdfModalParams}`}
+                  title={active.title}
+                  className="w-full h-[65vh] rounded-xl border border-slate-200 dark:border-white/10"
+                />
+              )}
+
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300">
+                {active.desc}
+              </p>
             </div>
-
-            {active.kind === "image" ? (
-              <img
-                src={enc(active.file)}
-                alt={active.title}
-                className="w-full max-h-[65vh] object-contain rounded-xl bg-slate-100 dark:bg-zinc-950"
-              />
-            ) : (
-              <iframe
-                src={`${enc(active.file)}${pdfModalParams}`}
-                title={active.title}
-                className="w-full h-[65vh] rounded-xl border border-slate-200 dark:border-white/10"
-              />
-            )}
-
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300">
-              {active.desc}
-            </p>
           </div>
-        </div>
+        </ClientPortal>
       )}
 
       <BackToTop />

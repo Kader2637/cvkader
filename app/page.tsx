@@ -8,6 +8,8 @@ import TiltedCard from "./components/bits/TiltedCard";
 import SpotlightCard from "./components/bits/SpotlightCard";
 import DecryptedText from "./components/bits/DecryptedText";
 import MagneticButton from "./components/bits/MagneticButton";
+import { useTheme } from "./components/ThemeProvider";
+import ClientPortal from "./components/ClientPortal";
 
 const MARQUEE_TECH = [
   { name: "Laravel", icon: "devicon-laravel-plain colored" },
@@ -27,45 +29,56 @@ const MARQUEE_TECH = [
 type FeaturedProject = {
   title: string;
   category: string;
+  badge?: string;
   img: string;
   desc: string;
   tags: string[];
   url?: string;
+  featuredStat?: { label: string; val: string };
 };
 
 const FEATURED_PROJECTS: FeaturedProject[] = [
   {
-    title: "e-Mawaris — Pembagian Hak Waris (HKI)",
-    category: "LegalTech · HKI",
+    title: "e-Mawaris — Pembagian Hak Waris 3 Hukum",
+    category: "LegalTech & Riset Dosen",
+    badge: "🏆 HKI Certified",
     img: "/assets/portfolio/e-mawarist.png",
-    desc: "Website pembagian hak waris berbasis 3 hukum (Islam, Perdata, Adat Jawa) lengkap dengan konversi harta. Proyek penelitian dosen bersertifikat HKI dengan saya sebagai salah satu penciptanya.",
-    tags: ["3 Hukum Waris", "Konversi Harta", "Terdaftar HKI", "Web App"],
+    desc: "Platform pembagian hak waris interaktif yang mengkalkulasi warisan berdasarkan 3 dasar hukum sekaligus: Islam, Perdata Barat, dan Adat Jawa, serta dilengkapi konversi aset harta riil. Karya penelitian dosen kampus bersertifikasi resmi HKI (Hak Kekayaan Intelektual) dengan saya sebagai salah satu anggota tim penciptanya.",
+    tags: ["3 Dasar Hukum", "Konversi Harta", "Sertifikasi HKI", "Riset Dosen", "Next.js"],
     url: "https://www.mawarist.web.id",
+    featuredStat: { label: "Hak Cipta", val: "Resmi HKI Kemenkumham" },
   },
   {
-    title: "Smart Desa — E-Government & UMKM",
-    category: "E-Government",
+    title: "Smart Desa — Ekosistem E-Government & UMKM",
+    category: "GovTech & Community",
+    badge: "🏛️ E-Gov Terpadu",
     img: "/assets/portfolio/smart-desa.png",
-    desc: "Platform e-government desa dengan layanan administrasi desa digital, katalog UMKM lokal, serta sistem laporan desa yang transparan.",
-    tags: ["Layanan Digital", "UMKM Desa", "Laporan Transparan", "Web App"],
+    desc: "Sistem pemerintahan desa digital terpadu: melayani administrasi kependudukan digital nirsentuh, katalog dan transaksi digital bagi pelaku UMKM desa, serta portal transparansi anggaran & laporan realisasi desa.",
+    tags: ["E-Government", "Katalog UMKM", "Laporan Transparan", "Layanan Digital"],
+    featuredStat: { label: "Fokus Layanan", val: "UMKM & Warga Digital" },
   },
   {
-    title: "SIPJAKI — Pasuruan (Konstruksi)",
-    category: "GovTech",
+    title: "SIPJAKI — Sistem Jasa Konstruksi Pasuruan",
+    category: "Enterprise GovTech",
+    badge: "🏗️ Layanan Konstruksi",
     img: "/assets/portfolio/sipjaki.png",
-    desc: "Sistem informasi jasa konstruksi Kabupaten Pasuruan: pengelolaan perizinan, daftar penyedia jasa, dan pelaporan proyek terintegrasi.",
-    tags: ["Laravel", "REST API", "MySQL"],
+    desc: "Aplikasi tata kelola perizinan jasa konstruksi Kabupaten Pasuruan: verifikasi berkas penyedia jasa, monitoring rantai pasok material konstruksi, hingga pelaporan berkala kegiatan pengawasan proyek daerah.",
+    tags: ["Laravel", "REST API", "PostgreSQL", "Arsitektur Enterprise"],
+    featuredStat: { label: "Pengguna", val: "Dinas & Asosiasi Jasa" },
   },
   {
-    title: "KR_Money — Catatan Keuangan",
-    category: "Mobile App",
+    title: "KR_Money — Aplikasi Analitik Keuangan Cerdas",
+    category: "Fintech Mobile",
+    badge: "📱 Mobile App",
     img: "/assets/portfolio/krmoney.jpg",
-    desc: "Aplikasi mobile pencatatan pengeluaran dan anggaran keuangan pribadi lengkap dengan grafik analitik serta pengingat otomatis.",
-    tags: ["React Native", "SQLite", "Redux"],
+    desc: "Aplikasi mobile pengelola keuangan mandiri: pencatatan cash flow harian offline-first, visualisasi analitik rasio pengeluaran per kategori, serta budgeting reminder cerdas berbasis limit bulanan.",
+    tags: ["React Native", "Offline First", "SQLite", "Analytics"],
+    featuredStat: { label: "Storage", val: "Local Encryption" },
   },
 ];
 
 export default function Page() {
+  const { openCvModal } = useTheme();
   const [previewProj, setPreviewProj] = useState<FeaturedProject | null>(null);
   const doubleMarquee = [...MARQUEE_TECH, ...MARQUEE_TECH];
 
@@ -139,15 +152,14 @@ export default function Page() {
                 </MagneticButton>
 
                 <MagneticButton>
-                  <a
-                    href="/assets/cv/AbdulKader_CV.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border border-slate-200 dark:border-white/15 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md text-slate-800 dark:text-zinc-100 text-xs sm:text-sm font-semibold hover:border-indigo-500/40 transition"
+                  <button
+                    type="button"
+                    onClick={openCvModal}
+                    className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border border-slate-200 dark:border-white/15 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md text-slate-800 dark:text-zinc-100 text-xs sm:text-sm font-semibold hover:border-indigo-500/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
                   >
                     <i className="fa-solid fa-file-pdf text-rose-500 text-xs" />
-                    Download CV
-                  </a>
+                    Preview CV PDF
+                  </button>
                 </MagneticButton>
 
                 <MagneticButton>
@@ -181,10 +193,10 @@ export default function Page() {
                 </div>
                 <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/65 dark:bg-zinc-900/55 backdrop-blur-md px-3.5 py-3 text-left">
                   <div className="font-display text-xl sm:text-2xl font-bold tabular-nums text-indigo-600 dark:text-indigo-400">
-                    HKI
+                    40+
                   </div>
                   <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">
-                    Certified IP
+                    Certificates
                   </div>
                 </div>
               </div>
@@ -256,10 +268,10 @@ export default function Page() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-              01 / Capabilities
+              Capabilities
             </span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Apa yang Saya Bangun
+              <DecryptedText text="Apa yang Saya Bangun" speed={28} />
             </h2>
           </div>
           <Link
@@ -321,10 +333,10 @@ export default function Page() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-              02 / Selected Work
+              Selected Work
             </span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Karya Pilihan Terbaik
+              <DecryptedText text="Karya Pilihan Terbaik" speed={28} />
             </h2>
           </div>
           <Link
@@ -335,36 +347,121 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 items-stretch">
-          {FEATURED_PROJECTS.map((proj) => (
-            <TiltedCard key={proj.title} maxTilt={6} className="h-full">
-              <SpotlightCard className="overflow-hidden h-full group">
-                <div className="h-full flex flex-col justify-between">
-                  <div className="flex-1 flex flex-col">
-                    <div className="relative aspect-[16/10] bg-slate-100 dark:bg-zinc-950 overflow-hidden shrink-0">
-                      <img
-                        src={proj.img}
-                        alt={proj.title}
-                        className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                      />
-                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-zinc-950/80 backdrop-blur border border-white/10 text-white text-[10px] font-mono uppercase tracking-wider">
-                        {proj.category}
-                      </span>
+        {/* Bento Grid: Asymmetric Architectural Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+          {/* Card 1: Main Highlight (e-Mawaris) - Big 7 columns */}
+          <div className="lg:col-span-7 flex">
+            <TiltedCard maxTilt={5} className="w-full h-full">
+              <SpotlightCard className="overflow-hidden h-full group flex flex-col justify-between border-indigo-500/30 dark:border-indigo-400/20 shadow-xl shadow-indigo-500/5">
+                <div className="relative aspect-[16/9] sm:aspect-[16/8.5] w-full bg-slate-100 dark:bg-zinc-950 overflow-hidden shrink-0">
+                  <img
+                    src={FEATURED_PROJECTS[0].img}
+                    alt={FEATURED_PROJECTS[0].title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
+                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-indigo-600/90 backdrop-blur-md text-white text-[10px] font-mono font-bold tracking-wider uppercase shadow-md">
+                      {FEATURED_PROJECTS[0].badge}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-zinc-300 text-[10px] font-mono border border-white/10">
+                      {FEATURED_PROJECTS[0].category}
+                    </span>
+                  </div>
+                  {FEATURED_PROJECTS[0].featuredStat && (
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
+                      <div className="text-xs font-mono">
+                        <span className="opacity-70">{FEATURED_PROJECTS[0].featuredStat.label}:</span>{" "}
+                        <span className="font-bold text-cyan-300">{FEATURED_PROJECTS[0].featuredStat.val}</span>
+                      </div>
                     </div>
+                  )}
+                </div>
 
-                    <div className="p-5 sm:p-6 space-y-2.5 flex-1">
-                      <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug">
-                        {proj.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
-                        {proj.desc}
-                      </p>
-                    </div>
+                <div className="p-6 sm:p-7 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-2.5">
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-tight">
+                      {FEATURED_PROJECTS[0].title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
+                      {FEATURED_PROJECTS[0].desc}
+                    </p>
                   </div>
 
-                  <div className="px-5 sm:px-6 pb-5 sm:pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-slate-200/70 dark:border-white/[0.06]">
+                  <div className="space-y-4 pt-4 border-t border-slate-200/70 dark:border-white/[0.08]">
                     <div className="flex flex-wrap gap-1.5">
-                      {proj.tags.map((t) => (
+                      {FEATURED_PROJECTS[0].tags.map((t) => (
+                        <span
+                          key={t}
+                          className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-white/10 text-[11px] font-mono text-slate-700 dark:text-zinc-300"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => setPreviewProj(FEATURED_PROJECTS[0])}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:border-indigo-500/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                      >
+                        <i className="fa-solid fa-magnifying-glass text-[11px]" />
+                        Detail &amp; Preview
+                      </button>
+                      {FEATURED_PROJECTS[0].url && (
+                        <a
+                          href={FEATURED_PROJECTS[0].url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-500/20 transition"
+                        >
+                          <span>Kunjungi Web</span>
+                          <i className="fa-solid fa-arrow-up-right-from-square text-[11px]" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </SpotlightCard>
+            </TiltedCard>
+          </div>
+
+          {/* Card 2: Smart Desa - 5 columns */}
+          <div className="lg:col-span-5 flex">
+            <TiltedCard maxTilt={5} className="w-full h-full">
+              <SpotlightCard className="overflow-hidden h-full group flex flex-col justify-between">
+                <div className="relative aspect-[16/10] w-full bg-slate-100 dark:bg-zinc-950 overflow-hidden shrink-0">
+                  <img
+                    src={FEATURED_PROJECTS[1].img}
+                    alt={FEATURED_PROJECTS[1].title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-emerald-600/90 backdrop-blur-md text-white text-[10px] font-mono font-bold tracking-wider uppercase">
+                      {FEATURED_PROJECTS[1].badge}
+                    </span>
+                  </div>
+                  {FEATURED_PROJECTS[1].featuredStat && (
+                    <div className="absolute bottom-3 left-4 text-xs font-mono text-emerald-300">
+                      {FEATURED_PROJECTS[1].featuredStat.val}
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug">
+                      {FEATURED_PROJECTS[1].title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+                      {FEATURED_PROJECTS[1].desc}
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 pt-3 border-t border-slate-200/70 dark:border-white/[0.08]">
+                    <div className="flex flex-wrap gap-1.5">
+                      {FEATURED_PROJECTS[1].tags.map((t) => (
                         <span
                           key={t}
                           className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-950/70 border border-slate-200 dark:border-white/10 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
@@ -373,31 +470,138 @@ export default function Page() {
                         </span>
                       ))}
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <button
-                        onClick={() => setPreviewProj(proj)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:border-indigo-500/40 transition"
-                      >
-                        <i className="fa-solid fa-magnifying-glass text-[10px]" />
-                        Preview
-                      </button>
-                      {proj.url && (
-                        <a
-                          href={proj.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition"
-                        >
-                          Kunjungi Web
-                          <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
-                        </a>
-                      )}
-                    </div>
+
+                    <button
+                      onClick={() => setPreviewProj(FEATURED_PROJECTS[1])}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:border-indigo-500/40 transition"
+                    >
+                      <i className="fa-solid fa-magnifying-glass text-[10px]" />
+                      Lihat Detail
+                    </button>
                   </div>
                 </div>
               </SpotlightCard>
             </TiltedCard>
-          ))}
+          </div>
+
+          {/* Card 3: SIPJAKI Pasuruan - 5 columns */}
+          <div className="lg:col-span-5 flex">
+            <TiltedCard maxTilt={5} className="w-full h-full">
+              <SpotlightCard className="overflow-hidden h-full group flex flex-col justify-between">
+                <div className="relative aspect-[16/10] w-full bg-slate-100 dark:bg-zinc-950 overflow-hidden shrink-0">
+                  <img
+                    src={FEATURED_PROJECTS[2].img}
+                    alt={FEATURED_PROJECTS[2].title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-blue-600/90 backdrop-blur-md text-white text-[10px] font-mono font-bold tracking-wider uppercase">
+                      {FEATURED_PROJECTS[2].badge}
+                    </span>
+                  </div>
+                  {FEATURED_PROJECTS[2].featuredStat && (
+                    <div className="absolute bottom-3 left-4 text-xs font-mono text-cyan-300">
+                      {FEATURED_PROJECTS[2].featuredStat.val}
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug">
+                      {FEATURED_PROJECTS[2].title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+                      {FEATURED_PROJECTS[2].desc}
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 pt-3 border-t border-slate-200/70 dark:border-white/[0.08]">
+                    <div className="flex flex-wrap gap-1.5">
+                      {FEATURED_PROJECTS[2].tags.map((t) => (
+                        <span
+                          key={t}
+                          className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-950/70 border border-slate-200 dark:border-white/10 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => setPreviewProj(FEATURED_PROJECTS[2])}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:border-indigo-500/40 transition"
+                    >
+                      <i className="fa-solid fa-magnifying-glass text-[10px]" />
+                      Lihat Detail
+                    </button>
+                  </div>
+                </div>
+              </SpotlightCard>
+            </TiltedCard>
+          </div>
+
+          {/* Card 4: KR_Money Mobile App - 7 columns */}
+          <div className="lg:col-span-7 flex">
+            <TiltedCard maxTilt={5} className="w-full h-full">
+              <SpotlightCard className="overflow-hidden h-full group flex flex-col justify-between">
+                <div className="relative aspect-[16/9] sm:aspect-[16/8.5] w-full bg-slate-100 dark:bg-zinc-950 overflow-hidden shrink-0">
+                  <img
+                    src={FEATURED_PROJECTS[3].img}
+                    alt={FEATURED_PROJECTS[3].title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-violet-600/90 backdrop-blur-md text-white text-[10px] font-mono font-bold tracking-wider uppercase">
+                      {FEATURED_PROJECTS[3].badge}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-zinc-300 text-[10px] font-mono border border-white/10">
+                      {FEATURED_PROJECTS[3].category}
+                    </span>
+                  </div>
+                  {FEATURED_PROJECTS[3].featuredStat && (
+                    <div className="absolute bottom-3 left-4 text-xs font-mono text-violet-300">
+                      {FEATURED_PROJECTS[3].featuredStat.val}
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-6 sm:p-7 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-2.5">
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-tight">
+                      {FEATURED_PROJECTS[3].title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+                      {FEATURED_PROJECTS[3].desc}
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 pt-3 border-t border-slate-200/70 dark:border-white/[0.08]">
+                    <div className="flex flex-wrap gap-1.5">
+                      {FEATURED_PROJECTS[3].tags.map((t) => (
+                        <span
+                          key={t}
+                          className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-950/70 border border-slate-200 dark:border-white/10 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => setPreviewProj(FEATURED_PROJECTS[3])}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:border-indigo-500/40 transition self-start"
+                    >
+                      <i className="fa-solid fa-magnifying-glass text-[11px]" />
+                      Detail &amp; Preview
+                    </button>
+                  </div>
+                </div>
+              </SpotlightCard>
+            </TiltedCard>
+          </div>
         </div>
       </section>
 
@@ -407,7 +611,7 @@ export default function Page() {
           <div className="space-y-5">
             <div className="flex items-center justify-between gap-4">
               <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                03 / Career Snapshot
+                Career Snapshot
               </span>
               <Link
                 href="/experience"
@@ -465,7 +669,7 @@ export default function Page() {
           <div className="space-y-5">
             <div className="flex items-center justify-between gap-4">
               <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-                04 / Awards &amp; Credentials
+                Awards &amp; Credentials
               </span>
               <Link
                 href="/certificates"
@@ -520,7 +724,7 @@ export default function Page() {
               Let&apos;s Collaborate
             </span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
-              Siap Membangun Produk Digital Berikutnya?
+              <DecryptedText text="Siap Membangun Produk Digital Berikutnya?" speed={24} />
             </h2>
             <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
               Diskusikan kebutuhan web, mobile, cloud, atau sistem IoT Anda bersama saya.
@@ -536,15 +740,14 @@ export default function Page() {
                 </Link>
               </MagneticButton>
               <MagneticButton>
-                <a
-                  href="/assets/cv/AbdulKader_CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-100 text-xs sm:text-sm font-semibold hover:border-indigo-500/40 transition"
+                <button
+                  type="button"
+                  onClick={openCvModal}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-100 text-xs sm:text-sm font-semibold hover:border-indigo-500/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
                 >
                   <i className="fa-solid fa-file-pdf text-rose-500 text-xs" />
-                  Download CV PDF
-                </a>
+                  Lihat CV PDF
+                </button>
               </MagneticButton>
             </div>
           </div>
@@ -553,10 +756,11 @@ export default function Page() {
 
       {/* Preview Modal */}
       {previewProj && (
-        <div
-          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm grid place-items-center p-4 backdrop-fade"
-          onClick={() => setPreviewProj(null)}
-        >
+        <ClientPortal>
+          <div
+            className="fixed inset-0 z-[100] w-screen h-screen bg-black/80 backdrop-blur-xl grid place-items-center p-4 backdrop-fade"
+            onClick={() => setPreviewProj(null)}
+          >
           <div
             className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bento-card p-5 sm:p-6 space-y-4 modal-pop bg-white dark:bg-zinc-900"
             onClick={(e) => e.stopPropagation()}
@@ -613,7 +817,8 @@ export default function Page() {
               )}
             </div>
           </div>
-        </div>
+          </div>
+        </ClientPortal>
       )}
 
       <BackToTop />

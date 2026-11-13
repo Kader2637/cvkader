@@ -5,8 +5,10 @@ import BackToTop from "../components/BackToTop";
 import SpotlightCard from "../components/bits/SpotlightCard";
 import DecryptedText from "../components/bits/DecryptedText";
 import MagneticButton from "../components/bits/MagneticButton";
+import { useTheme } from "../components/ThemeProvider";
 
 export default function Contact() {
+  const { openCvModal } = useTheme();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -58,7 +60,7 @@ export default function Contact() {
     <div id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-8">
       <header className="space-y-3 border-b border-slate-200/80 dark:border-white/[0.08] pb-6">
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-          07 / Get In Touch
+          Get In Touch
         </span>
         <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
           <DecryptedText text="Let's Build Something" speed={26} />
@@ -248,15 +250,14 @@ export default function Contact() {
                 Butuh versi PDF untuk keperluan HR atau arsip rekrutmen?
               </p>
               <MagneticButton>
-                <a
-                  href="/assets/cv/AbdulKader_CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={openCvModal}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-semibold hover:opacity-90 transition"
                 >
                   <i className="fa-solid fa-file-pdf text-rose-500" />
-                  Download AbdulKader_CV.pdf
-                </a>
+                  Lihat AbdulKader_CV.pdf
+                </button>
               </MagneticButton>
             </div>
           </SpotlightCard>

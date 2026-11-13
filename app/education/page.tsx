@@ -6,6 +6,7 @@ import BackToTop from "../components/BackToTop";
 import SpotlightCard from "../components/bits/SpotlightCard";
 import TiltedCard from "../components/bits/TiltedCard";
 import DecryptedText from "../components/bits/DecryptedText";
+import ClientPortal from "../components/ClientPortal";
 
 type Certificate = {
   key: string;
@@ -87,7 +88,7 @@ export default function Education() {
     <div id="education" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 pb-8">
       <header className="space-y-3 border-b border-slate-200/80 dark:border-white/[0.08] pb-6">
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">
-          03 / Academic Background
+          Academic Background
         </span>
         <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
           <DecryptedText text="Education & Core Certs" speed={26} />
@@ -112,10 +113,16 @@ export default function Education() {
                   />
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[11px] font-mono font-semibold">
-                      Ongoing
-                    </span>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[11px] font-mono font-semibold">
+                        Ongoing
+                      </span>
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25 text-[11px] font-mono font-bold shadow-sm">
+                        <i className="fa-solid fa-trophy text-[10px]" />
+                        Mahasiswa Berprestasi 2026
+                      </span>
+                    </div>
                     <span className="text-xs font-mono text-slate-400 dark:text-zinc-500">
                       Bachelor&apos;s Degree
                     </span>
@@ -130,6 +137,10 @@ export default function Education() {
                     Fokus pada analisis bisnis, arsitektur sistem, manajemen data &amp; integrasi aplikasi enterprise.
                   </p>
                   <ul className="space-y-1 text-xs text-slate-600 dark:text-zinc-300">
+                    <li className="font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+                      <i className="fa-solid fa-award text-[11px]" />
+                      Mahasiswa Berprestasi (Mawapres) Universitas Merdeka Malang 2026
+                    </li>
                     <li>• Business Process &amp; System Analysis</li>
                     <li>• Database Systems &amp; Data Modelling</li>
                     <li>• Web/App Development &amp; Integrations</li>
@@ -231,7 +242,7 @@ export default function Education() {
               Verified Credentials
             </span>
             <h2 className="font-display text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
-              Core Certifications &amp; Awards
+              <DecryptedText text="Core Certifications & Awards" speed={28} />
             </h2>
           </div>
           <Link
@@ -274,89 +285,93 @@ export default function Education() {
 
       {/* Modal Sertifikat */}
       {open && activeCert && (
-        <div
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm grid place-items-center p-4 backdrop-fade"
-          onClick={closeModal}
-        >
+        <ClientPortal>
           <div
-            className="w-full max-w-2xl bento-card p-6 space-y-4 modal-pop bg-white dark:bg-zinc-900 max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] w-screen h-screen bg-black/80 backdrop-blur-xl grid place-items-center p-4 backdrop-fade"
+            onClick={closeModal}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">
-                  {activeCert.title}
-                </h3>
-                <p className="text-xs text-indigo-600 dark:text-indigo-400">
-                  {activeCert.org} · {activeCert.subtitle}
+            <div
+              className="w-full max-w-2xl bento-card p-6 space-y-4 modal-pop bg-white dark:bg-zinc-900 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">
+                    {activeCert.title}
+                  </h3>
+                  <p className="text-xs text-indigo-600 dark:text-indigo-400">
+                    {activeCert.org} · {activeCert.subtitle}
+                  </p>
+                </div>
+                <button
+                  onClick={closeModal}
+                  aria-label="Close modal"
+                  className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white shrink-0"
+                >
+                  <i className="fa-solid fa-xmark" />
+                </button>
+              </div>
+              <img
+                src={activeCert.image}
+                alt={activeCert.title}
+                className="w-full max-h-[55vh] object-contain rounded-xl bg-slate-100 dark:bg-zinc-950"
+              />
+              {activeCert.description && (
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
+                  {activeCert.description}
                 </p>
-              </div>
-              <button
-                onClick={closeModal}
-                aria-label="Close modal"
-                className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white shrink-0"
-              >
-                <i className="fa-solid fa-xmark" />
-              </button>
+              )}
+              {activeCert.skills && (
+                <div className="flex flex-wrap gap-1.5">
+                  {activeCert.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-800 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
-            <img
-              src={activeCert.image}
-              alt={activeCert.title}
-              className="w-full max-h-[55vh] object-contain rounded-xl bg-slate-100 dark:bg-zinc-950"
-            />
-            {activeCert.description && (
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
-                {activeCert.description}
-              </p>
-            )}
-            {activeCert.skills && (
-              <div className="flex flex-wrap gap-1.5">
-                {activeCert.skills.map((s) => (
-                  <span
-                    key={s}
-                    className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-800 text-[10px] font-mono text-slate-600 dark:text-zinc-300"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            )}
           </div>
-        </div>
+        </ClientPortal>
       )}
 
       {/* Modal Kurikulum */}
       {showInfo && (
-        <div
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm grid place-items-center p-4 backdrop-fade"
-          onClick={closeInfo}
-        >
+        <ClientPortal>
           <div
-            className="w-full max-w-md bento-card p-6 space-y-4 modal-pop bg-white dark:bg-zinc-900"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] w-screen h-screen bg-black/80 backdrop-blur-xl grid place-items-center p-4 backdrop-fade"
+            onClick={closeInfo}
           >
-            <div className="flex items-center justify-between">
-              <h3 className="font-display text-base font-bold text-slate-900 dark:text-white">
-                Informasi Kurikulum
-              </h3>
+            <div
+              className="w-full max-w-md bento-card p-6 space-y-4 modal-pop bg-white dark:bg-zinc-900"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between">
+                <h3 className="font-display text-base font-bold text-slate-900 dark:text-white">
+                  Informasi Kurikulum
+                </h3>
+                <button
+                  onClick={closeInfo}
+                  className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500"
+                >
+                  <i className="fa-solid fa-xmark" />
+                </button>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
+                Detail kurikulum S1 Sistem Informasi Universitas Merdeka Malang mencakup Pemodelan Proses Bisnis (BPMN), Analisis &amp; Perancangan Sistem (UML), Basis Data Terdistribusi, serta Tata Kelola TI.
+              </p>
               <button
                 onClick={closeInfo}
-                className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500"
+                className="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition"
               >
-                <i className="fa-solid fa-xmark" />
+                Tutup
               </button>
             </div>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
-              Detail kurikulum S1 Sistem Informasi Universitas Merdeka Malang mencakup Pemodelan Proses Bisnis (BPMN), Analisis &amp; Perancangan Sistem (UML), Basis Data Terdistribusi, serta Tata Kelola TI.
-            </p>
-            <button
-              onClick={closeInfo}
-              className="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition"
-            >
-              Tutup
-            </button>
           </div>
-        </div>
+        </ClientPortal>
       )}
 
       <BackToTop />

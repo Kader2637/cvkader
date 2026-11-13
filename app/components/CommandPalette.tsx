@@ -14,7 +14,7 @@ type CmdItem = {
 };
 
 export default function CommandPalette() {
-  const { cmdOpen, setCmdOpen, theme, toggleTheme } = useTheme();
+  const { cmdOpen, setCmdOpen, theme, toggleTheme, openCvModal } = useTheme();
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(0);
@@ -88,12 +88,12 @@ export default function CommandPalette() {
       },
       {
         id: "download-cv",
-        label: "Download CV (PDF)",
-        hint: "AbdulKader_CV.pdf",
-        icon: "fa-solid fa-file-arrow-down",
+        label: "Preview / Download CV (PDF)",
+        hint: "Buka modal pop-up PDF",
+        icon: "fa-solid fa-file-pdf",
         group: "Actions",
         action: () => {
-          window.open("/assets/cv/AbdulKader_CV.pdf", "_blank");
+          openCvModal();
         },
       },
       {
@@ -149,7 +149,7 @@ export default function CommandPalette() {
         action: () => window.open("https://catatan-kader.web.id", "_blank"),
       },
     ],
-    [router, theme, toggleTheme, copied]
+    [router, theme, toggleTheme, copied, openCvModal]
   );
 
   const filtered = useMemo(() => {

@@ -9,6 +9,9 @@ type ThemeContextType = {
   toggleTheme: () => void;
   cmdOpen: boolean;
   setCmdOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  cvModalOpen: boolean;
+  openCvModal: () => void;
+  closeCvModal: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextType>({
@@ -16,6 +19,9 @@ const ThemeContext = createContext<ThemeContextType>({
   toggleTheme: () => {},
   cmdOpen: false,
   setCmdOpen: () => {},
+  cvModalOpen: false,
+  openCvModal: () => {},
+  closeCvModal: () => {},
 });
 
 function applyTheme(next: Theme) {
@@ -32,6 +38,10 @@ function applyTheme(next: Theme) {
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
   const [cmdOpen, setCmdOpen] = useState(false);
+  const [cvModalOpen, setCvModalOpen] = useState(false);
+
+  const openCvModal = () => setCvModalOpen(true);
+  const closeCvModal = () => setCvModalOpen(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("cv-theme-v2") as Theme | null;
@@ -59,7 +69,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, cmdOpen, setCmdOpen }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        toggleTheme,
+        cmdOpen,
+        setCmdOpen,
+        cvModalOpen,
+        openCvModal,
+        closeCvModal,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
